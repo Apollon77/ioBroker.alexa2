@@ -249,65 +249,17 @@
 
     <style>
         h1 {
-            font-size: 11px;
-            color: #505050;
+            font-size: 1em;
+            color: #505050; 
             font-weight: bold;
             width: 100%;
-            padding-left:6px;
-            padding-right: 5px;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            background-color: #e0e0e0;
+            padding: 6px 5px 5px 5px;
+            background-color: #e8e8e8;
             /*background-image: linear-gradient(to right, #e0e0e0, rgba(224,224,224,0.0));*/
             /*background-image: linear-gradient(to right, #e0e0e0, #e8e8e8 50%, #e0e0e0);*/
         }
-        /*
-        table#t01 {
-            width: 100%;
-            background-color: #f1f1c1;
-        }
-        */
-        .msgTable{
-            width:100%;
-            border-collapse:collapse;
-        }
-        .msgTable td{
-            padding:7px; border:#4e95f4 1px solid;
-        }
-        .msgTable tr{
-            background: #b8d1f3;
-        }
-        .hoverTable{
-            width:100%;
-            border-collapse:collapse;
-        }
-        .hoverTable td{
-            padding:7px; border:#4e95f4 1px solid; cursor: hand;
-        }
-        /* Define the default color for all the table rows */
-        .hoverTable th{
-            padding:7px; border:#4e95f4 1px solid; background-color: #b8d1f3;
-        }
-        .hoverTable th:hover{
-            padding:7px; border:#4e95f4 1px solid; background-color: #b8d1f3;
-        }
-        .hoverTable tr{
-            background: #b8d1f3;
-        }
-        /* Define the hover highlight color for the table row */
-        .hoverTable tr:hover {
-            background-color: #ffff99;
-        }
-
-        td {
-            font-size: 13px;
-            padding-left:1px;
-            padding-right: 4px;
-            padding-top: 2px;
-            padding-bottom: 2px;
-        }
-        input {
-            font-size: 13px;
+        .ueberschrift {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -347,7 +299,7 @@
                     
                     <div class="row">
                         <div class="col s12">
-                            <h4 class="translate">auth</h4>
+                            <h1 class="translate ueberschrift">auth</h1>
                             <p class="translate">auth_info</p>
                             
                             <div class="input-field col s12">
@@ -364,7 +316,7 @@
                     
                     <div class="row">    
                         <div class="col s12">
-                            <h4 class="translate">interval</h4>
+                            <h1 class="translate ueberschrift">interval</h1>
                             <p class="translate">interval_info</p>
                             
                             <div class="input-field col s12">
@@ -392,38 +344,38 @@
                     
                     <div class="row">
                         <div class="col s12">
-                            <h4 class="translate">cookieAlt</h4>
+                            <h1 class="translate ueberschrift">cookieAlt</h1>
                             <p class="translate">cookieAlt_info</p>
                             
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s12">
                                 <textarea id="cookie" class="value materialize-textarea"></textarea>
-                                  <label for="cookie" class="translate">cookie</label>
-                                  <span class="helper-text translate">cookieAlt_info2</span>
+                                <label for="cookie" class="translate">cookie</label>
+                                <span class="helper-text translate">cookieAlt_info2</span>
                             </div>
                         </div>
                     </div>
                     
                     <div class="row">
                         <div class="col s12">
-                            <h4 class="translate">overwrite</h4>
+                            <h1 class="translate ueberschrift">overwrite</h1>
                             <p class="translate">overwrite_info</p>
                             
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s12 m6">
                                 <input id="alexaServiceHost" class="value text"></input>
                                 <label for="alexaServiceHost" class="translate">alexaServiceHost</label>
                             </div>
                             
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s12 m6">
                                 <input id="userAgent" class="value text"></input>
                                 <label for="userAgent" class="translate">userAgent</label>
                             </div>
                             
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s12 m6">
                                 <input id="acceptLanguage" class="value text"></input>
                                 <label for="acceptLanguage" class="translate">acceptLanguage</label>
                             </div>
                             
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s12 m6">
                                 <input id="cookieLoginUrl" class="value text"></input>
                                 <label for="cookieLoginUrl" class="translate">cookieLoginUrl</input>
                             </div>
@@ -443,7 +395,7 @@
                     <div class="row">
                     
                         <div class="col s12">
-                            <h4 class="translate">proxy</h4>
+                            <h1 class="translate ueberschrift">proxy</h1>
                             <p class="translate">proxy_info</p>
                             
                             <div class="input-field col s12">
