@@ -1,0 +1,474 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+        <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+
+        <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+
+        <script type="text/javascript" src="../../js/translate.js"></script>
+        <script type="text/javascript" src="../../lib/js/materialize.js"></script>
+        <script type="text/javascript" src="../../js/adapter-settings.js"></script>
+        <!--<script type="text/javascript" src="words.js"></script>-->
+
+
+		<style>
+            .adapter-body {
+                overflow: hidden !important;
+            }
+        </style>
+
+        <!-- you have to define 2 functions in the global scope: -->
+		<script type="text/javascript">
+
+    	// Dictionary (systemDictionary is global variable from adapter-settings.js)
+    	systemDictionary = {
+        	"Settings": {
+            	"de": "Einstellungen",
+            	"ru": "Settings"
+	        },
+    	    "alexaServiceHost": {
+        	    "de": "Alexa Basis URL",
+            	"en": "Alexa base url"
+	        },
+    	    "alexaLogin": {
+        	    "de": "Alexa Login Daten",
+            	"en": "Alexa login data"
+	        },
+    	    "password": {
+        	    "de": "Passwort",
+            	"en": "password"
+	        },
+    	    "cookie": {
+        	    "de": "Cookie",
+            	"en": "Cookie"
+	        },
+    	    "Password": {
+            	"de": "Passwort",
+        	    "en": "Password"
+ 	       },
+    	    "Email": {
+        	    "de": "Benutzer/Email",
+            	"en": "User/Email"
+	       },
+    	    "auth": {
+        	    "de": "Login-Daten für das Amazon-Konto, wo die Echo Geräte registriert sind",
+            	"en": "Login Details for Amazon Account where Echo devices are registered"
+	        },
+	        "auth_info": {
+	            "de": "Die Login-Daten werden verschlüsselt in der lokalen ioBroker-Instanz gespeichert. Wenn die Daten nicht angegeben werden, muss man selbst das Cookie beschaffen oder über den Proxy des Adapters den Login vornehmen, sodass das Cookie dann ermittelt werden kann. Dies muss aber manuell wiederholt werden sobald der Cookie ungülktig geworden ist.",
+	            "en": "The credentials will be stored encrypted in your local ioBroker instance. You can also leave them empty, but then you need to fetch the Amazon cookie by your own or use the proxy from the adapter to login and get the cookie."
+	        },
+	        "cookieAlt": {
+	            "de": "Manuelle Eingabe des Cookie",
+	            "en": "Manual input of the cookie"
+	        },
+	        "cookieAlt_info": {
+	            "de": "Der Cookie kann auch manuell ermittelt und eingetragen werden. Email & Passwort werden dann nicht benötigt",
+	            "en": "The cookie can also be entered directly. Email & password are then not required"
+	        },
+	        "cookieAlt_info2": {
+	            "de": "Siehe z.B. <a href=\"https://www.gehrig.info/alexa/Alexa.html\" target=\"_blank\">here</a> wie ein Cookie manuellerstellt werden kann, oder den Proxy-Modus des Adapters versuchen. Die Proxy-URL wird in der Fehlermeldung angezeigt.",
+	            "en": "See e.g. <a href=\"https://www.gehrig.info/alexa/Alexa.html\" target=\"_blank\">here</a> how to get a cookie manually or try the proxy mode of the adapter! See Error message in log for proxy URL"
+    	    },
+        	"amazonPage": {
+            	"de": "Eigene Cookie-Amazon-URL",
+	            "en": "Custom Cookie-Amazon-URL"
+	        },
+    	    "userAgent": {
+        	    "de": "Eigener User-Agent",
+            	"en": "Custom User-Agent"
+	        },
+    	    "acceptLanguage": {
+        	    "de": "Eigene Sprachangabe-Header",
+            	"en": "Custom Accept-Language Header"
+	        },
+    	    "updateStateInterval": {
+        	    "de": "Daten-Update-Interval (Player-Info ...)",
+            	"en": "Data update interval (player info ...)"
+	        },
+    	    "updateHistoryInterval": {
+        	    "de": "History Update Interval",
+            	"en": "History update interval"
+	        },
+    		"interval": {
+            	"de": "Aktualisierungsintervalle",
+            	"en": "Data updateIntervals"
+	        },
+    	    "interval_info": {
+        	    "de": "Bestimmte Daten können automatisch aktualisiert werden. Wie oft dies passiert, wird hier in Sekunden ferstgelegt. Über den Datenunkt history.#trigger kann jederzeit manuell eine Aktualisierung angestossen werden. Die Angabe von 0 deaktiviert die automatischen Aktualisierungen.",
+            	"en": "Several data can automatically be updated. You define here in seconds how often this should happen. Using the state history.#trigger you can always update the data manually. If you set 0 as interval the automatic update is disabled. "
+	        },
+    	    "s (0 = disabled)": {
+        	    "de": "s (0 = deaktiviert)",
+            	"en": "s (0 = disabled)"
+	        },
+    	    "overwrite": {
+        	    "de": "Überschreiben spezieller Parameter zur Cookie-Ermittlung und Kommunikation",
+            	"en": "Override special parameter for cookie determination and communication"
+	        },
+    	    "overwrite_info": {
+        	    "de": "Standardmäßig verbindet sich der Adapter mit einem deutschen Amazon-Konto. Bei der Nutzung von anderen Amazon-Ländern müssen hier die korrekten Daten eingetragen werden. Einige Hinweise dazu sind in der Adapter-README zu finden. Auch in speziellen Fällen, wenn die automatische Cookie-Ermittlung fehlschlägt, kann es helfen die Fehler user-Agent und Accept-Language anzupassen.",
+            	"en": "By default the parameters are set to connect with a german amazon account. If you are using other amazon countries you need to set the correct data here. Check in Adapter README for some details. Also in certain cases whwere the automatic cookie determindation is failing it can help to play around here especially with Accept-Language and user-agent."
+	        },
+    	    "proxy": {
+        	    "de": "Proxy-Einstellungen",
+            	"en": "Proxy Settings"
+	        },
+    	    "proxy_info": {
+        	    "de": "Wenn die automatische Cookie-Ermittlung nicht funktioniert öffnet der Adapter einen Proxy um einen manuellen Login zu erleuben. Das Logfile nennt in dem Fall den aufzurufenden Link. Diese mit dem Browser aufrufen, bei Amazon einloggen, alle potentiell angezeigten Captachas und Zwei-Faktor-Abfragen beantworten und das Cookie wird bei Erfolg im Hintergrund automatisch erfasst.",
+            	"en": "If the automatic determination of a cookie is not able the adapter opens a proxy to allow a manual login to amazon. The Logfile will tell you the URL to use then. Open this in your browser, manually login into Amazon, solve all potential Captchas or Two-Factor-Authentications and the cookie is catched in the background automatically if successfull."
+	        },
+    	    "proxyOwnIp": {
+        	    "de": "Eigene IP oder für den Proxy-Link",
+            	"en": "Own IP or hostname to use in proxy link"
+	        },
+    	    "proxyPort": {
+        	    "de": "Proxy-Port",
+            	"en": "Proxy-Port"
+	        },
+    	    "proxyPort_info": {
+        	    "de": "(0 = zufälliger Port)",
+            	"en": "(0 = random port)"
+	        },
+    	    "proxyListenBind": {
+        	    "de": "Proxy-Beschränkung auf folgende IP (Listen Bind)",
+            	"en": "Proxy Binding to certain IP"
+	        }
+	    };
+
+    	var active = false;
+    	var g_onChange;
+    	var secret;
+
+    	function encrypt(key, value) {
+    	    var result = '';
+    	    for(var i = 0; i < value.length; ++i) {
+    	        result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+    	    }
+    	    return result;
+    	}
+
+    	function decrypt(key, value) {
+    	    var result = '';
+    	    for(var i = 0; i < value.length; ++i) {
+    	        result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+    	    }
+    	    return result;
+    	}
+
+
+    	// the function loadSettings has to exist ...
+    	function loadHelper(settings, onChange) {
+    	    $("#dialog-search").dialog({
+   		        autoOpen: false,
+    	        modal: true,
+        	    width: 600,
+            	height: 300
+        	});
+
+        	if (!settings) return;
+    	    if (settings.email === undefined) settings.email = '';
+   	 		if (settings.password === undefined) settings.password = '';
+    	    if (settings.cookie === undefined) settings.cookie = '';
+        	if (settings.alexaServiceHost === undefined) settings.alexaServiceHost = '';
+        	if (settings.userAgent === undefined) settings.userAgent = '';
+        	if (settings.acceptLanguage === undefined) settings.acceptLanguage = '';
+        	if (settings.cookieLoginUrl === undefined) settings.cookieLoginUrl = '';
+        	if (settings.updateStateInterval === undefined) settings.updateStateInterval = 0;
+        	if (settings.updateHistoryInterval === undefined) settings.updateHistoryInterval = 0;
+        	if (settings.proxyOwnIp === undefined) settings.proxyOwnIp = '';
+        	if (settings.proxyPort === undefined) settings.proxyPort = 0;
+        	if (settings.proxyListenBind === undefined) settings.proxyListenBind = '';
+
+        	changed = true;
+        	g_onChange = onChange;
+
+        	for (var key in settings) {
+        	    // example: select elements with id=key and class=value and insert value
+        	    $key = $('#' + key + '.value');
+        	    if ($key.attr('type') === 'checkbox') {
+        	        $key.prop('checked', settings[key]).change(function() {
+                    	if ($('#auth').prop('checked')) {
+                        	$('#secure').prop('checked', true);
+                    	}
+                    	onChange();
+                    	showHideSettings();
+                	});
+            	} else {
+                	var val = $key.attr('crypt') ? decrypt(secret, settings[key]) : settings[key];
+                	$key.val(val).change(function() {
+                    	onChange();
+                	}).keyup(function() {
+                    	onChange();
+                	});
+            	}
+        	}
+        	// Set default language
+        	if (!settings.language) {
+            	settings.language = systemLang || 'en';
+            	$('#language').val(settings.language).trigger('change');
+        	}
+
+        	changed = true;
+        	onChange(false);
+    	}
+
+    	function load(settings, onChange) {
+        	socket.emit('getObject', 'system.config', function (err, obj) {
+       		    secret = (obj.native ? obj.native.secret : '') || 'Zgfr56gFe87jJOM';
+            	loadHelper(settings, onChange);
+        	});
+
+        	onChange(false);
+    	}
+
+	    function save(callback) {
+    	    var obj = {};
+        	changed = true;
+        	$('.value').each(function () {
+            	var $this = $(this);
+            	switch($this.attr('type')) {
+                	case 'checkbox':
+                    	obj[$this.attr ('id')] = $this.prop ('checked');
+                    	break;
+                	case 'number':
+                	case 'value':
+                	    obj[$this.attr ('id')] = ~~$this.val ();
+                    	break;
+                	default:
+                    	var val = $this.attr('crypt') ? encrypt(secret, $this.val ()) : $this.val ();
+                    	obj[$this.attr ('id')] = val;
+            	}
+        	});
+        	changed = true;
+        	callback(obj);
+    	}
+	</script>
+
+
+	<style>
+    	h1 {
+        	font-size: 11px;
+        	color: #505050;
+        	font-weight: bold;
+        	width: 100%;
+        	padding-left:6px;
+        	padding-right: 5px;
+        	padding-top: 5px;
+        	padding-bottom: 5px;
+        	background-color: #e0e0e0;
+        	/*background-image: linear-gradient(to right, #e0e0e0, rgba(224,224,224,0.0));*/
+        	/*background-image: linear-gradient(to right, #e0e0e0, #e8e8e8 50%, #e0e0e0);*/
+    	}
+    	/*
+    	table#t01 {
+        	width: 100%;
+        	background-color: #f1f1c1;
+    	}
+    	*/
+    	.msgTable{
+        	width:100%;
+        	border-collapse:collapse;
+    	}
+    	.msgTable td{
+    	    padding:7px; border:#4e95f4 1px solid;
+    	}
+    	.msgTable tr{
+    	    background: #b8d1f3;
+    	}
+    	.hoverTable{
+    	    width:100%;
+    	    border-collapse:collapse;
+    	}
+    	.hoverTable td{
+    	    padding:7px; border:#4e95f4 1px solid; cursor: hand;
+    	}
+    	/* Define the default color for all the table rows */
+    	.hoverTable th{
+    	    padding:7px; border:#4e95f4 1px solid; background-color: #b8d1f3;
+    	}
+    	.hoverTable th:hover{
+    	    padding:7px; border:#4e95f4 1px solid; background-color: #b8d1f3;
+    	}
+    	.hoverTable tr{
+    	    background: #b8d1f3;
+    	}
+    	/* Define the hover highlight color for the table row */
+    	.hoverTable tr:hover {
+    	    background-color: #ffff99;
+    	}
+
+    	td {
+    	    font-size: 13px;
+        	padding-left:1px;
+        	padding-right: 4px;
+        	padding-top: 2px;
+        	padding-bottom: 2px;
+    	}
+    	input {
+        	font-size: 13px;
+    	}
+	</style>
+</head>
+
+<body>
+	<div class="m adapter-container">
+        <div class="row">
+        	<div class="col s12">
+        	    <!-- Tabs definieren -->
+        		<ul class="tabs">
+                    <!-- Tab1 Login + Intervalle-->
+                    <li class="tab col s4">
+                        <a href="#tab-main" class="translate">alexaLogin</a>
+                    </li>
+                    <!-- Tab2 Cookie -->
+                    <li class="tab col s4">
+                        <a href="#tab-cookie" class="translate">cookie</a>
+                    </li>
+                    <!-- Tab3 Proxy -->
+                    <li class="tab col s4">
+                        <a href="#tab-proxy" class="translate">proxy</a>
+                    </li>
+                    <!-- weitere Tabs hier einfügen -->
+                </ul>
+        	</div>
+        
+            <!-- Ab hier der Inhalt der Tabs -->
+            <div id="settings">
+            	
+            	<!-- Tab1 Login + Intervall-->
+            	<div id="tab-main" class="col s12 page">    
+                	<div class="row">
+                    	<div class="col s12 m4 l2">
+                        	<img src="alexa.png" class="logo">
+                    	</div>
+                	</div>
+                	
+                	<div class="row">
+                    	<div class="col s12 m4">
+                            <h1 class="translate">auth</h1>
+                            <p class="translate">auth_info</p>
+                            
+                            <div class="input-field col s12 m4">
+                            	<input class="value validate" crypt="1" id="email" value="true" type="email">
+                            	<label for="email" class="translate">Email</label>
+                            	<span class="helper-text" data-error="invalid Email" data-success="valid Email">Validierung</span>
+                            </div>
+                            <div class="input-field col s12 m4">
+                            	<input class="value" crypt="1" type="password" id="password" value="true">
+                            	<label for="password" class="translate">password</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">    
+                        <div class="col s12 m4">
+                            <h1 class="translate">interval</h1>
+                            <p class="translate">interval_info</p>
+                            
+                            <div class="input-field col s12 m4">
+                            	<input class="value validate" placeholder="300" id="updateStateInterval" value="true" type="number">s
+                            	<label for="updateStateInterval" class="translate">updateStateInterval</label>
+                            	<span class="helper-text translate">(0 = disabled)</span>
+                            </div>
+                            <div class="input-field col s12 m4">
+                            	<input class="value validate" placeholder="300" id="updateHistoryInterval" value="true" type="number">s
+                            	<label for="updateHistoryInterval" class="translate">updateHistoryInterval</label>
+                            	<span class="helper-text translate">(0 = disabled)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+            	</div> <!-- Ende Tab1 -->
+                
+                <!-- Tab2 Cookie -->
+                <div id="tab-cookie" class="col s12 page">    
+                	<div class="row">
+                    	<div class="col s12 m4 l2">
+                        	<img src="alexa.png" class="logo">
+                    	</div>
+                	</div>
+                	
+                	<div class="row">
+                    	<div class="col s12">
+                        	<h1 class="translate">cookieAlt</h1>
+                        	<p class="translate">cookieAlt_info</p>
+                        	
+                            <div class="input-field col s12 m4">
+                        		<textarea id="cookie" class="value materialize-textarea"></textarea>
+          						<label for="cookie" class="translate">cookie</label>
+          						<span class="helper-text translate">cookieAlt_info2</span>
+                        	</div>
+                    	</div>
+                	</div>
+                	
+                	<div class="row">
+                    	<div class="col s12">
+                        	<h1 class="translate">overwrite</h1>
+                        	<p class="translate">overwrite_info</p>
+                        	
+                            <div class="input-field col s12 m4">
+                        		<textarea id="alexaServiceHost" class="value text"></input>
+          						<label for="alexaServiceHost" class="translate">alexaServiceHost</label>
+                        	</div>
+                        	
+                        	<div class="input-field col s12 m4">
+                        		<textarea id="userAgent" class="value text"></input>
+          						<label for="userAgent" class="translate">userAgent</label>
+                        	</div>
+                        	
+                        	<div class="input-field col s12 m4">
+                        		<textarea id="acceptLanguage" class="value text"></input>
+          						<label for="acceptLanguage" class="translate">acceptLanguage</label>
+                        	</div>
+                        	
+                        	<div class="input-field col s12 m4">
+                        		<textarea id="cookieLoginUrl" class="value text"></textarea>
+          						<label for="cookieLoginUrl" class="translate">cookieLoginUrl</input>
+                        	</div>
+                        	
+                    	</div>
+                	</div>
+                	
+            	</div> <!-- Ende Tab2 -->
+                
+                <!-- Ende Tab3 Proxy -->
+                <div id="tab-proxy" class="col s12 page">    
+                	<div class="row">
+                    	<div class="col s12 m4 l2">
+                        	<img src="alexa.png" class="logo">
+                    	</div>
+                	</div>
+                	<div class="row">
+                	
+                    	<div class="col s12">
+                        	<h1 class="translate">proxy</h1>
+                        	<p class="translate">proxy_info</p>
+                        	
+                        	<div class="input-field col s12 m4">
+                        		<input id="proxyOwnIp" class="value text"></input>
+          						<label for="proxyOwnIp" class="translate">proxyOwnIp</label>
+                        	</div>
+                        	
+                        	<div class="input-field col s12 m4">
+                        		<input id="proxyPort" placeholder="0" class="value number"></input>
+          						<label for="proxyPort" class="translate">proxyPort</label>
+          						<span class="helper-text translate">proxyPort_info</span>
+                        	</div>
+                        	
+                        	<div class="input-field col s12 m4">
+                        		<input id="proxyListenBind" class="value text"></input>
+          						<label for="proxyListenBind" class="translate">proxyListenBind</label>
+                        	</div>
+                        	
+                        </div>
+                        	
+                	</div>
+            	</div> <!-- Ende Tab3 -->
+        
+        	</div> <!-- Ende id settings -->
+        </div><!-- Ende row -->
+        </div>
+    </body>
+</html>
