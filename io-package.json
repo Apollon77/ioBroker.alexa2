@@ -1,11 +1,15 @@
 {
   "common": {
     "name": "alexa2",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "title": "Alexa2 (Amazon Echo)",
     "desc": "Remote control for Alexa (Amazon Echo)",
     "platform": "Javascript/Node.js",
     "news": {
+        "0.2.4": {
+          "en": "settings window materialized",
+          "de": "Einstellungsfenster im Material Design"
+        },
         "0.2.1´2": {
           "en": "first release as Alexa2",
           "de": "Erste Veröffentlichung als Alexa2"
@@ -20,6 +24,7 @@
     ],
     "mode": "daemon",
     "icon": "alexa.png",
+    "materialize": true,
     "extIcon": "https://raw.githubusercontent.com/Apollon77/ioBroker.alexa2/master/admin/alexa.png",
     "readme": "https://github.com/Apollon77/ioBroker.alexa2/blob/master/README.md",
     "loglevel": "info",
