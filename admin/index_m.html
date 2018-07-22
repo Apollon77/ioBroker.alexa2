@@ -56,7 +56,7 @@
                 "en": "Login Details for Amazon Account where Echo devices are registered"
             },
             "auth_info": {
-                "de": "Die Login-Daten werden verschlüsselt in der lokalen ioBroker-Instanz gespeichert. Wenn die Daten nicht angegeben werden, muss man selbst das Cookie beschaffen oder über den Proxy des Adapters den Login vornehmen, sodass das Cookie dann ermittelt werden kann. Dies muss aber manuell wiederholt werden sobald der Cookie ungülktig geworden ist.",
+                "de": "Die Login-Daten werden verschlüsselt in der lokalen ioBroker-Instanz gespeichert. Wenn die Daten nicht angegeben werden, muss man selbst das Cookie beschaffen oder über den Proxy des Adapters den Login vornehmen, sodass das Cookie dann ermittelt werden kann. Dies muss aber manuell wiederholt werden sobald der Cookie ungültig geworden ist.",
                 "en": "The credentials will be stored encrypted in your local ioBroker instance. You can also leave them empty, but then you need to fetch the Amazon cookie by your own or use the proxy from the adapter to login and get the cookie."
             },
             "cookieAlt": {
@@ -346,33 +346,33 @@
                     </div>
                     
                     <div class="row">
-                        <div class="col s12 m4">
-                            <h1 class="translate">auth</h1>
+                        <div class="col s12">
+                            <h4 class="translate">auth</h4>
                             <p class="translate">auth_info</p>
                             
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s12">
                                 <input class="value validate" crypt="1" id="email" value="true" type="email">
-                                <label for="email" class="translate">Email</label>
+                                <label for="email" class="translate active">Email</label>
                                 <span class="helper-text" data-error="invalid Email" data-success="valid Email">Validierung</span>
                             </div>
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s12">
                                 <input class="value" crypt="1" type="password" id="password" value="true">
-                                <label for="password" class="translate">password</label>
+                                <label for="password" class="translate active">password</label>
                             </div>
                         </div>
                     </div>
                     
                     <div class="row">    
-                        <div class="col s12 m4">
-                            <h1 class="translate">interval</h1>
+                        <div class="col s12">
+                            <h4 class="translate">interval</h4>
                             <p class="translate">interval_info</p>
                             
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s12">
                                 <input class="value validate" placeholder="300" id="updateStateInterval" value="true" type="number">s
                                 <label for="updateStateInterval" class="translate">updateStateInterval</label>
                                 <span class="helper-text translate">(0 = disabled)</span>
                             </div>
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s12">
                                 <input class="value validate" placeholder="300" id="updateHistoryInterval" value="true" type="number">s
                                 <label for="updateHistoryInterval" class="translate">updateHistoryInterval</label>
                                 <span class="helper-text translate">(0 = disabled)</span>
@@ -392,7 +392,7 @@
                     
                     <div class="row">
                         <div class="col s12">
-                            <h1 class="translate">cookieAlt</h1>
+                            <h4 class="translate">cookieAlt</h4>
                             <p class="translate">cookieAlt_info</p>
                             
                             <div class="input-field col s12 m4">
@@ -405,26 +405,26 @@
                     
                     <div class="row">
                         <div class="col s12">
-                            <h1 class="translate">overwrite</h1>
+                            <h4 class="translate">overwrite</h4>
                             <p class="translate">overwrite_info</p>
                             
                             <div class="input-field col s12 m4">
-                                <textarea id="alexaServiceHost" class="value text"></input>
-                                  <label for="alexaServiceHost" class="translate">alexaServiceHost</label>
+                                <input id="alexaServiceHost" class="value text"></input>
+                                <label for="alexaServiceHost" class="translate">alexaServiceHost</label>
                             </div>
                             
                             <div class="input-field col s12 m4">
-                                <textarea id="userAgent" class="value text"></input>
-                                  <label for="userAgent" class="translate">userAgent</label>
+                                <input id="userAgent" class="value text"></input>
+                                <label for="userAgent" class="translate">userAgent</label>
                             </div>
                             
                             <div class="input-field col s12 m4">
-                                <textarea id="acceptLanguage" class="value text"></input>
-                                  <label for="acceptLanguage" class="translate">acceptLanguage</label>
+                                <input id="acceptLanguage" class="value text"></input>
+                                <label for="acceptLanguage" class="translate">acceptLanguage</label>
                             </div>
                             
                             <div class="input-field col s12 m4">
-                                <textarea id="cookieLoginUrl" class="value text"></textarea>
+                                <input id="cookieLoginUrl" class="value text"></input>
                                 <label for="cookieLoginUrl" class="translate">cookieLoginUrl</input>
                             </div>
                             
@@ -443,21 +443,21 @@
                     <div class="row">
                     
                         <div class="col s12">
-                            <h1 class="translate">proxy</h1>
+                            <h4 class="translate">proxy</h4>
                             <p class="translate">proxy_info</p>
                             
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s12">
                                 <input id="proxyOwnIp" class="value text"></input>
-                                  <label for="proxyOwnIp" class="translate">proxyOwnIp</label>
+                                  <label for="proxyOwnIp" class="translate active">proxyOwnIp</label>
                             </div>
                             
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s12">
                                 <input id="proxyPort" placeholder="0" class="value number"></input>
-                                  <label for="proxyPort" class="translate">proxyPort</label>
+                                  <label for="proxyPort" class="translate active">proxyPort</label>
                                   <span class="helper-text translate">proxyPort_info</span>
                             </div>
                             
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s12">
                                 <input id="proxyListenBind" class="value text"></input>
                                   <label for="proxyListenBind" class="translate">proxyListenBind</label>
                             </div>
