@@ -36,27 +36,27 @@ const commands = {
 };
 
 const knownDeviceType = {
-    'A10A33FOX2NUBK':   {name: 'Echo Spot', commandSupport: true},
-    'A15ERDAKK5HQQG':   {name: 'Sonos', commandSupport: false}, //? AUDIO_PLAYER,SUPPORTS_CONNECTED_HOME_CLOUD_ONLY,AMAZON_MUSIC,TUNE_IN,PANDORA,REMINDERS,I_HEART_RADIO,CHANGE_NAME,VOLUME_SETTING,PEONY
+    'A10A33FOX2NUBK':   {name: 'Echo Spot', commandSupport: true, icon: 'icons/spot.png'},
+    'A15ERDAKK5HQQG':   {name: 'Sonos', commandSupport: false, icon: 'icons/sonos.png'}, //? AUDIO_PLAYER,SUPPORTS_CONNECTED_HOME_CLOUD_ONLY,AMAZON_MUSIC,TUNE_IN,PANDORA,REMINDERS,I_HEART_RADIO,CHANGE_NAME,VOLUME_SETTING,PEONY
     'A1DL2DVDQVK3Q':	{name: 'Apps', commandSupport: false}, // (PEONY,VOLUME_SETTING)
-    'A1NL4BVLQ4L3N3':	{name: 'Echo Show', commandSupport: true},
+    'A1NL4BVLQ4L3N3':	{name: 'Echo Show', commandSupport: true, icon: 'icons/echo_show.png'},
     'A2825NDLA7WDZV':   {name: 'Apps', commandSupport: false}, // PEONY,VOLUME_SETTING
-    'A2E0SNTXJVT7WK':   {name: 'Fire TV V1', commandSupport: false},
-    'A2GFL5ZMWNE0PX':   {name: 'Fire TV', commandSupport: true}, // SUPPORTS_CONNECTED_HOME_CLOUD_ONLY,VOLUME_SETTING,SUPPORTS_SOFTWARE_VERSION,CHANGE_NAME,ACTIVE_AFTER_FRO,ARTHUR_TARGET,FLASH_BRIEFING
+    'A2E0SNTXJVT7WK':   {name: 'Fire TV V1', commandSupport: false, icon: 'icons/firetv.png'},
+    'A2GFL5ZMWNE0PX':   {name: 'Fire TV', commandSupport: true, icon: 'icons/firetv.png'}, // SUPPORTS_CONNECTED_HOME_CLOUD_ONLY,VOLUME_SETTING,SUPPORTS_SOFTWARE_VERSION,CHANGE_NAME,ACTIVE_AFTER_FRO,ARTHUR_TARGET,FLASH_BRIEFING
     'A2IVLV5VM2W81':    {name: 'Apps', commandSupport: false},
-    'A2LWARUGJLBYEW':   {name: 'Fire TV Stick V2', commandSupport: false},
+    'A2LWARUGJLBYEW':   {name: 'Fire TV Stick V2', commandSupport: false, icon: 'icons/firetv.png'},
     'A2M35JJZWCQOMZ':   {name: 'Echo Plus', commandSupport: true},
-    'A2OSP3UA4VC85F':   {name: 'Sonos', commandSupport: true}, // DEREGISTER_DEVICE,SUPPORTS_CONNECTED_HOME_CLOUD_ONLY,CHANGE_NAME,KINDLE_BOOKS,AUDIO_PLAYER,TIMERS_AND_ALARMS,VOLUME_SETTING,PEONY,AMAZON_MUSIC,REMINDERS,SLEEP,I_HEART_RADIO,AUDIBLE,GOLDFISH,TUNE_IN,DREAM_TRAINING,PERSISTENT_CONNECTION
+    'A2OSP3UA4VC85F':   {name: 'Sonos', commandSupport: true, icon: 'icons/sonos.png'}, // DEREGISTER_DEVICE,SUPPORTS_CONNECTED_HOME_CLOUD_ONLY,CHANGE_NAME,KINDLE_BOOKS,AUDIO_PLAYER,TIMERS_AND_ALARMS,VOLUME_SETTING,PEONY,AMAZON_MUSIC,REMINDERS,SLEEP,I_HEART_RADIO,AUDIBLE,GOLDFISH,TUNE_IN,DREAM_TRAINING,PERSISTENT_CONNECTION
     'A2T0P32DY3F7VB':   {name: 'echosim.io', commandSupport: false},
     'A2TF17PFR55MTB':   {name: 'Apps', commandSupport: false}, // VOLUME_SETTING
     'A3C9PE6TNYLTCH':   {name: 'Multiroom', commandSupport: false}, // AUDIO_PLAYER,AMAZON_MUSIC,KINDLE_BOOKS,TUNE_IN,AUDIBLE,PANDORA,I_HEART_RADIO,SALMON,VOLUME_SETTING
     'A3H674413M2EKB':   {name: 'echosim.io', commandSupport: false},
-    'A3R9S4ZZECZ6YL':   {name: 'Fire Tab', commandSupport: false}, // ASX_TIME_ZONE,PEONY,VOLUME_SETTING,SUPPORTS_SOFTWARE_VERSION
-    'A3S5BH2HU6VAYF':   {name: 'Echo Dot 2.Gen', commandSupport: true},
-    'A7WXQPH584YP':     {name: 'Echo 2.Gen', commandSupport: true},
-    'AB72C64C86AW2':    {name: 'Echo', commandSupport: true},
-    'ADVBD696BHNV5':    {name: 'Fire TV Stick V1', commandSupport: false},
-    'AILBSA2LNTOYL':    {name: 'reverb App', commandSupport: false}
+    'A3R9S4ZZECZ6YL':   {name: 'Fire Tab', commandSupport: false, icon: 'icons/firetab.png'}, // ASX_TIME_ZONE,PEONY,VOLUME_SETTING,SUPPORTS_SOFTWARE_VERSION
+    'A3S5BH2HU6VAYF':   {name: 'Echo Dot 2.Gen', commandSupport: true, icon: '/icons/echo_dot.png'},
+    'A7WXQPH584YP':     {name: 'Echo 2.Gen', commandSupport: true, icon: '/icons/echo2.png'},
+    'AB72C64C86AW2':    {name: 'Echo', commandSupport: true, icon: '/icons/echo.png'},
+    'ADVBD696BHNV5':    {name: 'Fire TV Stick V1', commandSupport: false, icon: 'icons/firetv.png'},
+    'AILBSA2LNTOYL':    {name: 'reverb App', commandSupport: false, icon: 'icons/reverb.png'}
 };
 
 let updateStateTimer;
@@ -587,7 +587,18 @@ Alexa.prototype.createStates = function (callback) {
     Object.keys (this.serialNumbers).forEach ((n) => {
         let device = this.serialNumbers[n];
         let devId = 'Echo-Devices.' + device.serialNumber;
-        setOrUpdateObject(devId, {type: 'device', common: {name: device._name}});
+        let deviceTypeDetails = knownDeviceType[device.deviceType];
+        const commonDevice = {name: device._name};
+        if (deviceTypeDetails) {
+            if (deviceTypeDetails.icon) {
+                commonDevice.icon = deviceTypeDetails.icon;
+            }
+            if (deviceTypeDetails.name) {
+                commonDevice.desc = deviceTypeDetails.name;
+            }
+        }
+
+        setOrUpdateObject(devId, {type: 'device', common: commonDevice});
         //dev.setName(device.accountName); TODO
         setOrUpdateObject(devId + '.online', {common: {role: 'indicator.reachable'}}, device.online);
         //setOrUpdateObject(devId + '.delete', {common: {name: 'Delete (Log out of this device)', role: 'button'}}, false); TODO
@@ -603,7 +614,6 @@ Alexa.prototype.createStates = function (callback) {
             setOrUpdateObject(devId + '.Info.multiroomParents', {common: {role: 'text', write: false}}, device.parentClusters.join (','));
         }
         setOrUpdateObject(devId + '.Info.deviceType', {common: {name:'deviceType', type:'string', role:'text'}}, device.deviceType || '');
-        let deviceTypeDetails = knownDeviceType[device.deviceType];
         if (!deviceTypeDetails) {
             deviceTypeDetails =  {name: 'Unknown', commandSupport: false};
             adapter.log.warn('Unknown Device type ' + device.deviceType + ' (' + device.capabilities.join (',') + ') - please report to developer!');
