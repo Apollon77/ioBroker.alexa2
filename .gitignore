@@ -63,3 +63,4 @@ typings/
 
 
 .idea
+/package-lock.json
