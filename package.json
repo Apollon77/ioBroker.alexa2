@@ -1,55 +1,54 @@
 {
-  "name": "iobroker.alexa2",
-  "version": "0.3.3",
-  "description": "Remote control for Alexa (Amazon Echo)",
-  "author": {
-    "name": "Apollon77",
-    "email": "ingo@fischer-ka.de"
-  },
-  "contributors": [
-    {
-      "name": "soef",
-      "email": "soef@gmx.net"
+    "name": "iobroker.alexa2",
+    "version": "0.4.0",
+    "description": "Remote control for Alexa (Amazon Echo)",
+    "author": {
+        "name": "Apollon77",
+        "email": "ingo@fischer-ka.de"
     },
-    {
-      "name": "Apollon77",
-      "email": "ingo@fischer-ka.de"
-    }
-  ],
-  "homepage": "https://github.com/Apollon77/ioBroker.alexa2",
-  "license": "MIT",
-  "keywords": [
-    "sync",
-    "iobroker file",
-    "JetBrains",
-    "webstorm",
-    "file",
-    "debug",
-    "editor",
-    "ide"
-  ],
-  "engines": {
-    "node": ">=6.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Apollon77/ioBroker.alexa2"
-  },
-  "dependencies": {
-    "alexa-remote2": "^0.2.7",
-    "https": "^1.0.0"
-  },
-  "devDependencies": {
-    "gulp": "^3.9.1",
-    "mocha": "^2.3.4",
-    "chai": "^3.4.1"
-  },
-  "main": "main.js",
-  "scripts": {
-    "test": "node node_modules/mocha/bin/mocha"
-  },
-  "bugs": {
-    "url": "https://github.com/Apollon77/ioBroker.alexa2/issues"
-  },
-  "readmeFilename": "README.md"
+    "contributors": [{
+            "name": "soef",
+            "email": "soef@gmx.net"
+        },
+        {
+            "name": "Apollon77",
+            "email": "ingo@fischer-ka.de"
+        }
+    ],
+    "homepage": "https://github.com/Apollon77/ioBroker.alexa2",
+    "license": "MIT",
+    "keywords": [
+        "sync",
+        "iobroker file",
+        "JetBrains",
+        "webstorm",
+        "file",
+        "debug",
+        "editor",
+        "ide"
+    ],
+    "engines": {
+        "node": ">=6.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Apollon77/ioBroker.alexa2"
+    },
+    "dependencies": {
+        "alexa-remote2": "^0.3.0",
+        "https": "^1.0.0"
+    },
+    "devDependencies": {
+        "gulp": "^3.9.1",
+        "mocha": "^2.3.4",
+        "chai": "^3.4.1"
+    },
+    "main": "main.js",
+    "scripts": {
+        "test": "node node_modules/mocha/bin/mocha"
+    },
+    "bugs": {
+        "url": "https://github.com/Apollon77/ioBroker.alexa2/issues"
+    },
+    "readmeFilename": "README.md"
 }

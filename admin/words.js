@@ -30,4 +30,37 @@ systemDictionary = {
     "updateHistoryInterval": {                       "en": "History update interval",                         "de": "History Update Interval",                         "ru": "Интервал обновления истории",                     "pt": "Intervalo de atualização do histórico",           "nl": "Historisch update-interval",                      "fr": "Intervalle de mise à",                            "it": "Intervallo di aggiornamento della cronologia",    "es": "Intervalo de actualización de historial",         "pl": "Interwał aktualizacji historii"},
     "updateStateInterval": {                         "en": "Data update interval (player info ...)",          "de": "Daten-Update-Interval (Player-Info ...)",         "ru": "Интервал обновления данных (информация плеера ...)", "pt": "Intervalo de atualização de dados (informações do player ...)", "nl": "Gegevensbijwerkingsinterval (Player-Info ...)",   "fr": "Intervalle de mise à jour des données (Player-Info ...)", "it": "Intervallo di aggiornamento dei dati (Player-Info ...)", "es": "Intervalo de actualización de datos (Player-Info ...)", "pl": "Interwał aktualizacji danych (Player-Info ...)"},
     "userAgent": {                                   "en": "Custom User-Agent",                               "de": "Eigener User-Agent",                              "ru": "Пользовательский User-Agent",                     "pt": "Custom User-Agent",                               "nl": "Aangepaste User-Agent",                           "fr": "User-Agent personnalisé",                         "it": "User-Agent personalizzato",                       "es": "User-Agent personalizado",                        "pl": "Niestandardowy User-Agent"},
+    "push_connection": {
+        "en": "Push-Connection",
+        "de": "Push-Verbindung",
+        "ru": "Push-соединение",
+        "pt": "Conexão Push",
+        "nl": "Push-aansluiting",
+        "fr": "Push-Connection",
+        "it": "Push-Connection",
+        "es": "Push-Connection",
+        "pl": "Push-Connection"
+    },
+    "push_connection_info": {
+        "en": "With the direct push connection the changes from the Echo devices are notified to the adapter and are used to update only needed data in near real time. If enabled the data update intervals below are not used.",
+        "de": "Bei der direkten Push-Verbindung werden die Änderungen der Echo-Geräte dem Adapter mitgeteilt und dienen dazu, nur benötigte Daten nahezu in Echtzeit zu aktualisieren. Wenn aktiviert, werden die Datenaktualisierungsintervalle unten nicht verwendet.",
+        "ru": "При прямом push-соединении изменения с Echo-устройств сообщаются адаптеру и используются для обновления только необходимых данных в режиме реального времени. Если включено, интервалы обновления данных ниже не используются.",
+        "pt": "Com a conexão push direta, as alterações dos dispositivos Echo são notificadas ao adaptador e são usadas para atualizar apenas os dados necessários em tempo quase real. Se habilitado, os intervalos de atualização de dados abaixo não serão usados.",
+        "nl": "Met de direct push-verbinding worden de wijzigingen van de Echo-apparaten aan de adapter gemeld en worden ze gebruikt om alleen de benodigde gegevens vrijwel in realtime bij te werken. Indien ingeschakeld, worden de onderstaande gegevensupdate-intervallen niet gebruikt.",
+        "fr": "Avec la connexion directe, les modifications apportées aux périphériques Echo sont notifiées à l'adaptateur et sont utilisées pour mettre à jour uniquement les données nécessaires en temps quasi réel. Si cette option est activée, les intervalles de mise à jour des données ci-dessous ne sont pas utilisés.",
+        "it": "Con la connessione diretta, le modifiche apportate dai dispositivi Echo vengono notificate all'adattatore e vengono utilizzate per aggiornare solo i dati necessari quasi in tempo reale. Se abilitato, gli intervalli di aggiornamento dati di seguito non vengono utilizzati.",
+        "es": "Con la conexión de inserción directa, los cambios de los dispositivos Echo se notifican al adaptador y se utilizan para actualizar solo los datos necesarios casi en tiempo real. Si está habilitado, los intervalos de actualización de datos a continuación no se utilizan.",
+        "pl": "Dzięki bezpośredniemu połączeniu push, zmiany z urządzeń Echo są wysyłane do adaptera i służą do aktualizacji tylko potrzebnych danych w czasie zbliżonym do rzeczywistego. Jeśli jest włączona, nie są używane poniższe przedziały czasu aktualizacji danych."
+    },
+    "usePushConnection": {
+        "en": "Use push connection",
+        "de": "Push-Verbindung verwenden",
+        "ru": "Использовать push-соединение",
+        "pt": "Use conexão push",
+        "nl": "Gebruik een push-verbinding",
+        "fr": "Utiliser la connexion push",
+        "it": "Utilizzare la connessione push",
+        "es": "Use la conexión push",
+        "pl": "Użyj połączenia push"
+    }
 };

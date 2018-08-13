@@ -73,6 +73,7 @@
             if (settings.proxyOwnIp === undefined) settings.proxyOwnIp = '';
             if (settings.proxyPort === undefined) settings.proxyPort = 0;
             if (settings.proxyListenBind === undefined) settings.proxyListenBind = '';
+            if (settings.usePushConnection === undefined) settings.usePushConnection = false;
 
             for (var key in settings) {
                 if (!settings.hasOwnProperty(key)) continue;
@@ -149,12 +150,17 @@
         .title {
             font-weight: bold;
         }
-        .adapter-body {
-            overflow: hidden !important;
-        }
-
         .proxy-info {
             margin-bottom: 25px;
+        }
+        .adapter-container>div {
+            margin-bottom: 0 !important;
+        }
+        .page {
+            height: calc(100% - 50px) !important;
+        }
+        .marg{
+            margin-top: 3em;
         }
     </style>
 </head>
@@ -205,6 +211,18 @@
                         <div class="input-field col s12 m6">
                             <input class="value" data-crypt="1" type="password" id="password"/>
                             <label for="password" class="translate">password</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <p class="translate title">push_connection</p>
+                        <p class="translate">push_connection_info</p>
+
+                        <div class="input-field col s12 m6">
+                            <input id="usePushConnection" type="checkbox" class="value" />
+                            <span for="usePushConnection" class="translate">usePushConnection</span>
                         </div>
                     </div>
                 </div>
