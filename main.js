@@ -2184,6 +2184,53 @@ function main() {
 
     alexa.init(options, err => {
         if (err) {
+            adapter.log.warn("Do a second login try.");
+            adapter.setState('info.connection', false, true);
+            return;
+        }
+
+        adapter.setState('info.connection', true, true);
+        adapter.setState('info.cookie', alexa.cookie, true);
+        adapter.setState('info.csrf', alexa.csrf, true);
+
+        if (alexa.cookie !== adapter.config.cookie) {
+            adapter.log.info('Update cookie in adapter configuration ... restarting ...');
+            adapter.extendForeignObject('system.adapter.' + adapter.namespace, {native: {cookie: alexa.cookie, csrf: alexa.csrf, cookieData: alexa.cookieData}});
+            return;
+        }
+
+        alexa.getMusicProviders((err, providers) => {
+            musicProviders = [];
+            if (!err && providers) {
+                musicProviders = providers;
+            }
+
+            initRoutines(() => {
+                createStates(() => {
+                    createSmarthomeStates(() => {
+                        queryAllSmartHomeDevices(true, () => {
+                            if (!initDone) {
+                                adapter.subscribeStates('*');
+                                adapter.subscribeObjects('*');
+                                initDone = true;
+                                const delIds = Object.keys(existingStates);
+                                if (delIds.length) {
+                                    adapter.log.info('Deleting the following states: ' + JSON.stringify(delIds));
+                                    for (let i = 0; i < delIds.length; i++) {
+                                        adapter.delObject(delIds[i]);
+                                        delete existingStates[delIds[i]];
+                                    }
+                                }
+                            }
+                        });
+                    });
+                });
+            });
+        });
+    });
+	
+    alexa.init(options, err => {
+        if (err) {
             if (err.message === 'no csrf found') {
                 adapter.log.error('Error: no csrf found. Check configuration of cookie');
             }
@@ -2238,4 +2285,5 @@ function main() {
             });
         });
     });
+	
 }
