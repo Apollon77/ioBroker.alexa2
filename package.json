@@ -40,7 +40,7 @@
     "https": "^1.0.0",
     "nearest-color": "^0.4.4",
     "virtual-device-sdk": "^1.6.2",
-    "@iobroker/adapter-core": "^1.0.3",
+    "@iobroker/adapter-core": "^2.0.0",
     "@sentry/node": "^5.10.2",
     "@sentry/integrations": "^5.10.2"
   },
