@@ -2086,42 +2086,43 @@ function updatePlayerStatus(serialOrName, callback) {
 
         alexa.getPlayerInfo(device , (err, resPlayer) => {
             if (err || !resPlayer || !resPlayer.playerInfo) return doIt();
-            alexa.getMedia(device, (err, resMedia) => {
-                if (err || !resMedia) return doIt();
+            //alexa.getMedia(device, (err, resMedia) => {
+            //    if (err || !resMedia) return doIt();
                 let devId = 'Echo-Devices.' + device.serialNumber;
                 if (lastPlayerState[device.serialNumber] && lastPlayerState[device.serialNumber].timeout) {
                     clearTimeout(lastPlayerState[device.serialNumber].timeout);
                 }
-                lastPlayerState[device.serialNumber] = {resPlayer: resPlayer, resMedia: resMedia, ts: Date.now(), devId: devId, timeout: null};
+                // lastPlayerState[device.serialNumber] = {resPlayer: resPlayer, resMedia: resMedia, ts: Date.now(), devId: devId, timeout: null};
+                lastPlayerState[device.serialNumber] = {resPlayer: resPlayer, ts: Date.now(), devId: devId, timeout: null};
 
                 if (device.capabilities.includes ('VOLUME_SETTING')) {
                     let volume = null;
-                    if (resMedia && resMedia.volume !== undefined && resMedia.volume !== null) {
-                        volume = ~~resMedia.volume;
-                    }
-                    else if (resPlayer.playerInfo && resPlayer.playerInfo.volume && resPlayer.playerInfo.volume.volume !== null) {
+                    // if (resMedia && resMedia.volume !== undefined && resMedia.volume !== null) {
+                        // volume = ~~resMedia.volume;
+                    // }
+                    // else 
+                    if (resPlayer.playerInfo && resPlayer.playerInfo.volume && resPlayer.playerInfo.volume.volume !== null) {
                         volume = ~~resPlayer.playerInfo.volume.volume;
                     }
                     if (volume === 0 && device.isMultiroomDevice) volume = null;
                     if (volume !== null) adapter.setState(devId + '.Player.volume', volume, true);
                 }
-                if (resMedia.shuffling !== undefined) adapter.setState(devId + '.Player.controlShuffle', resMedia.shuffling, true);
-                if (resMedia.looping !== undefined) adapter.setState(devId + '.Player.controlRepeat', resMedia.looping, true);
+                // if (resMedia.shuffling !== undefined) adapter.setState(devId + '.Player.controlShuffle', resMedia.shuffling, true);
+                // if (resMedia.looping !== undefined) adapter.setState(devId + '.Player.controlRepeat', resMedia.looping, true);
                 //let muted = res.playerInfo.volume.muted;
                 adapter.setState(devId + '.Player.controlPause', (resPlayer.playerInfo.state === 'PAUSED'), true);
                 adapter.setState(devId + '.Player.controlPlay', (resPlayer.playerInfo.state === 'PLAYING'), true);
 
-                //if (resPlayer.playerInfo.state !== null) adapter.setState(devId + '.Player.status', resPlayer.playerInfo.state, true);
-                adapter.setState(devId + '.Player.contentType', resMedia.contentType || '', true);	// 'LIVE_STATION' | 'TRACKS' | 'CUSTOM_STATION'
+                //adapter.setState(devId + '.Player.contentType', resMedia.contentType || '', true);	// 'LIVE_STATION' | 'TRACKS' | 'CUSTOM_STATION'
 
                 adapter.setState(devId + '.Player.currentState', resPlayer.playerInfo.state === 'PLAYING', true);	// 'PAUSED' | 'PLAYING'
 
-                if (resMedia.imageURL && resMedia.imageURL.endsWith('.')) resMedia.imageURL += 'png'; // Handle Amazon errors
-                adapter.setState(devId + '.Player.imageURL', resMedia.imageURL || '', true);
-                adapter.setState(devId + '.Player.muted', !!resMedia.muted, true);
-                adapter.setState(devId + '.Player.providerId', resMedia.providerId || '', true); // 'TUNE_IN' | 'CLOUD_PLAYER' | 'ROBIN'
-                adapter.setState(devId + '.Player.radioStationId', resMedia.radioStationId || '', true); // 's24885' | null
-                adapter.setState(devId + '.Player.service', resMedia.service || '', true); // 'TUNE_IN' | 'CLOUD_PLAYER' | 'PRIME_STATION'
+                //if (resMedia.imageURL && resMedia.imageURL.endsWith('.')) resMedia.imageURL += 'png'; // Handle Amazon errors
+                //adapter.setState(devId + '.Player.imageURL', resMedia.imageURL || '', true);
+                // adapter.setState(devId + '.Player.muted', !!resMedia.muted, true);
+                // adapter.setState(devId + '.Player.providerId', resMedia.providerId || '', true); // 'TUNE_IN' | 'CLOUD_PLAYER' | 'ROBIN'
+                // adapter.setState(devId + '.Player.radioStationId', resMedia.radioStationId || '', true); // 's24885' | null
+                // adapter.setState(devId + '.Player.service', resMedia.service || '', true); // 'TUNE_IN' | 'CLOUD_PLAYER' | 'PRIME_STATION'
 
                 let providerName = '';
                 if (resPlayer.playerInfo !== undefined && 'provider' in resPlayer.playerInfo && resPlayer.playerInfo.provider !== null) {
@@ -2177,7 +2178,7 @@ function updatePlayerStatus(serialOrName, callback) {
                 }
                 doIt();
             });
-        });
+       // });
     })();
 }
 
