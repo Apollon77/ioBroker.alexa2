@@ -2083,29 +2083,34 @@ function updatePlayerStatus(serialOrName, callback) {
         }
         let device = alexa.find(serials[i++]);
         if (! device || !device.isControllable) return doIt();
+        let devId = 'Echo-Devices.' + device.serialNumber;
 
         alexa.getPlayerInfo(device , (err, resPlayer) => {
             if (err || !resPlayer || !resPlayer.playerInfo) return doIt();
-            if (resPlayer.playerInfo.provider 
-                && resPlayer.playerInfo.provider.providerName 
-                && resPlayer.playerInfo.provider.providerName === 'Spotify') {
+
+            let providerName = '';
+            if (resPlayer.playerInfo !== undefined && 'provider' in resPlayer.playerInfo && resPlayer.playerInfo.provider !== null) {
+                providerName = resPlayer.playerInfo.provider.providerName;
+            }
+            adapter.setState(devId + '.Player.providerName', providerName || '',	true); // 'Amazon Music' | 'TuneIn Live-Radio'
+
+            if (providerName === 'Spotify') {
                 adapter.log.debug('Spotify');
                 lastPlayerState[device.serialNumber] = {resPlayer: resPlayer, ts: Date.now(), devId: devId, timeout: null};
 
-                if (resPlayer.transport.shuffle !== undefined) adapter.setState(devId + '.Player.controlShuffle', resPlayer.transport.shuffle, true);
-                if (resPlayer.transport.repeat !== undefined) adapter.setState(devId + '.Player.controlRepeat', resPlayer.transport.repeat, true);
+                if (resPlayer.transport && resPlayer.transport.shuffle !== undefined) adapter.setState(devId + '.Player.controlShuffle', resPlayer.transport.shuffle, true);
+                if (resPlayer.transport && resPlayer.transport.repeat !== undefined) adapter.setState(devId + '.Player.controlRepeat', resPlayer.transport.repeat, true);
                 
                 adapter.setState(devId + '.Player.contentType', 'TRACKS', true);	// 'LIVE_STATION' | 'TRACKS' | 'CUSTOM_STATION'
 
-                resPlayer.mainArt.url += '.jpeg'; 
-                adapter.setState(devId + '.Player.imageURL', resPlayer.mainArt.url  || '', true);
-
-                adapter.setState(devId + '.Player.muted', !!resPlayer.volume.muted, true);
-                adapter.setState(devId + '.Player.providerId', resPlayer.playerInfo.provider.providerName || '', true);
-                adapter.setState(devId + '.Player.service', resPlayer.playerInfo.provider.providerName || '', true);
+                if (resPlayer.mainArt && resPlayer.mainArt.url !== undefined) adapter.setState(devId + '.Player.imageURL', resPlayer.mainArt.url  || '', true);
+                                
+                adapter.setState(devId + '.Player.providerId', providerName || '', true);
+                adapter.setState(devId + '.Player.service', providerName || '', true);
 
                 if (device.capabilities.includes ('VOLUME_SETTING')) {
                     let volume = null;
+                    if (resPlayer.volume !== undefined) adapter.setState(devId + '.Player.muted', !!resPlayer.volume.muted, true);
                     if (resPlayer.playerInfo && resPlayer.playerInfo.volume && resPlayer.playerInfo.volume.volume !== null) {
                         volume = ~~resPlayer.playerInfo.volume.volume;
                     }
@@ -2140,8 +2145,7 @@ function updatePlayerStatus(serialOrName, callback) {
                     }
                 });
             }
-
-                let devId = 'Echo-Devices.' + device.serialNumber;
+                
                 if (lastPlayerState[device.serialNumber] && lastPlayerState[device.serialNumber].timeout) {
                     clearTimeout(lastPlayerState[device.serialNumber].timeout);
                 }
@@ -2151,12 +2155,6 @@ function updatePlayerStatus(serialOrName, callback) {
                 adapter.setState(devId + '.Player.controlPause', (resPlayer.playerInfo.state === 'PAUSED'), true);
                 adapter.setState(devId + '.Player.controlPlay', (resPlayer.playerInfo.state === 'PLAYING'), true);
                 adapter.setState(devId + '.Player.currentState', resPlayer.playerInfo.state === 'PLAYING', true);	// 'PAUSED' | 'PLAYING'
-
-                let providerName = '';
-                if (resPlayer.playerInfo !== undefined && 'provider' in resPlayer.playerInfo && resPlayer.playerInfo.provider !== null) {
-                    providerName = resPlayer.playerInfo.provider.providerName;
-                }
-                adapter.setState(devId + '.Player.providerName', providerName || '',	true); // 'Amazon Music' | 'TuneIn Live-Radio'
 
                 let title = '';
                 let artist = '';
