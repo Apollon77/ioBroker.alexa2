@@ -2089,7 +2089,7 @@ function updatePlayerStatus(serialOrName, callback) {
             if (resPlayer.playerInfo.provider 
                 && resPlayer.playerInfo.provider.providerName 
                 && resPlayer.playerInfo.provider.providerName === 'Spotify') {
-                adapter.log.info('Spotify');
+                adapter.log.debug('Spotify');
                 lastPlayerState[device.serialNumber] = {resPlayer: resPlayer, ts: Date.now(), devId: devId, timeout: null};
 
                 if (resPlayer.transport.shuffle !== undefined) adapter.setState(devId + '.Player.controlShuffle', resPlayer.transport.shuffle, true);
@@ -2114,7 +2114,6 @@ function updatePlayerStatus(serialOrName, callback) {
                 }
             }
             else {
-                adapter.log.info('Kein Spotify');
                 alexa.getMedia(device, (err, resMedia) => {
                     if (err || !resMedia) return doIt();
                     lastPlayerState[device.serialNumber] = {resPlayer: resPlayer, resMedia: resMedia, ts: Date.now(), devId: devId, timeout: null};
@@ -2142,8 +2141,6 @@ function updatePlayerStatus(serialOrName, callback) {
                 });
             }
 
-
-
                 let devId = 'Echo-Devices.' + device.serialNumber;
                 if (lastPlayerState[device.serialNumber] && lastPlayerState[device.serialNumber].timeout) {
                     clearTimeout(lastPlayerState[device.serialNumber].timeout);
@@ -2151,17 +2148,9 @@ function updatePlayerStatus(serialOrName, callback) {
 
                 lastPlayerState[device.serialNumber] = {resPlayer: resPlayer, ts: Date.now(), devId: devId, timeout: null};
 
-
-
-
                 adapter.setState(devId + '.Player.controlPause', (resPlayer.playerInfo.state === 'PAUSED'), true);
                 adapter.setState(devId + '.Player.controlPlay', (resPlayer.playerInfo.state === 'PLAYING'), true);
-
-
-
                 adapter.setState(devId + '.Player.currentState', resPlayer.playerInfo.state === 'PLAYING', true);	// 'PAUSED' | 'PLAYING'
-
-
 
                 let providerName = '';
                 if (resPlayer.playerInfo !== undefined && 'provider' in resPlayer.playerInfo && resPlayer.playerInfo.provider !== null) {
