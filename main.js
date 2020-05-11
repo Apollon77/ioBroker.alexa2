@@ -2094,7 +2094,7 @@ function updatePlayerStatus(serialOrName, callback) {
             }
             adapter.setState(devId + '.Player.providerName', providerName || '',	true); // 'Amazon Music' | 'TuneIn Live-Radio'
 
-            if (providerName === 'Spotify') {
+            if (providerName === 'Spotify' || providerName === '') {
                 adapter.log.debug('Spotify');
                 lastPlayerState[device.serialNumber] = {resPlayer: resPlayer, ts: Date.now(), devId: devId, timeout: null};
 
