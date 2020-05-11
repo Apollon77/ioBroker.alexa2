@@ -2102,14 +2102,14 @@ function updatePlayerStatus(serialOrName, callback) {
                 controlPause: false,
                 controlPlay: false,
                 currentState: '',
-                title = '',
-                artist = '',
-                album = '',
-                mainArtUrl = '',
-                miniArtUrl = '',
-                mediaLength = 0,
-                mediaProgress = 0,
-                mediaProgressPercent = 0
+                title : '',
+                artist : '',
+                album : '',
+                mainArtUrl : '',
+                miniArtUrl : '',
+                mediaLength : 0,
+                mediaProgress : 0,
+                mediaProgressPercent : 0
             };
 
             if (resPlayer.playerInfo !== undefined && 'provider' in resPlayer.playerInfo && resPlayer.playerInfo.provider !== null) {
@@ -2120,10 +2120,10 @@ function updatePlayerStatus(serialOrName, callback) {
 
             if (resPlayer.volume !== undefined) playerData.muted = !!resPlayer.volume.muted;
             if (resPlayer.playerInfo && resPlayer.playerInfo.volume && resPlayer.playerInfo.volume.volume !== null) {
-                volume = ~~resPlayer.playerInfo.volume.volume;
+                playerData.volume = ~~resPlayer.playerInfo.volume.volume;
             }
 
-            if (playerData.providerName !== 'Spotify' || playerData.providerName !== '') { // Spotify Podcast -> empty providerName
+            if (playerData.providerName !== 'Spotify' && playerData.providerName !== '') { // Spotify Podcast -> empty providerName
                 alexa.getMedia(device, (err, resMedia) => {
                     if (err || !resMedia) return doIt();
 
@@ -2147,9 +2147,7 @@ function updatePlayerStatus(serialOrName, callback) {
                 clearTimeout(lastPlayerState[device.serialNumber].timeout);
             }
 
-            playerData.controlPause = (resPlayer.playerInfo.state === 'PAUSED');
-            playerData.controlPlay = (resPlayer.playerInfo.state === 'PLAYING');
-            playerData.currentState = resPlayer.currentState;
+            playerData.currentState = resPlayer.playerInfo.state;
 
             if (resPlayer.playerInfo !== undefined && 'infoText' in resPlayer.playerInfo && resPlayer.playerInfo.infoText !== null) {
                 playerData.title = resPlayer.playerInfo.infoText.title;
@@ -2168,7 +2166,7 @@ function updatePlayerStatus(serialOrName, callback) {
                 playerData.mediaLength = parseInt(resPlayer.playerInfo.progress.mediaLength, 10);
                 playerData.mediaProgress = parseInt(resPlayer.playerInfo.progress.mediaProgress, 10);
                 if (playerData.mediaLength > 0) {
-                    playerData.mediaProgressPercent = Math.round(((mediaProgress * 100) / mediaLength));
+                    playerData.mediaProgressPercent = Math.round(((playerData.mediaProgress * 100) / playerData.mediaLength));
                 }
             }
 
@@ -2188,8 +2186,6 @@ function updatePlayerStatus(serialOrName, callback) {
                 if (playerData.volume !== null) adapter.setState(devId + '.Player.volume', playerData.volume, true);
             }
 
-            adapter.setState(devId + '.Player.controlPause', playerData.controlPause, true);
-            adapter.setState(devId + '.Player.controlPlay', playerData.controlPlay, true);
             adapter.setState(devId + '.Player.currentState', playerData.currentState, true);
 
             adapter.setState(devId + '.Player.currentTitle', playerData.title, true);
@@ -2206,7 +2202,7 @@ function updatePlayerStatus(serialOrName, callback) {
             adapter.setState(devId + '.Player.mediaProgressPercent', playerData.mediaProgressPercent, true);
 
             // Check Progress
-            if (playerData.state === 'PLAYING') {
+            if (playerData.currentState === 'PLAYING') {
                 lastPlayerState[device.serialNumber].timeout = setTimeout(() => {
                     lastPlayerState[device.serialNumber].timeout = null;
                     updateMediaProgress(device.serialNumber);
