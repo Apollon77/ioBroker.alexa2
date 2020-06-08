@@ -2182,7 +2182,7 @@ function updatePlayerStatus(serialOrName, callback) {
 
             if (device.capabilities.includes('VOLUME_SETTING')) {
                 if (playerData.muted !== null) adapter.setState(devId + '.Player.muted', playerData.muted, true);
-                if (playerData.volume === 0 && device.isMultiroomDevice) volume = null;
+                if (playerData.volume === 0 && device.isMultiroomDevice) playerData.volume = null;
                 if (playerData.volume !== null) adapter.setState(devId + '.Player.volume', playerData.volume, true);
             }
 
