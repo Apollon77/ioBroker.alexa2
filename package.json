@@ -42,7 +42,7 @@
     "virtual-device-sdk": "^1.7.2",
     "@iobroker/adapter-core": "^2.2.1",
     "@sentry/node": "^5.14.2",
-    "@sentry/integrations": "^5.14.2",
+    "@sentry/integrations": "^5.17.0",
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
