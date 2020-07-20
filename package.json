@@ -41,7 +41,7 @@
     "nearest-color": "^0.4.4",
     "virtual-device-sdk": "^1.7.3",
     "@iobroker/adapter-core": "^2.4.0",
-    "@sentry/node": "^5.19.1",
+    "@sentry/node": "^5.19.2",
     "@sentry/integrations": "^5.19.1",
     "source-map-support": "^0.5.19"
   },
