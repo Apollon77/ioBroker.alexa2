@@ -39,7 +39,7 @@
     "alexa-remote2": "^3.3.1",
     "https": "^1.0.0",
     "nearest-color": "^0.4.4",
-    "virtual-device-sdk": "^1.7.5",
+    "virtual-device-sdk": "^1.8.2",
     "@iobroker/adapter-core": "^2.4.0",
     "@sentry/node": "^5.20.1",
     "@sentry/integrations": "^5.20.1",
