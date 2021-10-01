@@ -42,7 +42,7 @@
     "@iobroker/adapter-core": "^2.5.1",
     "@sentry/node": "^6.8.0",
     "@sentry/integrations": "^6.8.0",
-    "source-map-support": "^0.5.19"
+    "source-map-support": "^0.5.20"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^2.2.1",
