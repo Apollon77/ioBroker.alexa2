@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.5.2",
-    "@alcalzone/release-script-plugin-iobroker": "^3.5.1",
+    "@alcalzone/release-script-plugin-iobroker": "^3.5.7",
     "@alcalzone/release-script-plugin-license": "^3.5.0",
     "eslint": "^8.12.0",
     "gulp": "^4.0.2",
