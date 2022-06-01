@@ -40,7 +40,7 @@
     "https": "^1.0.0",
     "nearest-color": "^0.4.4",
     "@iobroker/adapter-core": "^2.5.1",
-    "@sentry/node": "^6.13.3",
+    "@sentry/node": "^7.0.0",
     "@sentry/integrations": "^6.13.3",
     "source-map-support": "^0.5.21"
   },
