@@ -41,7 +41,7 @@
     "nearest-color": "^0.4.4",
     "@iobroker/adapter-core": "^2.6.0",
     "@sentry/node": "^7.8.1",
-    "@sentry/integrations": "^7.8.1",
+    "@sentry/integrations": "^7.12.0",
     "source-map-support": "^0.5.21",
     "rrule": "^2.7.1"
   },
