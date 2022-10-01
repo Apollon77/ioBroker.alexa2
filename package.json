@@ -39,7 +39,7 @@
     "alexa-remote2": "^5.8.2",
     "https": "^1.0.0",
     "nearest-color": "^0.4.4",
-    "@iobroker/adapter-core": "^2.6.2",
+    "@iobroker/adapter-core": "^2.6.6",
     "@sentry/node": "^7.12.1",
     "@sentry/integrations": "^7.12.1",
     "source-map-support": "^0.5.21",
