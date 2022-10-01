@@ -51,7 +51,7 @@
     "@alcalzone/release-script-plugin-license": "^3.5.9",
     "@iobroker/dev-server": "^0.5.0",
     "@iobroker/adapter-dev": "^1.0.1",
-    "eslint": "^8.23.1",
+    "eslint": "^8.24.0",
     "mocha": "^10.0.0",
     "chai": "^4.3.6"
   },
