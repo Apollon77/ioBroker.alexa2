@@ -22,5 +22,11 @@
     "resetCookie": "Amazon sütik törlése",
     "s (0 = disabled)": "s (0 = kikapcsolva)",
     "updateConfigurationInterval_info": "Az eszközbeálltások automatikusan frissültek. Az frissítés intervallumának gyakorisága beállítható. Ne állítsa nagyon alacsony értékre, mert az Amazon blokkolhatja! A minimum érték 300 másodperc vagy a 0 beállításával kikapcsolható a frissítés.",
-    "updateHistoryInterval": "Az előzmények frissítésének időtartama"
+    "updateHistoryInterval": "Az előzmények frissítésének időtartama",
+    "proxyListenBind": "Proxy-kapcsolat bizonyos IP-címekhez",
+    "proxyOwnIp": "Saját IP cím vagy hosztnév a proxy kapcsolatban",
+    "proxyOverrideIp": "Külső konténer-IP címe (Docker)",
+    "historyIgnoreEmptySummary": "Korábbi bejegyzések kihagyása, ha az utasítás nem ismerhető fel",
+    "history_info": "Beállítások a korábbi adatokhoz, amik a \"Korábbi\" állapot cimkével elérhetők",
+    "updateStateInterval": "Adatfrissítési intervallum (lejátszási információ ...)"
 }
