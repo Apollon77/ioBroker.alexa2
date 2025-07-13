@@ -1620,6 +1620,7 @@ function getCachedSmarthomeDevices(callback) {
             }
         }
         if (err || !res || !res.locationDetails || !res.locationDetails.Default_Location) {
+            adapter.log.info(`Could not get smart home devices from Amazon: ${err ? err.message : 'no data'}`);
             res = getCachedDeviceList(true);
             if (res) {
                 err = null;
@@ -1698,7 +1699,7 @@ function createSmarthomeStates(callback) {
                         adapter.log.info('Could not delete cached devices: ' + err.message);
                     }
                     alexa.deleteAllSmarthomeDevices((err, res) => {
-                        adapter.deleteDevice('Smart-Home-Devices', () => {
+                        adapter.delObject('Smart-Home-Devices', { recursive: true }, () => {
                             setTimeout(createSmarthomeStates, 1000);
                         });
                     });
@@ -1787,7 +1788,7 @@ function createSmarthomeStates(callback) {
                             }.bind(alexa));
                             setOrUpdateObject(`Smart-Home-Devices.${shDevice.entityId}.#delete`, {common: { type: 'boolean', read: false, write: true, role: 'button'}}, false, function (entityId, val) {
                                 alexa.deleteSmarthomeDevice(n);
-                                adapter.deleteChannel('Smart-Home-Devices', entityId);
+                                adapter.delObject(`Smart-Home-Devices.${entityId}`, { recursive: true});
                             }.bind(alexa, shDevice.entityId));
 
                             const excludeReadable = shDevice.manufacturerName.startsWith('ioBroker') || shDevice.manufacturerName.startsWith('openHAB');
@@ -2173,7 +2174,7 @@ function createSmarthomeStates(callback) {
                         });
                         setOrUpdateObject(`Smart-Home-Devices.${groupIdShort}.#delete`, {common: { type: 'boolean', read: false, write: true, role: 'button'}}, false, function (entityId, val) {
                             alexa.deleteSmarthomeGroup(entityId);
-                            adapter.deleteChannel('Smart-Home-Devices', groupIdShort);
+                            adapter.delObject(`Smart-Home-Devices.${groupIdShort}`, { recursive: true});
                         }.bind(alexa, i));
 
                         for (const param of Object.keys(groupParamData.parameters)) {
@@ -4337,11 +4338,10 @@ function getLists(listId, callback) {
 
         if (Array.isArray(lists)) {
             lists.forEach(list => {
-                if (listId && list.itemId !== listId) return;
+                if (listId && list.listId !== listId) return;
                 // modify states
                 list.name = list.name || list.type;
                 list.id = list.name.replace(adapter.FORBIDDEN_CHARS, '-').replace(/ /g, '_').replace(/\./g, '_');
-                list.listId = list.itemId;
                 delete list.listIds;
                 delete list.itemId;
 
@@ -4396,13 +4396,13 @@ function updateListItem(list, item) {
 
 function deleteListItem(list, item) {
     adapter.log.info(`Deleting item "${item.value}" from the list ${list.name}.`);
-    alexa.deleteListItem(list.listId, item.id); // , (err, res) => updateListItems(list)
+    alexa.deleteListItem(list.listId, item.id, item); // , (err, res) => updateListItems(list)
 }
 
 function updateListItems(list, callback) {
     let node = `Lists.${list.id}`;
     return new Promise(resolve => {
-        alexa.getListItems(list.listId, (err, items) => {
+        alexa.getListItems(list.listId || list.itemId, (err, items) => {
             if (stopped) return;
             setOrUpdateObject(`${node}.json`, {common: {name: 'List as json', role: 'json'}}, JSON.stringify(items));
 
@@ -5196,7 +5196,7 @@ function main() {
                                                     if (delIds.length) {
                                                         adapter.log.info(`Deleting the following states: ${JSON.stringify(delIds)}`);
                                                         for (let i = 0; i < delIds.length; i++) {
-                                                            if (delIds[i].startsWith('Smart-Home-Devices.') && !delIds[i].endsWith('.#includeInIntervalQuery')) continue; // TODO Do not cleanup for now, change later
+                                                            /*if (delIds[i].startsWith('Smart-Home-Devices.') && !delIds[i].endsWith('.#includeInIntervalQuery')) continue;*/ // TODO Do not cleanup for now, change later
                                                             try {
                                                                 adapter.delObject(delIds[i], err => {
                                                                     if (err) adapter.log.info(`Can not delete object ${delIds[i]}: ${err.message}`);

@@ -488,6 +488,13 @@ After deleting an unused device, please restart the adapter to remove them there
 
 ## Changelog
 <!-- ### __WORK IN PROGRESS__ -->
+
+### __WORK IN PROGRESS__
+* (Apollon77) Adjust Lists to recent Amazon changes
+* (Apollon77) Adjust retrieving the Smart home device list to recent Amazon changes
+* (Apollon77) Delete all ioBroker originated Smart Home devices because not controllable anyway
+* (Apollon77) Adjust usage of some deprecated js-controller methods
+
 ### 3.26.7 (2024-10-24)
 * (Apollon77) Fix Sentry integration
 
