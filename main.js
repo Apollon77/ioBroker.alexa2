@@ -372,10 +372,11 @@ function deleteObject(id) {
                     try {
                         adapter.delObject(objId, (err) => {
                             err = err ? ` (${err})` : '';
-                            adapter.log.info(`${adapterObjects[objId] ? adapterObjects[objId].type : '?'} ${objId} deleted${err}`);
                             if (!err) {
                                 delete adapterObjects[objId];
                                 delete stateChangeTrigger[objId];
+                            } else {
+                                adapter.log.info(`${adapterObjects[objId] ? adapterObjects[objId].type : '?'} ${objId} deleted${err}`);
                             }
                         });
                     } catch (err) {
@@ -386,10 +387,11 @@ function deleteObject(id) {
         }
         try {
             adapter.delObject(id, (err) => {
-                adapter.log.info(`${obj.type} ${id} deleted (${err})`);
                 if (!err) {
                     delete adapterObjects[id];
                     delete stateChangeTrigger[id];
+                } else {
+                    adapter.log.info(`${obj.type} ${id} deleted (${err})`);
                 }
             });
         } catch (err) {
