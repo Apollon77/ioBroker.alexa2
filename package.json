@@ -1,6 +1,6 @@
 {
   "name": "iobroker.alexa2",
-  "version": "3.27.0",
+  "version": "3.27.1",
   "description": "Remote control for Alexa (Amazon Echo)",
   "author": {
     "name": "Apollon77",
@@ -31,7 +31,7 @@
     "url": "https://github.com/Apollon77/ioBroker.alexa2"
   },
   "dependencies": {
-    "alexa-remote2": "^8.0.0",
+    "alexa-remote2": "^8.0.1",
     "https": "^1.0.0",
     "nearest-color": "^0.4.4",
     "@iobroker/adapter-core": "^3.2.3",
