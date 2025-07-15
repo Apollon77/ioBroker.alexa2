@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "alexa2",
-    "version": "3.27.2",
+    "version": "3.27.3",
     "blockedVersions": [
       "~3.14.0",
       "~3.15.0",
@@ -40,6 +40,19 @@
     },
     "platform": "Javascript/Node.js",
     "news": {
+      "3.27.3": {
+        "en": "Adjust Lists to recent Amazon changes\nAdjust retrieving the Smart home device list to recent Amazon changes\nDelete all ioBroker originated Smart Home devices because not controllable anyway\nAdjust usage of some deprecated js-controller methods",
+        "de": "Anpassung der Listen an aktuelle Amazon-Änderungen\nBestätigen Sie das Abrufen der Smart Home-Gerät-Liste auf aktuelle Amazon-Änderungen\nLöschen Sie alle ioBroker entstanden Smart Home Geräte, weil nicht kontrollierbar sowieso\nPassen Sie die Verwendung einiger deprecated js-Controller Methoden an",
+        "ru": "Адаптация списков к последним изменениям Amazon\nНастройка восстановления списка устройств Smart Home до последних изменений Amazon\nУдалить все ioBroker Устройства умного дома, потому что они не контролируются\nНастройка использования некоторых устаревших методов js-контроллера",
+        "pt": "Ajustar listas para alterações recentes na Amazon\nAjustar a recuperação da lista de dispositivos domésticos Smart para alterações recentes na Amazon\nApagar todas as origens do ioBroker Smart Home dispositivos porque não controlável de qualquer maneira\nAjuste o uso de alguns métodos desatualizados de controle js",
+        "nl": "Lijsten aanpassen aan recente wijzigingen in Amazon\nPas het ophalen van de Smart home apparaat lijst aan recente Amazon wijzigingen\nVerwijder alle ioBroker-afkomstig Smart Home apparaten omdat niet te controleren toch\nHet gebruik van sommige verouderde js-controller methoden aanpassen",
+        "fr": "Ajuster les listes aux changements récents d'Amazon\nAjuster la récupération de la liste des appareils à domicile intelligents aux changements récents d'Amazon\nSupprimer tout ioBroker originaire Appareils Smart Home parce qu'ils ne sont pas contrôlables de toute façon\nRégler l'utilisation de certaines méthodes de contrôle de js dépréciées",
+        "it": "Regolare le liste alle recenti modifiche Amazon\nRegolare il recupero dell'elenco dei dispositivi Smart home alle recenti modifiche Amazon\nCancella tutto ioBroker originato Dispositivi Smart Home perché non controllabili comunque\nRegolare l'uso di alcuni metodi js-controller deprecati",
+        "es": "Ajuste listas de cambios recientes en Amazon\nAjuste la recuperación de la lista de dispositivos inteligentes para el hogar a los cambios recientes de Amazon\nEliminar todo el origen de ioBroker Smart Home dispositivos porque no controlables de todos modos\nAjuste el uso de algunos métodos de control js deprecated",
+        "pl": "Dostosuj listy do ostatnich zmian Amazon\nDostosowanie listy urządzeń Smart home do ostatnich zmian Amazon\nUsuń wszystkie jOBroker pochodzi Inteligentne urządzenia domowe, ponieważ i tak nie do kontrolowania\nDostosuj użycie niektórych zdeprecjonowanych metod sterownika js- controla",
+        "uk": "Налаштування списку останніх змін Amazon\nНалаштування перерозподілу списку побутових пристроїв Smart до останніх змін Amazon\nВидалити всі ioBroker Розумні побутові пристрої, тому що не керовані\nРегулювання використання деяких депресованих методів js-controller",
+        "zh-cn": "根据最近的亚马逊变化调整列表\n将 Smart 主设备列表调整为最近的 Amazon 更改\n删除所有 ioBroker 来源 智能家用设备, 因为不能控制\n调整一些已贬值的js控制器方法的使用"
+      },
       "3.26.7": {
         "en": "Fix Sentry integration",
         "de": "Fix Sentry Integration",
@@ -117,19 +130,6 @@
         "pl": "Przesuwane informacje o tym, jak sporządzać ręcznie, ponieważ nie są już dostępne\nOptymizowana wersja Admin dla historii\nSzczegółowe przypadki katastrofy odnotowane przez Sentry'a\nUdostępnić więcej typów urządzeń",
         "uk": "Видаліть інформацію про те, як отримати файли cookie вручну, оскільки більше не доступний\nОптимізований порядок налаштування адміністратора для історії\nВиправлено деякі випадки аварії, які повідомили Sentry\nДодайте більше типів пристроїв",
         "zh-cn": "投机:如何用手做饭,因为不再能再接手。\nB. 为历史创造有利条件\nSentry所报告的一些事故\n增加一些更类型的装置"
-      },
-      "3.26.1": {
-        "en": "Fix missing text in Admin Config",
-        "de": "Löschen Sie fehlenden Text in Admin Config",
-        "ru": "Исправление отсутствует текст в Admin Config",
-        "pt": "Corrigir texto em falta no Admin Config",
-        "nl": "Vertaling:",
-        "fr": "Correction du texte manquant dans Admin Config",
-        "it": "Fissare il testo mancante in Admin Config",
-        "es": "Corregir texto perdido en Admin Config",
-        "pl": "Zaginął tekst Admin Config",
-        "uk": "Виправлення відсутніх тексту в Конфігурації адміністратора",
-        "zh-cn": "Fix 在阿德明·阿菲格斯失踪案文"
       }
     },
     "keywords": [
