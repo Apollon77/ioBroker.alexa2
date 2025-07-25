@@ -1,0 +1,496 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+
+    <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+
+    <script type="text/javascript" src="../../js/translate.js"></script>
+    <script type="text/javascript" src="../../lib/js/materialize.js"></script>
+    <script type="text/javascript" src="../../js/adapter-settings.js"></script>
+    <script type="text/javascript" src="words.js"></script>
+
+    <!-- you have to define 2 functions in the global scope: -->
+    <script type="text/javascript">
+
+        var secret;
+
+        function ownFillSelectIPs(id, actualAddr, callback) {
+            getIPs(function (ips) {
+                var str = '';
+                var existingFound = false;
+                for (var i = 0; i < ips.length; i++) {
+                    if (ips[i].family === 'ipv6') continue;
+                    if (ips[i].address === '0.0.0.0') continue;
+                    if (ips[i].address === '127.0.0.1') continue;
+                    if (ips[i].address === actualAddr) existingFound = true;
+                    str += '<option value="' + ips[i].address + '" ' + ((ips[i].address === actualAddr) ? 'selected' : '') + '>' + ips[i].name + '</option>';
+                }
+                if (!existingFound && actualAddr) {
+                    str = '<option value="' + actualAddr + '" selected> Please change INVALID!!' + actualAddr + '</option>' + str;
+                }
+
+                $(id).html(str);
+                $(id).select();
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            });
+        }
+
+        function sprintf(format) {
+            var args = Array.prototype.slice.call(arguments, 1);
+            var i = 0;
+            return format.replace(/%s/g, function () {
+                return args[i++];
+            });
+        }
+
+        var statusUpdateTimeout = null;
+        function getStatusInfo(updateCall) {
+            if (statusUpdateTimeout) clearTimeout(statusUpdateTimeout);
+            if (!updateCall) {
+                statusUpdateTimeout = setTimeout(getStatusInfo, 5000);
+            }
+            sendTo(null, 'getStatusInfo', null, function (response) {
+                if (statusUpdateTimeout) clearTimeout(statusUpdateTimeout);
+                var text;
+                if (response.result.proxyActive) {
+                    text = '<img src="warning.png" width=60 height=60 align="middle">' + sprintf(systemDictionary['ProxyInfo'][systemLang], response.result.proxyUrl);
+                    statusUpdateTimeout = setTimeout(getStatusInfo, 5000, true);
+                }
+                else {
+                    text = '<img src="info.png" width=60 height=60 align="middle">' + sprintf(systemDictionary['StatusInfo'][systemLang], response.result.cookieTimestamp);
+                }
+                $('#statusInfo').html(text);
+            });
+        }
+
+        // the function loadSettings has to exist ...
+        function load(settings, onChange) {
+            ownFillSelectIPs('#proxyOwnIp', settings.proxyOwnIp, false, true, function () {
+                $('#proxyOwnIp').select();
+            });
+
+            fillSelectIPs('#proxyListenBind', settings.proxyListenBind, false, true, function () {
+                $('#proxyListenBind').select();
+            });
+
+            if (!settings) return;
+            settings.email = '';
+            settings.password = '';
+            if (settings.cookie === undefined) settings.cookie = '';
+            if (settings.alexaServiceHost === undefined) settings.alexaServiceHost = '';
+            if (settings.userAgent === undefined) settings.userAgent = '';
+            if (settings.acceptLanguage === undefined) settings.acceptLanguage = '';
+            if (settings.cookieLoginUrl === undefined) settings.cookieLoginUrl = '';
+            if (settings.updateStateInterval === undefined) settings.updateStateInterval = 0;
+            if (settings.updateHistoryInterval === undefined) settings.updateHistoryInterval = 0;
+            if (settings.proxyOwnIp === undefined) settings.proxyOwnIp = '';
+            if (settings.proxyOverrideIp === undefined) settings.proxyOverrideIp = '';
+            if (settings.proxyPort === undefined) settings.proxyPort = 0;
+            if (settings.proxyListenBind === undefined) settings.proxyListenBind = '';
+            if (settings.usePushConnection === undefined) settings.usePushConnection = false;
+            if (settings.resetCookies === undefined) settings.resetCookies = false;
+            if (settings.historyIgnoreEmptySummary === undefined) settings.historyIgnoreEmptySummary = false;
+            if (settings.includeAppDevices === undefined) settings.includeAppDevices = false;
+            if (settings.autoQueryActivityOnTrigger === undefined) settings.autoQueryActivityOnTrigger = false;
+
+            for (var key in settings) {
+                if (!settings.hasOwnProperty(key)) continue;
+
+                var $key = $('#' + key + '.value');
+                if ($key.attr('type') === 'checkbox') {
+                    $key.prop('checked', settings[key]).on('change', function () {
+                        if ($('#auth').prop('checked')) {
+                            $('#secure').prop('checked', true);
+                        }
+                        onChange();
+                        showHideSettings();
+                    });
+                } else {
+                    var val = settings[key];
+                    $key.val(val).on('change', function () {
+                        onChange();
+                    }).on('keyup', function () {
+                        onChange();
+                    });
+                }
+            }
+            // Set default language
+            if (!settings.language) {
+                settings.language = systemLang || 'en';
+                $('#language').val(settings.language).trigger('change');
+            }
+
+            M.updateTextFields();
+            $('select').select();
+            onChange(false);
+            getStatusInfo();
+        }
+
+        function save(callback) {
+            var obj = {};
+            $('.value').each(function () {
+                var $this = $(this);
+                switch ($this.attr('type')) {
+                    case 'checkbox':
+                        obj[$this.attr('id')] = $this.prop('checked');
+                        break;
+                    case 'number':
+                        obj[$this.attr('id')] = parseInt($this.val(), 10);
+                        break;
+                    default:
+                        obj[$this.attr('id')] = $this.val();
+                        break;
+                }
+            });
+            callback(obj);
+        }
+    </script>
+
+    <style>
+        h1 {
+            font-size: 10px;
+            color: #505050;
+            font-weight: bold;
+            width: 100%;
+            padding: 6px 5px 5px 5px;
+            background-color: #e8e8e8;
+        }
+
+        .title {
+            font-weight: bold;
+        }
+
+        .proxy-info {
+            margin-bottom: 25px;
+        }
+
+        .adapter-container>div {
+            margin-bottom: 0 !important;
+        }
+
+        .page {
+            height: calc(100% - 50px) !important;
+        }
+
+        .marg {
+            margin-top: 3em;
+        }
+
+        #statusInfo a:link {
+            color: #3366BB !important;
+            cursor: pointer !important;
+            text-decoration: underline !important;
+        }
+
+        .respTab {
+            padding: 0 !important;
+        }
+
+        /* Styling for small Screen (Responsive) */
+        @media screen and (max-width: 768px) {
+            .m .tabs .tab {
+                margin: 0 5px !important;
+            }
+
+            .m .tabs .tab a {
+                padding: 5px 5px;
+                display: flex;
+                white-space: normal;
+                word-wrap: break-word;
+                text-align: center;
+                align-items: center;
+                justify-content: center;
+                line-height: 1.2;
+            }
+
+            .m .tabs {
+                display: flex;
+                justify-content: space-around;
+            }
+
+            #statusInfo {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .warnInfo {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .adapter-body {
+                overflow: hidden;
+            }
+
+            .m [type=checkbox]+span:not(.lever) {
+                height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="m adapter-container" id="settings">
+        <div class="row">
+            <div class="col s12 respTab">
+                <!-- Tabs definieren -->
+                <ul class="tabs">
+                    <!-- Tab1 Login + Intervalle-->
+                    <li class="tab col s4">
+                        <a href="#tab-main" class="translate">alexaLogin</a>
+                    </li>
+                    <!-- Tab2 Cookie -->
+                    <li class="tab col s4">
+                        <a href="#tab-cookie" class="translate">cookie</a>
+                    </li>
+                    <!-- Tab3 Proxy -->
+                    <li class="tab col s4">
+                        <a href="#tab-proxy" class="translate">proxy</a>
+                    </li>
+                    <!-- weitere Tabs hier einfügen -->
+                </ul>
+            </div>
+
+            <!-- Ab hier der Inhalt der Tabs -->
+
+
+            <!-- Tab1 Login + Intervall-->
+            <div id="tab-main" class="col s12 page">
+                <div class="row">
+                    <div class="col s6 m6 l6">
+                        <img src="alexa.png" class="logo">
+                    </div>
+                </div>
+
+                <input id="email" type="hidden" />
+                <input type="hidden" id="password" />
+
+                <div class="row">
+                    <div class="col s12">
+                        <b><span id="statusInfo" for="statusInfo" class="translate">Please wait while loading
+                                Adapter-Status ...</span></b>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <p class="translate title">push_connection</p>
+                        <p class="translate">push_connection_info</p>
+
+                        <div class="input-field col s12 m6">
+                            <input id="usePushConnection" type="checkbox" class="value" />
+                            <span for="usePushConnection" class="translate">usePushConnection</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <p class="translate title">history</p>
+                        <p class="translate">history_info</p>
+
+                        <div class="input-field col s12 m6">
+                            <input id="historyIgnoreEmptySummary" type="checkbox" class="value" />
+                            <span for="historyIgnoreEmptySummary" class="translate">historyIgnoreEmptySummary</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <div class="input-field col s12 m6">
+                            <input id="autoQueryActivityOnTrigger" type="checkbox" class="value" />
+                            <span for="autoQueryActivityOnTrigger" class="translate">autoQueryActivityOnTrigger</span>
+                        </div>
+                        <div class="col s12 m6 warnInfo">
+                            <img src="warning.png" width=60 height=60 align="left">
+                            <span class="translate">autoQueryActivityOnTrigger_info</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12 warnInfo">
+                        <p class="translate title">sync_settings</p>
+                        <img src="warning.png" width=60 height=60 align="left">
+                        <p class="translate">sync_settings_info</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <div class="input-field col s12 m6">
+                            <input id="synchronizeSmartHomeDevices" type="checkbox" class="value" />
+                            <span for="synchronizeSmartHomeDevices" class="translate">synchronizeSmartHomeDevices</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <div class="input-field col s12 m6">
+                            <input id="synchronizeLists" type="checkbox" class="value" />
+                            <span for="synchronizeLists" class="translate">synchronizeLists</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <div class="input-field col s12 m6">
+                            <input id="includeAppDevices" type="checkbox" class="value" />
+                            <span for="includeAppDevices" class="translate">includeAppDevices</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <p class="translate title">interval</p>
+                        <p class="translate">interval_info</p>
+
+                        <div class="input-field col s12 m6">
+                            <input class="value validate" placeholder="300" id="updateStateInterval" type="number"
+                                min="0" max="100000">
+                            <label for="updateStateInterval" class="translate">updateStateInterval</label>
+                            <span class="helper-text translate">s (0 = disabled)</span>
+                        </div>
+                        <div class="col s12 m6 warnInfo">
+                            <img src="warning.png" width=60 height=60 align="left">
+                            <span class="translate">updateStateInterval_info</span>
+                        </div>
+                    </div>
+                    <div class="col s12">
+                        <div class="input-field col s12 m6">
+                            <input class="value validate" placeholder="300" id="updateHistoryInterval" type="number"
+                                min="0" max="100000">
+                            <label for="updateHistoryInterval" class="translate">updateHistoryInterval</label>
+                            <span class="helper-text translate">s (0 = disabled)</span>
+                        </div>
+                        <div class="col s12 m6 warnInfo">
+                            <img src="warning.png" width=60 height=60 align="left">
+                            <span class="translate">updateHistoryInterval_info</span>
+                        </div>
+                    </div>
+                    <div class="col s12">
+                        <div class="input-field col s12 m6">
+                            <input class="value validate" placeholder="300" id="updateConfigurationInterval"
+                                type="number" min="0" max="100000">
+                            <label for="updateConfigurationInterval"
+                                class="translate">updateConfigurationInterval</label>
+                            <span class="helper-text translate">s (0 = disabled)</span>
+                        </div>
+                        <div class="input-field col s12 m6 warnInfo">
+                            <img src="warning.png" width=60 height=60 align="left">
+                            <span class="translate">updateConfigurationInterval_info</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- Ende Tab1 -->
+
+            <!-- Tab2 Cookie -->
+            <div id="tab-cookie" class="col s12 page">
+                <div class="row">
+                    <div class="col s12 m4 l2">
+                        <img src="alexa.png" class="logo">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <div class="input-field col s12 m6">
+                            <input id="resetCookies" type="checkbox" class="value" />
+                            <span for="resetCookies" class="translate">resetCookie</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <p class="translate title">overwrite</p>
+                        <p class="translate">overwrite_info</p>
+
+                        <div class="input-field col s12 m6">
+                            <input id="alexaServiceHost" class="value" type="text" />
+                            <label for="alexaServiceHost" class="translate">alexaServiceHost</label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input id="userAgent" class="value" type="text" />
+                            <label for="userAgent" class="translate">userAgent</label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input id="acceptLanguage" class="value" type="text" />
+                            <label for="acceptLanguage" class="translate">acceptLanguage</label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input id="cookieLoginUrl" class="value" type="text" />
+                            <label for="cookieLoginUrl" class="translate">cookieLoginUrl</label>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div> <!-- Ende Tab2 -->
+
+            <!-- Tab3 Proxy -->
+            <div id="tab-proxy" class="col s12 page">
+                <div class="row">
+                    <div class="col s12 m4 l2">
+                        <img src="alexa.png" class="logo">
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col s12">
+                        <p class="translate title">proxy</p>
+                        <p class="translate proxy-info">proxy_info</p>
+
+                        <div class="input-field col s12">
+                            <select id="proxyOwnIp" class="value"></select>
+                            <label for="proxyOwnIp" class="translate">proxyOwnIp</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input id="proxyPort" class="value" type="number" min="0" max="65565" />
+                            <label for="proxyPort" class="translate">proxyPort</label>
+                            <span class="helper-text translate">proxyPort_info</span>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <select id="proxyListenBind" class="value"></select>
+                            <label for="proxyListenBind" class="translate">proxyListenBind</label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input id="proxyOverrideIp" class="value" type="text" />
+                            <label for="proxyOverrideIp" class="translate">proxyOverrideIp</label>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div> <!-- Ende Tab3 -->
+
+        </div><!-- Ende row -->
+
+    </div><!-- Ende Adapter Container -->
+</body>
+
+</html>
