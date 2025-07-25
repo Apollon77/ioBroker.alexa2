@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 7
+    },
+    "auditLog": "/home/runner/work/ioBroker.alexa2/ioBroker.alexa2/tmp/log/iobroker-audit.json",
+    "files": [
+        {
+            "date": 1753448637320,
+            "name": "/home/runner/work/ioBroker.alexa2/ioBroker.alexa2/tmp/log/iobroker.2025-07-25.log",
+            "hash": "1fd31dc58dc7b2dd38c2f9c1657594df88b47abc45a173d4f4a2cc97f9028b77"
+        }
+    ],
+    "hashType": "sha256"
+}
