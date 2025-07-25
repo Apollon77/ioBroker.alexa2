@@ -1,2 +1,0 @@
-#!/usr/bin/env node
-require('/home/runner/work/ioBroker.alexa2/ioBroker.alexa2/tmp/node_modules/@iobroker/js-controller-cli/build/esm/lib/setup').execute();
