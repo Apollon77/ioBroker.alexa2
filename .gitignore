@@ -68,6 +68,3 @@ typings/
 
 # ioBroker dev-server
 .dev-server/
-
-# temporary test files
-tmp/
