@@ -93,6 +93,7 @@ const allDevicesCommands = {
 const knownDeviceType = {
     'A10A33FOX2NUBK':   {name: 'Echo Spot', commandSupport: true, icon: 'icons/spot.png'},
     'A10L5JEZTKKCZ8':   {name: 'Vobot-Clock', commandSupport: true}, // REMINDERS,VOLUME_SETTING,TUNE_IN,MUSIC_SKILL,TIMERS_AND_ALARMS,I_HEART_RADIO,PEONY,AUDIO_PLAYER,DEREGISTER_DEVICE,SLEEP,CHANGE_NAME,GOLDFISH,AUDIBLE,SUPPORTS_CONNECTED_HOME_CLOUD_ONLY,KINDLE_BOOKS,PERSISTENT_CONNECTION,MICROPHONE,DREAM_TRAINING,AMAZON_MUSIC
+    'A112LJ20W14H95':   {name: 'webOS TV', commandSupport: true}, // HANDS_FREE,DREAM_TRAINING,SUPPORTS_LOCALE_SWITCH,ASCENDING_ALARM_VOLUME,SUPPORTS_CONNECTED_HOME_CLOUD_ONLY,AUDIO_PLAYER,CUSTOM_ALARM_TONE,SET_TIME_ZONE,AMAZON_MUSIC,TIMERS_AND_ALARMS,GOLDFISH,REMINDERS,TUNE_IN,TOUCH_INITIATED,TIDAL,DEEZER,MICROPHONE,MULTI_WAKEWORDS_SUPPORTED,KINDLE_BOOKS,PERSISTENT_CONNECTION,FAR_FIELD,MUSIC_SKILL,SOUND_SETTINGS,SUPPORTS_LOCALE,APPLE_MUSIC,SET_LOCALE,TIMERS_ALARMS_NOTIFICATIONS_VOLUME,VOLUME_SETTING,DIALOG_INTERFACE_VERSION,ADAPTIVE_LISTENING,CHANGE_NAME,DEREGISTER_DEVICE,AUDIBLE,SIRIUSXM,SPEECH_RECOGNIZER_USS,SLEEP,EARCONS,I_HEART_RADIO
     'A11QM4H9HGV71H':   {name: 'Echo Show 5 3rd Gen', commandSupport: true, icon: 'icons/echo_show5.png'}, // SUPPORTS_CONNECTED_HOME_CLOUD_ONLY,SUPPORTS_SOFTWARE_VERSION,DREAM_TRAINING,SIRIUSXM,TUNE_IN,CUSTOM_ALARM_TONE,TUPLE,ADAPTIVE_LISTENING,SUPPORTS_LOCALE_SWITCH,EQUALIZER_CONTROLLER_TREBLE,FLASH_BRIEFING,ALEXA_PRESENCE,PAIR_BT_SINK,AUDIO_PLAYER,LEMUR_ALPHA,TUPLE_CATEGORY_C,EQUALIZER_CONTROLLER_BASS,DISPLAY_BRIGHTNESS_ADJUST,MICROPHONE,LIVE_VIEW,AUDIO_CONTROLS,KINDLE_BOOKS,SALMON,EARCONS,CLOCK_FORMAT_24_HR,TAP_GESTURES_SINGLE_TAP,SHARKNADO,TIDAL,DISPLAY_ADAPTIVE_BRIGHTNESS,EQUALIZER_CONTROLLER_MIDRANGE,PANDORA,DIALOG_INTERFACE_VERSION,EFDCARDS,REMINDERS,SOUND_SETTINGS,SUPPORT_CALENDAR_ALERT,TIMERS_AND_ALARMS,CHANGE_NAME,DEEZER,AUDIBLE,ASCENDING_ALARM_VOLUME,VOLUME_SETTING,ALEXA_VOICE,DS_VOLUME_SETTING,DISPLAY_POWER_TOGGLE,APPLE_MUSIC,SET_LOCALE,VOICE_TRAINING,BT_PAIRING_FLOW_V2,AMAZON_MUSIC,I_HEART_RADIO,GUARD_EARCON,TAP_GESTURES,MUSIC_SKILL,GOLDFISH,FAR_FIELD_WAKE_WORD,DEREGISTER_DEVICE,SLEEP,SET_TIME_ZONE,SUPPORTS_LOCALE,SPEECH_RECOGNIZER_USS,MULTI_WAKEWORDS_SUPPORTED,ALEXA_GESTURES,PERSISTENT_CONNECTION,TIMERS_ALARMS_NOTIFICATIONS_VOLUME
     'A12GXV8XMS007S':   {name: 'FireTV', commandSupport: true, icon: 'icons/firetv.png'}, // ARTHUR_TARGET,BT_PAIRING_FLOW_V2,REMINDERS,CHANGE_NAME,ACTIVE_AFTER_FRO,SUPPORTS_LOCALE,FLASH_BRIEFING,ASCENDING_ALARM_VOLUME,TIMERS_AND_ALARMS,PAIR_BT_SINK,PERSISTENT_CONNECTION,SOUND_SETTINGS,SUPPORTS_SOFTWARE_VERSION,MULTI_WAKEWORDS_SUPPORTED,SHARKNADO,SPEECH_RECOGNIZER_USS,CUSTOM_ALARM_TONE,EARCONS,SUPPORTS_CONNECTED_HOME_CLOUD_ONLY,SUPPORTS_LOCALE_SWITCH,VOLUME_SETTING,MICROPHONE,DIALOG_INTERFACE_VERSION
     'A15996VY63BQ2D':   {name: 'Echo Show 8 2nd Gen', commandSupport: true, icon: 'icons/echo_show.png'}, // TIMERS_ALARMS_NOTIFICATIONS_VOLUME,SOUND_SETTINGS,DEREGISTER_DEVICE,DS_VOLUME_SETTING,BT_PAIRING_FLOW_V2,ADAPTIVE_LISTENING,SET_LOCALE,GUARD_EARCON,PERSISTENT_CONNECTION,LOCALIZATION,VOICE_TRAINING,ALEXA_VOICE,SUPPORT_CALENDAR_ALERT,DEEZER,MUSIC_SKILL,AUDIO_CONTROLS,TUNE_IN,EFDCARDS,SPEECH_RECOGNIZER_USS,EQUALIZER_CONTROLLER_TREBLE,DIALOG_INTERFACE_VERSION,TUPLE_CATEGORY_B,APPLE_MUSIC,SLEEP,PAIR_BT_SINK,SIRIUSXM,VISUAL_GESTURE,SUPPORTS_SOFTWARE_VERSION,TIMERS_AND_ALARMS,FAR_FIELD_WAKE_WORD,FLASH_BRIEFING,AUDIBLE,EQUALIZER_CONTROLLER_BASS,SUPPORTS_LOCALE,I_HEART_RADIO,SUPPORTS_LOCALE_SWITCH,KINDLE_BOOKS,CUSTOM_ALARM_TONE,SALMON,ALEXA_PRESENCE,MULTI_WAKEWORDS_SUPPORTED,CHANGE_NAME,TUPLE,MICROPHONE,EARCONS,SUPPORTS_CONNECTED_HOME_CLOUD_ONLY,AMAZON_MUSIC,VOLUME_SETTING,LEMUR_ALPHA,PANDORA,GOLDFISH,SHARKNADO,CLOCK_FORMAT_24_HR,LIVE_VIEW,POPTART,FACE_TO_TALK,TIDAL,REMINDERS,DREAM_TRAINING,AUDIO_PLAYER,ASCENDING_ALARM_VOLUME,EQUALIZER_CONTROLLER_MIDRANGE
@@ -3088,9 +3089,26 @@ async function createDeviceStates(serialOrName, additionalDeviceData, callback) 
     if (!deviceTypeDetails) {
         deviceTypeDetails =  {name: 'Unknown', commandSupport: true};
         if (!unknownDeviceWarnings[device.deviceType]) {
-            adapter.log.info('Unknown Device, but enabling commands, Try it and report back if commands work.');
-            adapter.log.info('Report to developer as GitHub issue with details for device. Please grab full next line pot. from logfile on disk if cutted');
-            adapter.log.info(`    Device-type:${device.deviceType} - ${device._name} (${device.capabilities.join(',')})`);
+            adapter.log.info('Unknown Device detected! Enabling commands by default - please test and report results.');
+            adapter.log.info('=== GitHub Issue Report Template ===');
+            adapter.log.info('Please create a GitHub issue at: https://github.com/Apollon77/ioBroker.alexa2/issues/new');
+            adapter.log.info('Title: "Add support for device type ' + device.deviceType + ' - ' + device._name + '"');
+            adapter.log.info('Description template:');
+            adapter.log.info('**Device Information:**');
+            adapter.log.info(`Device-type: ${device.deviceType}`);
+            adapter.log.info(`Device-name: ${device._name}`);
+            adapter.log.info(`Capabilities: ${device.capabilities.join(',')}`);
+            adapter.log.info('');
+            adapter.log.info('**Command Support Test Results:**');
+            adapter.log.info('- [ ] Volume control works (tested: voice commands, ioBroker controls)');
+            adapter.log.info('- [ ] Media playback control works (play/pause/next/previous)');
+            adapter.log.info('- [ ] Text-to-speech works');
+            adapter.log.info('- [ ] Notifications work');
+            adapter.log.info('- [ ] Other commands work (specify which ones)');
+            adapter.log.info('');
+            adapter.log.info('**Additional Notes:**');
+            adapter.log.info('(Add any additional information about device behavior, issues, or working features)');
+            adapter.log.info('=== End Template ===');
             unknownDeviceWarnings[device.deviceType] = true;
         }
     } else if (deviceTypeDetails.icon) {

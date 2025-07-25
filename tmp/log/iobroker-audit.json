@@ -6,9 +6,9 @@
     "auditLog": "/home/runner/work/ioBroker.alexa2/ioBroker.alexa2/tmp/log/iobroker-audit.json",
     "files": [
         {
-            "date": 1753448614258,
+            "date": 1753448888795,
             "name": "/home/runner/work/ioBroker.alexa2/ioBroker.alexa2/tmp/log/iobroker.2025-07-25.log",
-            "hash": "cd39b298faf50eadfe622af0d1cb77d0309f6a1065e9ba076ff9fa691143cf9d"
+            "hash": "7f761f01658b6640cd87c0c0f594d09baffbb3d5782106d23470d0ccfd165ec9"
         }
     ],
     "hashType": "sha256"
