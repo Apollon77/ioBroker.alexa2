@@ -69,5 +69,5 @@ typings/
 # ioBroker dev-server
 .dev-server/
 
-# Test artifacts
+# Test files
 tmp/
