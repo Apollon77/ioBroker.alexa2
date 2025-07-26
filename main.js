@@ -3089,26 +3089,9 @@ async function createDeviceStates(serialOrName, additionalDeviceData, callback) 
     if (!deviceTypeDetails) {
         deviceTypeDetails =  {name: 'Unknown', commandSupport: true};
         if (!unknownDeviceWarnings[device.deviceType]) {
-            adapter.log.info('Unknown Device detected! Enabling commands by default - please test and report results.');
-            adapter.log.info('=== GitHub Issue Report Template ===');
-            adapter.log.info('Please create a GitHub issue at: https://github.com/Apollon77/ioBroker.alexa2/issues/new');
-            adapter.log.info('Title: "Add support for device type ' + device.deviceType + ' - ' + device._name + '"');
-            adapter.log.info('Description template:');
-            adapter.log.info('**Device Information:**');
-            adapter.log.info(`Device-type: ${device.deviceType}`);
-            adapter.log.info(`Device-name: ${device._name}`);
-            adapter.log.info(`Capabilities: ${device.capabilities.join(',')}`);
-            adapter.log.info('');
-            adapter.log.info('**Command Support Test Results:**');
-            adapter.log.info('- [ ] Volume control works (tested: voice commands, ioBroker controls)');
-            adapter.log.info('- [ ] Media playback control works (play/pause/next/previous)');
-            adapter.log.info('- [ ] Text-to-speech works');
-            adapter.log.info('- [ ] Notifications work');
-            adapter.log.info('- [ ] Other commands work (specify which ones)');
-            adapter.log.info('');
-            adapter.log.info('**Additional Notes:**');
-            adapter.log.info('(Add any additional information about device behavior, issues, or working features)');
-            adapter.log.info('=== End Template ===');
+            adapter.log.info('Unknown Device, but enabling commands, Try it and report back if commands work.');
+            adapter.log.info('Report to developer as GitHub issue with details for device. Please grab full next line pot. from logfile on disk if cutted');
+            adapter.log.info(`    Device-type:${device.deviceType} - ${device._name} (${device.capabilities.join(',')})`);
             unknownDeviceWarnings[device.deviceType] = true;
         }
     } else if (deviceTypeDetails.icon) {
