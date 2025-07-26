@@ -1,7 +1,0 @@
-{"k":"**META**","v":{"states.protocolVersion":"4"}}
-{"k":"system.host.pkrvmpptgkbjq6m.plugins.sentry.enabled","v":{"val":false,"ack":true,"ts":1753448555969,"q":0,"from":"system.host.pkrvmpptgkbjq6m.plugins.sentry","lc":1753448555969}}
-{"k":"system.host.pkrvmpptgkbjq6m.plugins.sentry.enabled","v":{"val":false,"ack":true,"ts":1753448570253,"q":0,"from":"system.host.pkrvmpptgkbjq6m.plugins.sentry","lc":1753448555969}}
-{"k":"system.adapter.alexa2.upload","v":{"val":0,"ack":true,"ts":1753448570270,"q":0,"lc":1753448570270}}
-{"k":"alexa2.0.info.connection","v":{"val":false,"ack":true,"ts":1753448570390,"q":0,"from":"system.host.pkrvmpptgkbjq6m.cli","lc":1753448570390}}
-{"k":"alexa2.0.info.cookie","v":{"val":"","ack":true,"ts":1753448570391,"q":0,"from":"system.host.pkrvmpptgkbjq6m.cli","lc":1753448570391}}
-{"k":"alexa2.0.info.csrf","v":{"val":"","ack":true,"ts":1753448570392,"q":0,"from":"system.host.pkrvmpptgkbjq6m.cli","lc":1753448570392}}
