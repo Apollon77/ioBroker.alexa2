@@ -64,10 +64,8 @@ typings/
 
 .idea
 
-
-
 # ioBroker dev-server
 .dev-server/
 
-# Test artifacts
+# Test temporary files
 tmp/
