@@ -64,8 +64,6 @@ typings/
 
 .idea
 
-
-
 # ioBroker dev-server
 .dev-server/
 
