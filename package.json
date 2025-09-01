@@ -34,7 +34,7 @@
     "alexa-remote2": "^8.0.2",
     "https": "^1.0.0",
     "nearest-color": "^0.4.4",
-    "@iobroker/adapter-core": "^3.2.3",
+    "@iobroker/adapter-core": "^3.3.2",
     "rrule": "^2.8.1"
   },
   "devDependencies": {
