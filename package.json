@@ -43,7 +43,7 @@
     "@alcalzone/release-script-plugin-license": "^3.7.0",
     "@iobroker/dev-server": "^0.7.8",
     "@iobroker/adapter-dev": "^1.4.0",
-    "eslint": "^8.57.1",
+    "eslint": "^9.34.0",
     "mocha": "^11.7.1",
     "chai": "^4.5.0"
   },
