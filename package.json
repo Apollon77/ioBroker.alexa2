@@ -45,7 +45,7 @@
     "@iobroker/adapter-dev": "^1.4.0",
     "eslint": "^8.57.1",
     "mocha": "^11.7.1",
-    "chai": "^4.5.0"
+    "chai": "^6.2.0"
   },
   "main": "main.js",
   "scripts": {
