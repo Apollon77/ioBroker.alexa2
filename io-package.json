@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "alexa2",
-    "version": "3.27.3",
+    "version": "3.27.4",
     "blockedVersions": [
       "~3.14.0",
       "~3.15.0",
@@ -40,6 +40,19 @@
     },
     "platform": "Javascript/Node.js",
     "news": {
+      "3.27.4": {
+        "en": "Adjusts authentication check to recent Amazon changes",
+        "de": "Anpassung der Authentifizierungsprüfung an aktuelle Amazon-Änderungen",
+        "ru": "Настройка проверки подлинности на последние изменения Amazon",
+        "pt": "Ajusta a verificação de autenticação às alterações recentes do Amazon",
+        "nl": "Past authenticatiecontrole aan aan recente Amazon-wijzigingen",
+        "fr": "Ajuste la vérification d'authentification aux changements récents d'Amazon",
+        "it": "Regola il controllo di autenticazione alle recenti modifiche Amazon",
+        "es": "Ajuste la verificación de autenticación a los cambios recientes de Amazon",
+        "pl": "Dostosuje sprawdzanie autentyczności do ostatnich zmian Amazon",
+        "uk": "Налаштування перевірки автентичності на останні зміни Amazon",
+        "zh-cn": "根据最近的亚马逊变化调整认证检查"
+      },
       "3.27.3": {
         "en": "Adjust Lists to recent Amazon changes\nAdjust retrieving the Smart home device list to recent Amazon changes\nDelete all ioBroker originated Smart Home devices because not controllable anyway\nAdjust usage of some deprecated js-controller methods",
         "de": "Anpassung der Listen an aktuelle Amazon-Änderungen\nBestätigen Sie das Abrufen der Smart Home-Gerät-Liste auf aktuelle Amazon-Änderungen\nLöschen Sie alle ioBroker entstanden Smart Home Geräte, weil nicht kontrollierbar sowieso\nPassen Sie die Verwendung einiger deprecated js-Controller Methoden an",
@@ -117,19 +130,6 @@
         "pl": "Fixed proxy login process",
         "uk": "Виправлено процес проксі",
         "zh-cn": "A. 确定代伐木过程"
-      },
-      "3.26.2": {
-        "en": "Removed infos how to get cookies manually because no longer available\nOptimized Admin configuration order of settings for history\nFixed some crash cases reported by Sentry\nAdded some more device types",
-        "de": "Entfernte Informationen, wie man Cookies manuell erhält, weil nicht mehr verfügbar\nOptimierte Admin-Konfigurationsreihenfolge von Einstellungen für die Geschichte\nBehoben einige Unfallfälle von Sentry gemeldet\nEinige weitere Gerätetypen hinzugefügt",
-        "ru": "Удалили информацию о том, как получить файлы cookie вручную, потому что больше не доступно\nОптимизированный порядок настройки Admin для истории\nИсправлены некоторые случаи сбоя, описанные в Sentry\nДобавлены еще некоторые типы устройств",
-        "pt": "Remover informações como obter cookies manualmente porque não mais disponível\nOrdem de configuração de administrador otimizada para histórico\nCorrigido alguns casos de acidente relatados por Sentry\nAdicionado alguns mais tipos de dispositivo",
-        "nl": "Verwijderde informatie hoe je koekjes handmatig kan krijgen, want niet langer beschikbaar\nOptimaal administratiebevel voor geschiedenis\nVertaling:\nVoeg nog wat apparaten toe",
-        "fr": "Informations supprimées comment obtenir des cookies manuellement parce qu'il n'est plus disponible\nCommande de configuration Admin optimisée pour l'histoire\nCorrection de certains cas de crash signalés par Sentry\nAjout d'autres types de périphériques",
-        "it": "Informazioni eliminate come ottenere i cookie manualmente perché non piÃ1 disponibili\nOrdine di configurazione di Admin ottimizzato per la storia\nRisolto alcuni casi di crash segnalati da Sentry\nAggiunto alcuni più tipi di dispositivo",
-        "es": "Datos eliminados cómo obtener las cookies manualmente porque ya no está disponible\nOrden de configuración de Admin optimizada para la historia\nArreglado algunos casos de accidentes reportados por Sentry\nAñadido algunos tipos de dispositivo más",
-        "pl": "Przesuwane informacje o tym, jak sporządzać ręcznie, ponieważ nie są już dostępne\nOptymizowana wersja Admin dla historii\nSzczegółowe przypadki katastrofy odnotowane przez Sentry'a\nUdostępnić więcej typów urządzeń",
-        "uk": "Видаліть інформацію про те, як отримати файли cookie вручну, оскільки більше не доступний\nОптимізований порядок налаштування адміністратора для історії\nВиправлено деякі випадки аварії, які повідомили Sentry\nДодайте більше типів пристроїв",
-        "zh-cn": "投机:如何用手做饭,因为不再能再接手。\nB. 为历史创造有利条件\nSentry所报告的一些事故\n增加一些更类型的装置"
       }
     },
     "keywords": [
