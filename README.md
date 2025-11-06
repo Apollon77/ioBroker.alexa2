@@ -488,6 +488,10 @@ After deleting an unused device, please restart the adapter to remove them there
 
 ## Changelog
 <!-- ### __WORK IN PROGRESS__ -->
+
+### __WORK IN PROGRESS__
+* (@Apollon77) Adjusts authentication check to recent Amazon changes
+
 ### 3.27.3 (2025-07-15)
 * (Apollon77) Adjust Lists to recent Amazon changes
 * (Apollon77) Adjust retrieving the Smart home device list to recent Amazon changes
