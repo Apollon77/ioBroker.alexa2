@@ -69,3 +69,6 @@ typings/
 
 # Test temporary files
 tmp/
+
+#ignore .commitinfo created by ioBroker release script
+.commitinfo
