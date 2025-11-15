@@ -486,6 +486,23 @@ Link: https://www.amazon.de/hz/mycd/digital-console/devicedetails?deviceFamily=A
 
 After deleting an unused device, please restart the adapter to remove them there too.
 
+### 🌍 Region‑specific Amazon configuration
+
+Some users may encounter crashes when first configuring the adapter.  
+This is often caused by the adapter being **preconfigured for the German Amazon region (amazon.de)**.  
+If your Alexa account is registered in another Amazon marketplace, you must update few settings so the adapter communicates with the correct regional endpoints.
+
+When these values are not adjusted, authentication and cookie might work but failure will occurs when fetching your devices, leading to adapter startup errors and got a terminate signal TERMINATE_YOURSELF.
+
+To correct the regional endpoints, go to `Instances > alexa2.x > Settings > Cookie` and configure the values as below.
+
+| Region / Country | Alexa Base URL        | Accept‑Language  | Cookie Amazon URL  |
+|------------------|-----------------------|------------------|--------------------|
+| **France** 🇫🇷    | `alexa.amazon.fr`     | `fr-FR`          | `amazon.fr`        |
+| *(Add more...)*  |                       |                  |                    |
+
+If you region is not present, and you find out the value, do not hesitate to enrich this documentation with your findings.
+
 ## Changelog
 <!-- ### __WORK IN PROGRESS__ -->
 ### 3.27.4 (2025-11-06)
