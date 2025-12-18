@@ -3527,7 +3527,8 @@ function createNotificationStates(serialOrName) {
                     activeTimerList.push({
                         id: noti.notificationIndex,
                         triggerTime: noti.triggerTime || Date.now() + remainingTime,
-                        label: noti.timerLabel
+                        label: noti.timerLabel,
+                        durationMillis: noti.originalDurationInMillis
                     });
                     if (notificationTimer[noti.id]) {
                         clearTimeout(notificationTimer[noti.id]);
