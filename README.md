@@ -505,6 +505,10 @@ If you region is not present, and you find out the value, do not hesitate to enr
 
 ## Changelog
 <!-- ### __WORK IN PROGRESS__ -->
+
+### __WORK IN PROGRESS__
+* (MiRo1310) Adds durationMillis to the activeTimerList
+
 ### 3.27.4 (2025-11-06)
 * (@Apollon77) Adjusts authentication check to recent Amazon changes
 
