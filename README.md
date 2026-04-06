@@ -504,6 +504,9 @@ To correct the regional endpoints, go to `Instances > alexa2.x > Settings > Cook
 If you region is not present, and you find out the value, do not hesitate to enrich this documentation with your findings.
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+- (iobroker-bot) Adapter requires node.js >= 20 now.
 <!-- ### __WORK IN PROGRESS__ -->
 ### 3.27.4 (2025-11-06)
 * (@Apollon77) Adjusts authentication check to recent Amazon changes
