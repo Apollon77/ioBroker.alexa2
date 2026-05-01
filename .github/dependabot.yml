@@ -18,3 +18,7 @@ updates:
       cronjob: "38 2 19 * *"
     open-pull-requests-limit: 20
     versioning-strategy: "increase"
+    ignore:
+      - dependency-name: "@types/node"
+        update-types:
+          - version-update:semver-major
