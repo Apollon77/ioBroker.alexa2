@@ -1091,6 +1091,8 @@ If you region is not present, and you find out the value, do not hesitate to enr
 ### 0.0.x
 * soef versions
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 
 The MIT License (MIT)
