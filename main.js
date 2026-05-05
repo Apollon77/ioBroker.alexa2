@@ -4651,15 +4651,25 @@ function main() {
 
     if (!adapter.config.proxyOwnIp) {
         const ifaces = os.networkInterfaces();
+        const candidates = [];
         for (const eth of Object.keys(ifaces)) {
-            for (let num = 0; num < ifaces[eth].length; num++) {
-                if (ifaces[eth][num].family !== 'IPv6' && ifaces[eth][num].address !== '127.0.0.1' && ifaces[eth][num].address !== '0.0.0.0') {
-                    adapter.config.proxyOwnIp = ifaces[eth][num].address;
-                    adapter.log.info(`Proxy IP not set, use first network interface (${adapter.config.proxyOwnIp}) instead`);
-                    break;
+            for (const iface of ifaces[eth]) {
+                const isIPv4 = iface.family === 'IPv4' || iface.family === 4;
+                if (isIPv4 && !iface.internal) {
+                    candidates.push({ name: eth, address: iface.address });
                 }
             }
-            if (adapter.config.proxyOwnIp) break;
+        }
+        if (candidates.length) {
+            adapter.config.proxyOwnIp = candidates[0].address;
+            if (candidates.length > 1) {
+                const list = candidates.map(c => `${c.address} (${c.name})`).join(', ');
+                adapter.log.info(`Proxy IP not set, picked first non-internal IPv4: ${adapter.config.proxyOwnIp} (${candidates[0].name}). Other candidates: ${list}. If wrong, open instance settings, Proxy tab and select the correct "Own IP".`);
+            } else {
+                adapter.log.info(`Proxy IP not set, picked ${adapter.config.proxyOwnIp} (${candidates[0].name}). Override via "Own IP" in instance settings (Proxy tab) if needed.`);
+            }
+        } else {
+            adapter.log.warn('Proxy IP not set and no non-internal IPv4 interface found. Please set "Own IP" in instance settings (Proxy tab).');
         }
     }
 
@@ -5126,6 +5136,7 @@ function main() {
                 lines[1] = `Please open ${lines[1]}`;
                 proxyUrl = lines[1].substring(lines[1].indexOf('http://'), lines[1].lastIndexOf('/') + 1);
                 restartAdapter = false;
+                lines.push('If the URL above is not reachable from your browser, the picked "Own IP" is wrong. Open instance settings, Proxy tab, set "Own IP" to the address you use to reach ioBroker and save.');
             } else {
                 lines = err.message.split('\n');
             }
