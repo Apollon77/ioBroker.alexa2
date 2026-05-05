@@ -21,36 +21,15 @@
             getIPs(function (ips) {
                 var str = '';
                 var existingFound = false;
-                // When no value is stored yet, prefer the host that admin is currently accessed
-                // through. That is the address the user reaches ioBroker on, so the cookie proxy URL
-                // built from it will work for them. Falls back to the first listed IP otherwise.
-                var adminHost = '';
-                try {
-                    adminHost = (window.location && window.location.hostname) || '';
-                } catch (e) { /* ignore */ }
-                if (adminHost === 'localhost' || adminHost === '127.0.0.1' || adminHost === '::1') {
-                    adminHost = '';
-                }
-                var preferAdminHost = !actualAddr && adminHost;
-                var preferredMatched = false;
                 for (var i = 0; i < ips.length; i++) {
                     if (ips[i].family === 'ipv6') continue;
                     if (ips[i].address === '0.0.0.0') continue;
                     if (ips[i].address === '127.0.0.1') continue;
                     if (ips[i].address === actualAddr) existingFound = true;
-                    var selectThis = actualAddr
-                        ? ips[i].address === actualAddr
-                        : (preferAdminHost && ips[i].address === adminHost && !preferredMatched);
-                    if (selectThis && preferAdminHost) preferredMatched = true;
-                    str += '<option value="' + ips[i].address + '" ' + (selectThis ? 'selected' : '') + '>' + ips[i].name + '</option>';
+                    str += '<option value="' + ips[i].address + '" ' + ((ips[i].address === actualAddr) ? 'selected' : '') + '>' + ips[i].name + '</option>';
                 }
                 if (!existingFound && actualAddr) {
                     str = '<option value="' + actualAddr + '" selected> Please change INVALID!!' + actualAddr + '</option>' + str;
-                } else if (preferAdminHost && !preferredMatched) {
-                    // Admin host (e.g. hostname or reverse-proxy IP) is not in the host's IP list.
-                    // Offer it as a preselected option so the URL we build later matches what the
-                    // user already uses to reach ioBroker.
-                    str = '<option value="' + adminHost + '" selected>' + adminHost + ' (admin host)</option>' + str;
                 }
 
                 $(id).html(str);
