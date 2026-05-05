@@ -611,7 +611,11 @@ function startAdapter(options) {
     });
 
     adapter.on('ready', () => {
-        initSentry(() => loadExistingAccessories(checkInstanceObject(main)));
+        initSentry(() => loadExistingAccessories(checkInstanceObject(() => {
+            Promise.resolve()
+                .then(() => main())
+                .catch(err => adapter.log.error(`Unhandled error in main(): ${err && err.stack ? err.stack : err}`));
+        })));
     });
 
     return adapter;
@@ -4612,7 +4616,7 @@ function loadExistingAccessories(callback) {
 }
 
 
-function main() {
+async function main() {
     adapter.log.info('Starting Alexa2 adapter ... it can take several minutes to initialize all data. Please be patient! A done message is logged.');
     crashCheckFileName = path.join(__dirname, `crashCheck-${adapter.namespace}.json`);
     if (useCrashCheck) {
@@ -4646,6 +4650,21 @@ function main() {
                 adapter.terminate && adapter.terminate(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
             }, 1000);
             return;
+        }
+    }
+
+    if (!adapter.config.proxyOwnIp) {
+        // Prefer the IP the admin instance is bound to: that is the address the user reaches
+        // ioBroker on, and the cookie proxy URL we build from it will work for them.
+        try {
+            const adminObj = await adapter.getForeignObjectAsync('system.adapter.admin.0');
+            const bind = adminObj && adminObj.native && adminObj.native.bind;
+            if (bind && bind !== '0.0.0.0' && bind !== '127.0.0.1' && bind !== '::') {
+                adapter.config.proxyOwnIp = bind;
+                adapter.log.info(`Proxy IP not set, using admin bind IP (${adapter.config.proxyOwnIp}). Override via "Own IP" in instance settings (Proxy tab) if needed.`);
+            }
+        } catch (e) {
+            adapter.log.debug(`Could not read admin bind IP, falling back to interface scan: ${e.message}`);
         }
     }
 
