@@ -505,6 +505,10 @@ If you region is not present, and you find out the value, do not hesitate to enr
 
 ## Changelog
 <!-- ### __WORK IN PROGRESS__ -->
+
+### **WORK IN PROGRESS**
+- (ioBroker-Bot) Adapter requires js-controller >= 6.0.11 now.
+
 ### 3.27.4 (2025-11-06)
 * (@Apollon77) Adjusts authentication check to recent Amazon changes
 

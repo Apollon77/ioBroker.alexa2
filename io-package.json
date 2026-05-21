@@ -161,7 +161,7 @@
     "compact": true,
     "dependencies": [
       {
-        "js-controller": ">=4.0.24"
+        "js-controller": ">=6.0.11"
       }
     ],
     "plugins": {
