@@ -505,7 +505,8 @@ If you region is not present, and you find out the value, do not hesitate to enr
 
 ## Changelog
 <!-- ### __WORK IN PROGRESS__ -->
-### 3.28.0 (2026-05-22)
+
+### __WORK IN PROGRESS__
 * (MiRo1310) Adds durationMillis to the activeTimerList
 * (Apollon77) Added some more device types
 

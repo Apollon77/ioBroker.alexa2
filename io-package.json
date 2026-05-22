@@ -39,19 +39,6 @@
     },
     "platform": "Javascript/Node.js",
     "news": {
-      "3.28.0": {
-        "en": "Adds durationMillis to the activeTimerList\nAdded some more device types",
-        "de": "Fügt DauerMillis zum aktivenTimerList hinzu\nEinige weitere Gerätetypen hinzugefügt",
-        "ru": "Добавляет продолжительность Millis в активный TimerList\nДобавлено несколько типов устройств",
-        "pt": "Adiciona a duraçãoMillis à lista de tempo ativa\nAdicionado mais alguns tipos de dispositivo",
-        "nl": "Voegt duurMillis toe aan de actieveTimerList\nMeer apparaattypes toegevoegd",
-        "fr": "Ajoute la duréeMillis à la liste active\nAjout d'autres types d'appareils",
-        "it": "Aggiunge la durataMillis all'attivoTimerList\nAggiunto alcuni più tipi di dispositivo",
-        "es": "Añade duraciónMillis al tiempo activo\nAñadido algunos tipos de dispositivo más",
-        "pl": "Dodaje czas trwania Millis do ActiveTimerList\nDodano kilka typów urządzeń",
-        "uk": "Додавання тривалостіMillis до активногоTimerList\nДодайте більше типів пристроїв",
-        "zh-cn": "将持续时间Millis添加到活动时间列表\n添加了更多设备类型"
-      },
       "3.27.4": {
         "en": "Adjusts authentication check to recent Amazon changes",
         "de": "Anpassung der Authentifizierungsprüfung an aktuelle Amazon-Änderungen",
