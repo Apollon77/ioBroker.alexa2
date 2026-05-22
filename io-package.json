@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "alexa2",
-    "version": "3.27.4",
+    "version": "3.28.0",
     "blockedVersions": [
       "~3.14.0",
       "~3.15.0",
@@ -39,6 +39,19 @@
     },
     "platform": "Javascript/Node.js",
     "news": {
+      "3.28.0": {
+        "en": "Adds durationMillis to the activeTimerList\nAdded some more device types",
+        "de": "Fügt DauerMillis zum aktivenTimerList hinzu\nEinige weitere Gerätetypen hinzugefügt",
+        "ru": "Добавляет продолжительность Millis в активный TimerList\nДобавлено несколько типов устройств",
+        "pt": "Adiciona a duraçãoMillis à lista de tempo ativa\nAdicionado mais alguns tipos de dispositivo",
+        "nl": "Voegt duurMillis toe aan de actieveTimerList\nMeer apparaattypes toegevoegd",
+        "fr": "Ajoute la duréeMillis à la liste active\nAjout d'autres types d'appareils",
+        "it": "Aggiunge la durataMillis all'attivoTimerList\nAggiunto alcuni più tipi di dispositivo",
+        "es": "Añade duraciónMillis al tiempo activo\nAñadido algunos tipos de dispositivo más",
+        "pl": "Dodaje czas trwania Millis do ActiveTimerList\nDodano kilka typów urządzeń",
+        "uk": "Додавання тривалостіMillis до активногоTimerList\nДодайте більше типів пристроїв",
+        "zh-cn": "将持续时间Millis添加到活动时间列表\n添加了更多设备类型"
+      },
       "3.27.4": {
         "en": "Adjusts authentication check to recent Amazon changes",
         "de": "Anpassung der Authentifizierungsprüfung an aktuelle Amazon-Änderungen",
@@ -116,19 +129,6 @@
         "pl": "Usunięto mrugnięcie\nDostosuj zapytanie Historia do ostatnich zmian Amazon",
         "uk": "Видалити Weblink\nНалаштування історичного запиту на останні зміни Amazon",
         "zh-cn": "删除了网络链接\n调整历史查询以适应最近的亚马逊更改"
-      },
-      "3.26.3": {
-        "en": "Fixed the proxy login process",
-        "de": "Behoben des Proxy-Anmeldevorgangs",
-        "ru": "Исправлен процесс авторизации прокси",
-        "pt": "Corrigido o processo de login proxy",
-        "nl": "Het proxy loginproces",
-        "fr": "Correction du processus de connexion proxy",
-        "it": "Risolto il processo di login proxy",
-        "es": "Arreglado el proceso de inicio de sesión proxy",
-        "pl": "Fixed proxy login process",
-        "uk": "Виправлено процес проксі",
-        "zh-cn": "A. 确定代伐木过程"
       }
     },
     "keywords": [
