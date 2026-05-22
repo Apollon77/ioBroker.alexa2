@@ -38,13 +38,13 @@
     "rrule": "^2.8.1"
   },
   "devDependencies": {
-    "@alcalzone/release-script": "^5.0.0",
-    "@alcalzone/release-script-plugin-iobroker": "^4.0.0",
-    "@alcalzone/release-script-plugin-license": "^4.0.0",
+    "@alcalzone/release-script": "^5.2.0",
+    "@alcalzone/release-script-plugin-iobroker": "^5.2.0",
+    "@alcalzone/release-script-plugin-license": "^5.2.0",
     "@iobroker/dev-server": "^0.8.0",
     "@iobroker/adapter-dev": "^1.5.0",
     "eslint": "^8.57.1",
-    "mocha": "^11.7.5",
+    "mocha": "^11.7.6",
     "chai": "^4.5.0"
   },
   "main": "main.js",
