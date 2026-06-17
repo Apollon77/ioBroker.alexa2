@@ -505,6 +505,10 @@ If you region is not present, and you find out the value, do not hesitate to enr
 
 ## Changelog
 <!-- ### __WORK IN PROGRESS__ -->
+
+### **WORK IN PROGRESS**
+- (ioBroker-Bot) Adapter requires js-controller >= 6.0.11 now.
+
 ### 3.28.1 (2026-05-22)
 * (MiRo1310) Adds durationMillis to the activeTimerList
 * (Apollon77) Added some more device types

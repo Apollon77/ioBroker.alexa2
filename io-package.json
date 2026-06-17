@@ -143,7 +143,6 @@
     ],
     "mode": "daemon",
     "icon": "alexa.png",
-    "materialize": true,
     "extIcon": "https://raw.githubusercontent.com/Apollon77/ioBroker.alexa2/master/admin/alexa.png",
     "readme": "https://github.com/Apollon77/ioBroker.alexa2/blob/master/README.md",
     "loglevel": "info",
@@ -160,7 +159,7 @@
     "compact": true,
     "dependencies": [
       {
-        "js-controller": ">=4.0.24"
+        "js-controller": ">=6.0.11"
       }
     ],
     "plugins": {
@@ -365,7 +364,10 @@
           "cancel"
         ]
       }
-    ]
+    ],
+    "adminUI": {
+      "config": "materialize"
+    }
   },
   "native": {
     "cookie": "",
