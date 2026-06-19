@@ -504,6 +504,9 @@ To correct the regional endpoints, go to `Instances > alexa2.x > Settings > Cook
 If you region is not present, and you find out the value, do not hesitate to enrich this documentation with your findings.
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+- (iobroker-bot) Adapter requires node.js >= 20 now.
 <!-- ### __WORK IN PROGRESS__ -->
 ### 3.28.1 (2026-05-22)
 * (MiRo1310) Adds durationMillis to the activeTimerList
