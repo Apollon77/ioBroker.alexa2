@@ -31,14 +31,14 @@
     "url": "https://github.com/Apollon77/ioBroker.alexa2"
   },
   "dependencies": {
-    "alexa-remote2": "^8.0.4",
+    "alexa-remote2": "^8.0.5",
     "https": "^1.0.0",
     "nearest-color": "^0.4.4",
     "@iobroker/adapter-core": "^3.3.2",
     "rrule": "^2.8.1"
   },
   "devDependencies": {
-    "@alcalzone/release-script": "^5.2.0",
+    "@alcalzone/release-script": "^5.2.1",
     "@alcalzone/release-script-plugin-iobroker": "^5.2.0",
     "@alcalzone/release-script-plugin-license": "^5.2.0",
     "@iobroker/dev-server": "^0.8.0",
