@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "alexa2",
-    "version": "3.28.1",
+    "version": "3.28.2",
     "blockedVersions": [
       "~3.14.0",
       "~3.15.0",
@@ -39,6 +39,19 @@
     },
     "platform": "Javascript/Node.js",
     "news": {
+      "3.28.2": {
+        "en": "Fix Amazon login proxy auth flow and refreshs",
+        "de": "Behebung des Problems mit der Amazon-Anmeldeproxy-Authentifizierung und den Aktualisierungen",
+        "ru": "Исправлена ошибка аутентификации и обновления данных при входе через прокси-сервер Amazon.",
+        "pt": "Corrigir o fluxo de autenticação e atualizações do proxy de login da Amazon.",
+        "nl": "Los het probleem met de proxy-authenticatiestroom en de vernieuwingen bij het inloggen op Amazon op.",
+        "fr": "Correction du flux d'authentification et des actualisations du proxy de connexion Amazon",
+        "it": "Correzione del flusso di autenticazione proxy e degli aggiornamenti per l'accesso ad Amazon.",
+        "es": "Solucionar el flujo de autenticación del proxy de inicio de sesión de Amazon y las actualizaciones.",
+        "pl": "Napraw przepływ uwierzytelniania i odświeżania logowania do serwera proxy Amazon",
+        "uk": "Виправлення процесу автентифікації проксі-сервера для входу в Amazon та оновлення",
+        "zh-cn": "修复亚马逊登录代理身份验证流程和刷新问题"
+      },
       "3.28.1": {
         "en": "Adds durationMillis to the activeTimerList\nAdded some more device types",
         "de": "Fügt DauerMillis zum aktivenTimerList hinzu\nEinige weitere Gerätetypen hinzugefügt",
@@ -116,19 +129,6 @@
         "pl": "Dostosuj zapytanie Historia do ostatnich zmian Amazon",
         "uk": "Налаштування історичного запиту на останні зміни Amazon",
         "zh-cn": "调整历史查询以适应最近的亚马逊更改"
-      },
-      "3.26.4": {
-        "en": "Removed Weblink\nAdjust History query to recent Amazon changes",
-        "de": "Entfernen von Weblink\nBegleichen Sie die Geschichte Anfrage an aktuelle Amazon-Änderungen",
-        "ru": "Удаленная веб-ссылка\nНастройте исторический запрос на недавние изменения в Amazon",
-        "pt": "Weblink removido\nAjustar a consulta de história às mudanças recentes da Amazônia",
-        "nl": "Weblink verwijderd\nHistorische zoekopdracht aanpassen aan recente Amazon-wijzigingen",
-        "fr": "Supprimé le lien Web\nRégler la requête d'historique aux changements récents d'Amazon",
-        "it": "Rimozione di Weblink\nRegolare la query di storia alle recenti modifiche Amazon",
-        "es": "Redlink eliminado\nAdjust Historia consulta a cambios recientes de Amazon",
-        "pl": "Usunięto mrugnięcie\nDostosuj zapytanie Historia do ostatnich zmian Amazon",
-        "uk": "Видалити Weblink\nНалаштування історичного запиту на останні зміни Amazon",
-        "zh-cn": "删除了网络链接\n调整历史查询以适应最近的亚马逊更改"
       }
     },
     "keywords": [

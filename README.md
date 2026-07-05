@@ -506,8 +506,7 @@ If you region is not present, and you find out the value, do not hesitate to enr
 ## Changelog
 
 <!-- ### __WORK IN PROGRESS__ -->
-
-### __WORK IN PROGRESS__
+### 3.28.2 (2026-07-05)
 * (@fkhr79, @blabond, @Apollon77) Fix Amazon login proxy auth flow and refreshs
 
 ### 3.28.1 (2026-05-22)
