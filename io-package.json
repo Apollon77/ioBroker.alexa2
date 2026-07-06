@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "alexa2",
-    "version": "3.28.2",
+    "version": "3.28.3",
     "blockedVersions": [
       "~3.14.0",
       "~3.15.0",
@@ -39,6 +39,19 @@
     },
     "platform": "Javascript/Node.js",
     "news": {
+      "3.28.3": {
+        "en": "Fix the proxy login process when no static port is specified",
+        "de": "Beheben Sie das Problem mit dem Proxy-Anmeldevorgang, wenn kein statischer Port angegeben ist.",
+        "ru": "Исправлен процесс авторизации через прокси-сервер, если статический порт не указан.",
+        "pt": "Corrigir o processo de login do proxy quando nenhuma porta estática for especificada.",
+        "nl": "Corrigeer het proxy-aanmeldingsproces wanneer er geen statische poort is opgegeven.",
+        "fr": "Corriger le processus de connexion au proxy lorsqu'aucun port statique n'est spécifié.",
+        "it": "Correggere il processo di accesso proxy quando non viene specificata alcuna porta statica.",
+        "es": "Solucionar el proceso de inicio de sesión del proxy cuando no se especifica un puerto estático.",
+        "pl": "Napraw proces logowania proxy, gdy nie określono portu statycznego",
+        "uk": "Виправлено процес входу через проксі, коли не вказано статичний порт",
+        "zh-cn": "修复未指定静态端口时的代理登录过程。"
+      },
       "3.28.2": {
         "en": "Fix Amazon login proxy auth flow and refreshs",
         "de": "Behebung des Problems mit der Amazon-Anmeldeproxy-Authentifizierung und den Aktualisierungen",
@@ -116,19 +129,6 @@
         "pl": "Dodano projekt odpowiedzialny",
         "uk": "Додано адаптивний дизайн",
         "zh-cn": "添加响应设计"
-      },
-      "3.26.5": {
-        "en": "Adjust History query to recent Amazon changes",
-        "de": "Begleichen Sie die Geschichte Anfrage an aktuelle Amazon-Änderungen",
-        "ru": "Настройте исторический запрос на недавние изменения в Amazon",
-        "pt": "Ajustar a consulta de história às mudanças recentes da Amazônia",
-        "nl": "Historische zoekopdracht aanpassen aan recente Amazon-wijzigingen",
-        "fr": "Régler la requête d'historique aux changements récents d'Amazon",
-        "it": "Regolare la query di storia alle recenti modifiche Amazon",
-        "es": "Adjust Historia consulta a cambios recientes de Amazon",
-        "pl": "Dostosuj zapytanie Historia do ostatnich zmian Amazon",
-        "uk": "Налаштування історичного запиту на останні зміни Amazon",
-        "zh-cn": "调整历史查询以适应最近的亚马逊更改"
       }
     },
     "keywords": [
