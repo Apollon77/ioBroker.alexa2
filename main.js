@@ -4663,11 +4663,16 @@ async function main() {
 
     if (!adapter.config.proxyOwnIp) {
         // Prefer the IP the admin instance is bound to: that is the address the user reaches
-        // ioBroker on, and the cookie proxy URL we build from it will work for them.
+        // ioBroker on, so the cookie proxy URL built from it is reachable from the same browser.
+        // Only when admin runs on THIS host: in a multihost setup admin may sit on a different
+        // machine, and its bind address says nothing about how this host is reached.
         try {
             const adminObj = await adapter.getForeignObjectAsync('system.adapter.admin.0');
             const bind = adminObj && adminObj.native && adminObj.native.bind;
-            if (bind && bind !== '0.0.0.0' && bind !== '127.0.0.1' && bind !== '::') {
+            const adminHost = adminObj && adminObj.common && adminObj.common.host;
+            if (adminHost && adminHost !== adapter.host) {
+                adapter.log.debug(`admin.0 runs on host "${adminHost}", this instance on "${adapter.host}" - not using its bind IP, falling back to interface scan.`);
+            } else if (bind && bind !== '0.0.0.0' && bind !== '127.0.0.1' && bind !== '::') {
                 adapter.config.proxyOwnIp = bind;
                 adapter.log.info(`Proxy IP not set, using admin bind IP (${adapter.config.proxyOwnIp}). Override via "Own IP" in instance settings (Proxy tab) if needed.`);
             }
