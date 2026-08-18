@@ -506,6 +506,9 @@ If you region is not present, and you find out the value, do not hesitate to enr
 ## Changelog
 
 <!-- ### **WORK IN PROGRESS** -->
+### **WORK IN PROGRESS**
+- (copilot) Adapter requires node.js >= 22 now
+
 ### 3.28.3 (2026-07-06)
 * (@Apollon77) Fix the proxy login process when no static port is specified
 
