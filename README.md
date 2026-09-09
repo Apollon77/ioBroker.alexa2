@@ -142,7 +142,7 @@ Information about the Alexa device
 | isMultiroomMember | Is Multiroom member - If true the device is part of a multiroom device group                | Information, true / false |
 | MultiroomParents  | If this device is part of a multiroom device group this state shows the parent group device | Information               |
 | name              | Name of Alexa Device                                                                        | Information               |
-| SerialNumber      | Serial number of Alexa device                                                               |
+| SerialNumber      | Serial number of Alexa device                                                               | Information               |
 
 ### alexa2.0.Echo-Devices.Serialnumber.Music-Provider.*
 Directly tell Alexa to play Music or a playlist from supported music providers. Actually supported are: My Library, Amazon Music, Tune In. You can also include a multiroom device group name in the phrase to play it on this group (e.g. "SWR3 auf Erdgeschoss")
@@ -208,7 +208,7 @@ Here you find some device preferences.
 
 | State name                       | meaning                                                                                                                                                                    | value                                                                           |
 |----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
-| ringNotificationsEnabled         | Shows if the ring notifications are enabled or not and allows to edit it (true/false). The status is updated from cloud with a device configuration interval               |
+| ringNotificationsEnabled         | Shows if the ring notifications are enabled or not and allows to edit it (true/false). The status is updated from cloud with a device configuration interval               | Boolean                                                                         |
 | notificationVolume               | The notification volume set for the device. The value is loaded once on adapter start and then not synced with Cloud services, but changeable                              | number 0..100                                                                   |
 | ascendingAlarmState              | The ascending alarm state set for the device. The value is loaded once on adapter start and then not synced with Cloud services, but changeable                            | Boolean                                                                         |
 | auxPort-*-Direction              | The direction of the AuxPort (when supported). The value is loaded once on adapter start and then not synced with Cloud services, but changeable                           | "INPUT" or "OUTPUT"                                                             |
@@ -257,7 +257,7 @@ You can have one or more timers running on each Alexa device. Because of the ver
 | State name      | meaning                                                                                                      | value      |
 |-----------------|--------------------------------------------------------------------------------------------------------------|------------|
 | activeTimerList | JSON array with the list of active timers containing ID, label and trigger timepoint as unix timestamp in ms | JSON array |
-| nextTimeDate    | Contains the timepoint of the next expected triggering as unix epoch in ms                                   | Number     | Number
+| nextTimeDate    | Contains the timepoint of the next expected triggering as unix epoch in ms                                   | Number     |
 | nextTimerId     | ID of the next timer to trigger                                                                              | String     |
 | stopTimerId     | Control with a timer ID to stop the timer (also stops if the timer is currently ringing!)                    | String     |
 | triggered       | A timer got triggered - in fact it is the "nextTimerId" one                                                  | true/false |
