@@ -63,6 +63,7 @@ const commands = {
     'singasong': { val: false, common: { type: 'boolean', read: false, write: true, role: 'button'}},
     'tellstory': { val: false, common: { type: 'boolean', read: false, write: true, role: 'button'}},
     'deviceStop': { val: false, common: { type: 'boolean', read: false, write: true, role: 'button'}},
+    'reboot': { val: false, common: { type: 'boolean', read: false, write: true, role: 'button'}},
     'calendarToday': { val: false, common: { type: 'boolean', read: false, write: true, role: 'button'}},
     'calendarTomorrow': { val: false, common: { type: 'boolean', read: false, write: true, role: 'button'}},
     'calendarNext': { val: false, common: { type: 'boolean', read: false, write: true, role: 'button'}},
@@ -2672,6 +2673,7 @@ function createStatesForDevice(device, additionalDeviceData) {
                                     setOrUpdateObject(`${devId}.Commands`, {type: 'channel'});
                                     for (const c of Object.keys(commands)) {
                                         if (c === 'notification' && device.isMultiroomDevice) continue;
+                                        if (c === 'reboot' && (!device.capabilities.includes('ALEXA_DEVICE_REBOOT') || typeof alexa.rebootDevice !== 'function')) continue;
                                         const obj = JSON.parse (JSON.stringify (commands[c]));
                                         if (c === 'sound' && routineSounds && Object.keys(routineSounds).length) {
                                             obj.common.states = routineSounds;
@@ -2681,6 +2683,21 @@ function createStatesForDevice(device, additionalDeviceData) {
                                         }
                                         setOrUpdateObject(`${devId}.Commands.${c}`, {common: obj.common}, obj.val, function (device, command, value) {
                                             command = commands[command].command || command;
+                                            if (command === 'reboot') {
+                                                if (!value) return;
+                                                if (typeof alexa.rebootDevice !== 'function') {
+                                                    adapter.log.error(`${device.serialNumber} Reboot is not supported by the installed alexa-remote2 version`);
+                                                    adapter.setState(`Echo-Devices.${device.serialNumber}.Commands.reboot`, false, true);
+                                                    return;
+                                                }
+                                                alexa.rebootDevice(device, err => {
+                                                    if (err) {
+                                                        adapter.log.error(`${device.serialNumber} Error rebooting device: ${err}`);
+                                                    }
+                                                    adapter.setState(`Echo-Devices.${device.serialNumber}.Commands.reboot`, false, true);
+                                                });
+                                                return;
+                                            }
                                             const commandsToExecute = [];
                                             const speakVolumeCommands = [];
                                             const speakVolumeResetCommands = [];
