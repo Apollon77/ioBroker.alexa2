@@ -618,7 +618,11 @@ function startAdapter(options) {
     });
 
     adapter.on('ready', () => {
-        initSentry(() => loadExistingAccessories(checkInstanceObject(main)));
+        initSentry(() => loadExistingAccessories(checkInstanceObject(() => {
+            Promise.resolve()
+                .then(() => main())
+                .catch(err => adapter.log.error(`Unhandled error in main(): ${err && err.stack ? err.stack : err}`));
+        })));
     });
 
     return adapter;
@@ -4620,7 +4624,7 @@ function loadExistingAccessories(callback) {
 }
 
 
-function main() {
+async function main() {
     adapter.log.info('Starting Alexa2 adapter ... it can take several minutes to initialize all data. Please be patient! A done message is logged.');
     crashCheckFileName = path.join(__dirname, `crashCheck-${adapter.namespace}.json`);
     if (useCrashCheck) {
@@ -4658,16 +4662,46 @@ function main() {
     }
 
     if (!adapter.config.proxyOwnIp) {
+        // Prefer the IP the admin instance is bound to: that is the address the user reaches
+        // ioBroker on, so the cookie proxy URL built from it is reachable from the same browser.
+        // Only when admin runs on THIS host: in a multihost setup admin may sit on a different
+        // machine, and its bind address says nothing about how this host is reached.
+        try {
+            const adminObj = await adapter.getForeignObjectAsync('system.adapter.admin.0');
+            const bind = adminObj && adminObj.native && adminObj.native.bind;
+            const adminHost = adminObj && adminObj.common && adminObj.common.host;
+            if (adminHost && adminHost !== adapter.host) {
+                adapter.log.debug(`admin.0 runs on host "${adminHost}", this instance on "${adapter.host}" - not using its bind IP, falling back to interface scan.`);
+            } else if (bind && bind !== '0.0.0.0' && bind !== '127.0.0.1' && bind !== '::') {
+                adapter.config.proxyOwnIp = bind;
+                adapter.log.info(`Proxy IP not set, using admin bind IP (${adapter.config.proxyOwnIp}). Override via "Own IP" in instance settings (Proxy tab) if needed.`);
+            }
+        } catch (e) {
+            adapter.log.debug(`Could not read admin bind IP, falling back to interface scan: ${e.message}`);
+        }
+    }
+
+    if (!adapter.config.proxyOwnIp) {
         const ifaces = os.networkInterfaces();
+        const candidates = [];
         for (const eth of Object.keys(ifaces)) {
-            for (let num = 0; num < ifaces[eth].length; num++) {
-                if (ifaces[eth][num].family !== 'IPv6' && ifaces[eth][num].address !== '127.0.0.1' && ifaces[eth][num].address !== '0.0.0.0') {
-                    adapter.config.proxyOwnIp = ifaces[eth][num].address;
-                    adapter.log.info(`Proxy IP not set, use first network interface (${adapter.config.proxyOwnIp}) instead`);
-                    break;
+            for (const iface of ifaces[eth]) {
+                const isIPv4 = iface.family === 'IPv4' || iface.family === 4;
+                if (isIPv4 && !iface.internal) {
+                    candidates.push({ name: eth, address: iface.address });
                 }
             }
-            if (adapter.config.proxyOwnIp) break;
+        }
+        if (candidates.length) {
+            adapter.config.proxyOwnIp = candidates[0].address;
+            if (candidates.length > 1) {
+                const list = candidates.map(c => `${c.address} (${c.name})`).join(', ');
+                adapter.log.info(`Proxy IP not set, picked first non-internal IPv4: ${adapter.config.proxyOwnIp} (${candidates[0].name}). Other candidates: ${list}. If wrong, open instance settings, Proxy tab and select the correct "Own IP".`);
+            } else {
+                adapter.log.info(`Proxy IP not set, picked ${adapter.config.proxyOwnIp} (${candidates[0].name}). Override via "Own IP" in instance settings (Proxy tab) if needed.`);
+            }
+        } else {
+            adapter.log.warn('Proxy IP not set and no non-internal IPv4 interface found. Please set "Own IP" in instance settings (Proxy tab).');
         }
     }
 
@@ -5134,6 +5168,7 @@ function main() {
                 lines[1] = `Please open ${lines[1]}`;
                 proxyUrl = lines[1].substring(lines[1].indexOf('http://'), lines[1].lastIndexOf('/') + 1);
                 restartAdapter = false;
+                lines.push('If the URL above is not reachable from your browser, the picked "Own IP" is wrong. Open instance settings, Proxy tab, set "Own IP" to the address you use to reach ioBroker and save.');
             } else {
                 lines = err.message.split('\n');
             }
