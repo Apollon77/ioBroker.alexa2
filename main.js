@@ -1,8 +1,8 @@
 ﻿/* eslint-disable no-unused-vars */
 const Alexa = require('alexa-remote2');
-const path = require('path');
-const fs = require('fs');
-const os = require('os');
+const path = require('node:path');
+const fs = require('node:fs');
+const os = require('node:os');
 const utils = require('@iobroker/adapter-core'); // Get common adapter utils
 const shObjects = require('./lib/smarthomedevices.js');
 const { rrulestr } = require('rrule');
