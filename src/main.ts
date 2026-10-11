@@ -262,7 +262,12 @@ class Alexa2Adapter extends utils.Adapter {
             id.endsWith('.Commands.speak')
         ) {
             // NOTE: '/  /g' is a string, not a RegExp - only the literal text "/  /g" would be replaced (kept as before)
-            state.val = (state.val as string).replace(/<[^>]+>/g, '').replace('/  /g', ' ');
+            // Remove HTML tags; leftover "<" / ">" are removed too, otherwise nested input like "<scr<x>ipt>" would
+            // still contain a tag after a single pass
+            state.val = (state.val as string)
+                .replace(/<[^>]+>/g, '')
+                .replace(/[<>]/g, '')
+                .replace('/  /g', ' ');
         }
 
         const stateChangeCallback = this.stateChangeTrigger[id];
