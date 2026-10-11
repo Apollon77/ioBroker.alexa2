@@ -331,7 +331,7 @@ With #brightness you can adjust the brightness of your light, #colorName is to p
 
 
 ## Installation
-As usual using stable repository, the latest repository or uses the ioBroker "Install" options from GitHub
+As usual using the stable or the latest repository. Installing directly from GitHub is not possible, because the adapter is written in TypeScript and the compiled code is only part of the npm package.
 
 ## Send Alexa Device Command sequences via messages
 All commands to the alexa devices can be sent via the adapter to single devices or to groups. The adapter supports sending of these commands and - if needed - also combines them to set a specific volume before a voice output and restore the original volume afterward.
@@ -505,7 +505,11 @@ If your region is not present, and you find out the value, do not hesitate to en
 
 ## Changelog
 
-<!-- ### **WORK IN PROGRESS** -->
+### **WORK IN PROGRESS**
+* (@GermanBluefox) Breaking change: Node.js >= 22.19.0, js-controller >= 6.0.11 and admin >= 7.0.0 are required now
+* (@GermanBluefox) The adapter was refactored to TypeScript
+* (@GermanBluefox) The configuration dialog was migrated to JsonConfig
+
 ### 3.28.3 (2026-07-06)
 * (@Apollon77) Fix the proxy login process when no static port is specified
 
