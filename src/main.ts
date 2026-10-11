@@ -646,7 +646,7 @@ class Alexa2Adapter extends utils.Adapter {
                     this.sendTo(
                         msg.from,
                         msg.command,
-                        getStatusInfoText(this.proxyUrl, cookieTimestamp, lang),
+                        getStatusInfoText(this.proxyUrl, cookieTimestamp, lang, this.name),
                         msg.callback,
                     );
                 }

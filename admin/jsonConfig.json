@@ -6,15 +6,6 @@
             "type": "panel",
             "label": "Alexa login data",
             "items": {
-                "_logo": {
-                    "type": "staticImage",
-                    "src": "alexa.png",
-                    "style": { "width": 64, "height": 64 },
-                    "xs": 12,
-                    "sm": 12,
-                    "md": 12,
-                    "lg": 12
-                },
                 "_statusInfo": {
                     "type": "textSendTo",
                     "command": "getStatusInfoText",

@@ -43,22 +43,24 @@ function translate(texts: Record<string, string>, lang: string | undefined, valu
  * @param proxyUrl URL of the login proxy or null if the proxy is not active
  * @param cookieTimestamp formatted date of the last cookie update
  * @param lang language of the admin user
+ * @param adapterName adapter name, the icon URL is resolved relative to the admin page, so it must point to adapter/<name>/
  */
 export function getStatusInfoText(
     proxyUrl: string | null,
     cookieTimestamp: string | number,
     lang: string | undefined,
+    adapterName: string,
 ): { text: string; icon: string; iconStyle: { width: number; height: number } } {
     if (proxyUrl !== null) {
         return {
             text: translate(PROXY_INFO, lang, proxyUrl),
-            icon: 'warning.png',
+            icon: `adapter/${adapterName}/warning.png`,
             iconStyle: { width: 60, height: 60 },
         };
     }
     return {
         text: translate(STATUS_INFO, lang, String(cookieTimestamp)),
-        icon: 'info.png',
+        icon: `adapter/${adapterName}/info.png`,
         iconStyle: { width: 60, height: 60 },
     };
 }
