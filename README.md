@@ -13,8 +13,8 @@
 
 This adapter allows you to remotely control your Alexa (Amazon Echo) devices.
 
-Big thanks go to soef for version 1 of the adapter and to Hauke and ruhr70 for ideas in their scripts from ioBroker-Forum (especially the media progress updates)!
-Also, big thanks to meicker for support in documenting all of this and numerous users from ioBroker Forum for their testing support!
+Big thanks go to `@soef` for version 1 of the adapter and to Hauke and ruhr70 for ideas in their scripts from ioBroker-Forum (especially the media progress updates)!
+Also, big thanks to `@meicker` for support in documenting all of this and numerous users from ioBroker Forum for their testing support!
 
 ## Disclaimer
 **All product and company names or logos are trademarks™ or registered® trademarks of their respective holders. Use of them does not imply any affiliation with or endorsement by them or any associated subsidiaries! This personal project is maintained in spare time and has no business goal.**
@@ -22,7 +22,7 @@ Also, big thanks to meicker for support in documenting all of this and numerous 
 
 ## States and their meanings:
 
-In the adapter namespace (e.g., alexa2.0) some channels are created
+In the adapter namespace (e.g., `alexa2.0`) some channels are created
 
 ### alexa2.0
 
@@ -88,29 +88,29 @@ Here you find all connected or known bluetooth device(s) with MAC address(es). T
 ### alexa2.0.Echo-Devices.Serialnumber.Commands.*
 With Commands, you can trigger some actions on your Alexa-Device. If you use these on a multiroom device, then they are executed independently and *will not* run in sync on the single devices!
 
-| State name    | meaning                                                                                                                                | value                                                                                                        |
-|---------------|----------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| doNotDisturb  | Switch on/off "Do not Disturb" for this device or group. Value is updated with Device Configuration updates from Cloud too             | true/false, or number in seconds to enable (max 12h) or string in form "HH:MM" until this time it is enabled |
-| flashbriefing | Briefing in 100 seconds - news etc.pp                                                                                                  | Button                                                                                                       |
-| goodmorning   | Good morning from Alexa ...                                                                                                            | Button                                                                                                       |
-| funfact       | Fun fact from Alexa ... (Only USA at the moment)                                                                                       | Button                                                                                                       |
-| joke          | Joke from Alexa ...                                                                                                                    | Button                                                                                                       |
-| cleanup       | Plays a "gong" tone like for start/end of listening mode ...                                                                           | Button                                                                                                       |
-| curatedtts    | Random sentence from the chosen area from Alexa ...                                                                                   | Text (allowed: "goodbye", "confirmations", "goodmorning", "compliments", "birthday", "goodnight", "iamhome") |
-| singasong     | Alexa sings a song ...                                                                                                                 | Button                                                                                                       |
-| speak         | Alexa says what you type in here ...                                                                                                   | Text Input                                                                                                   |
-| speakvolume   | Adjust the speak volume of Alexa, this volume is set before the speak and reset afterwards                                             | 0-100                                                                                                        |
-| skill         | Launch a defined Skill                                                                                                                 | Skill-ID as String                                                                                           |
-| skillYours    | launch a defined Skill - is prefilled with "Your Skills" as displayed in Alexa App too                                                 | Skill-ID as String                                                                                           |
-| tellstory     | Alexa tells a story                                                                                                                    | Button                                                                                                       |
-| traffic       | Traffic news                                                                                                                           | Button                                                                                                       |
-| weather       | Weather news                                                                                                                           | Button                                                                                                       |
-| deviceStop    | Stop all actions on device                                                                                                             | Button                                                                                                       |
-| notification  | Send text notification to customer of the device                                                                                       | Text, optionally specify title "title;text"                                                                  |
-| announcement  | Play announcement (like speak but with Bing before text) <br>*Note: will only work if announcements (for this device) are activated and the device is not in "do not disturb"-mode*                                                                              | Text                                                                                                         |
-| ssml          | Speak SSML XML string <br>*Note: will only work if announcements (for this device) are activated and the device is not in "do not disturb"-mode*                                                                                                                 | Text                                                                                                         |
-| textcommand   | Send a Text command to Alexa,. Make sure to only use text (e.g. also 3 -> three and such, else Alexa might not correctly react to it!) | Text                                                                                                         |
-| sound         | Play a sound on the device.                                                                                                            | Text                                                                                                         |
+| State name    | meaning                                                                                                                                                                             | value                                                                                                        |
+|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| doNotDisturb  | Switch on/off "Do not Disturb" for this device or group. Value is updated with Device Configuration updates from Cloud too                                                          | true/false, or number in seconds to enable (max 12h) or string in form "HH:MM" until this time it is enabled |
+| flashbriefing | Briefing in 100 seconds - news etc.pp                                                                                                                                               | Button                                                                                                       |
+| goodmorning   | Good morning from Alexa ...                                                                                                                                                         | Button                                                                                                       |
+| funfact       | Fun fact from Alexa ... (Only USA at the moment)                                                                                                                                    | Button                                                                                                       |
+| joke          | Joke from Alexa ...                                                                                                                                                                 | Button                                                                                                       |
+| cleanup       | Plays a "gong" tone like for start/end of listening mode ...                                                                                                                        | Button                                                                                                       |
+| curatedtts    | Random sentence from the chosen area from Alexa ...                                                                                                                                 | Text (allowed: "goodbye", "confirmations", "goodmorning", "compliments", "birthday", "goodnight", "iamhome") |
+| singasong     | Alexa sings a song ...                                                                                                                                                              | Button                                                                                                       |
+| speak         | Alexa says what you type in here ...                                                                                                                                                | Text Input                                                                                                   |
+| speakvolume   | Adjust the speak volume of Alexa, this volume is set before the speak and reset afterwards                                                                                          | 0-100                                                                                                        |
+| skill         | Launch a defined Skill                                                                                                                                                              | Skill-ID as String                                                                                           |
+| skillYours    | launch a defined Skill - is prefilled with "Your Skills" as displayed in Alexa App too                                                                                              | Skill-ID as String                                                                                           |
+| tellstory     | Alexa tells a story                                                                                                                                                                 | Button                                                                                                       |
+| traffic       | Traffic news                                                                                                                                                                        | Button                                                                                                       |
+| weather       | Weather news                                                                                                                                                                        | Button                                                                                                       |
+| deviceStop    | Stop all actions on device                                                                                                                                                          | Button                                                                                                       |
+| notification  | Send text notification to customer of the device                                                                                                                                    | Text, optionally specify title "title;text"                                                                  |
+| announcement  | Play announcement (like speak but with Bing before text) <br>*Note: will only work if announcements (for this device) are activated and the device is not in "do not disturb"-mode* | Text                                                                                                         |
+| ssml          | Speak SSML XML string <br>*Note: will only work if announcements (for this device) are activated and the device is not in "do not disturb"-mode*                                    | Text                                                                                                         |
+| textcommand   | Send a Text command to Alexa,. Make sure to only use text (e.g. also 3 -> three and such, else Alexa might not correctly react to it!)                                              | Text                                                                                                         |
+| sound         | Play a sound on the device.                                                                                                                                                         | Text                                                                                                         |
 
 Detailed information Speak and Announcement: Type in here what you want Alexa to say. You can also adjust the volume of Alexa by giving a percentage before your text.
 Example: 10;Alexa is saying Alexa with 10% volume, while 100;Alexa is 100% volume.
@@ -120,7 +120,7 @@ Alexa will then speak the text after each other with a small break. You also can
 Partially also sounds from https://developer.amazon.com/en-US/docs/alexa/custom-skills/ask-soundlibrary.html work. Specify in speak or ssml as `<audio src="soundbank://soundlibrary/animals/amzn_sfx_bear_groan_roar_01"/>`. Details and discussion please at https://forum.iobroker.net/topic/27509/ssml-audio
 
 ### alexa2.0.Echo-Devices.Serialnumber.FireTVCommands.*
-If a device is an Amazon FireTV then you can use the following commands:
+If a device is an Amazon Fire TV then you can use the following commands:
 
 | State name   | meaning                  | value  |
 |--------------|--------------------------|--------|
@@ -343,7 +343,7 @@ If this is not flexible enough, the adapter offers since version 3.14.0 a way to
 You provide an array structure which will be converted to commands. There are two types of options for one array element:
 
 **A command**
-```json
+```json5
 {
     "command": "speak", // command like the state name in Commands states
     "value": "This is a test speak.", // value like value you set on state
@@ -353,7 +353,7 @@ You provide an array structure which will be converted to commands. There are tw
 
 **A sequence definition**
 
-```json
+```json5
 {
     "sequenceType": "...", // "SerialNode" or "ParallelNode"
     "nodes": [...] // array of commands or sequences
@@ -381,7 +381,7 @@ When commands are executed as "ParallelNode" in parallel, which mainly makes sen
 
 A structure like the following is possible:
 
-```json
+```json5
 ... // use ParallelNode on main level
 "sequenceNodes": [
     {
@@ -434,7 +434,7 @@ A structure like the following is possible:
 ## Troubleshooting
 
 ### Problem with Cookie determination with SMS based 2FA flow
-If you still use the SMS/E-Mail based 2FA flow, then this might not work. Please update the 2FA/OTP method in the amazon settings to the current process! Not working could also mean that a Error 404/Page not found is shown. ALso then check and upgrade OTP settings!
+If you still use the SMS/E-Mail based 2FA flow, then this might not work. Please update the 2FA/OTP method in the amazon settings to the current process! Not working could also mean that an Error 404/Page not found is shown. Also, then check and upgrade OTP settings!
 
 ### The Alexa App opens when I try to log in
 If you open the Proxy URL from a mobile device where also the Alexa App is installed on, it might be that it does not work because Amazon might open the Alexa App. So please use a device or PC where the Alexa App is not installed!
@@ -492,16 +492,16 @@ Some users may encounter crashes when first configuring the adapter.
 This is often caused by the adapter being **preconfigured for the German Amazon region (amazon.de)**.  
 If your Alexa account is registered in another Amazon marketplace, you must update few settings so the adapter communicates with the correct regional endpoints.
 
-When these values are not adjusted, authentication and cookie might work but failure will occurs when fetching your devices, leading to adapter startup errors and got a terminate signal TERMINATE_YOURSELF.
+When these values are not adjusted, authentication and cookie might work but failure will occur when fetching your devices, leading to adapter startup errors and got a terminate signal TERMINATE_YOURSELF.
 
 To correct the regional endpoints, go to `Instances > alexa2.x > Settings > Cookie` and configure the values as below.
 
-| Region / Country | Alexa Base URL        | Accept‑Language  | Cookie Amazon URL  |
-|------------------|-----------------------|------------------|--------------------|
-| **France** 🇫🇷    | `alexa.amazon.fr`     | `fr-FR`          | `amazon.fr`        |
-| *(Add more...)*  |                       |                  |                    |
+| Region / Country  | Alexa Base URL    | Accept‑Language | Cookie Amazon URL |
+|-------------------|-------------------|-----------------|-------------------|
+| **France** 🇫🇷   | `alexa.amazon.fr` | `fr-FR`         | `amazon.fr`       |
+| *(Add more...)*   |                   |                 |                   |
 
-If you region is not present, and you find out the value, do not hesitate to enrich this documentation with your findings.
+If your region is not present, and you find out the value, do not hesitate to enrich this documentation with your findings.
 
 ## Changelog
 
@@ -622,7 +622,7 @@ If you region is not present, and you find out the value, do not hesitate to enr
 * (Apollon77) Fix crash check with multiple adapter instances
 
 ### 3.19.2 (2022-08-06)
-* (Apollon77) Fix Alarm creation when just providing time and it is for next day
+* (Apollon77) Fix Alarm creation when just providing time, and it is for next day
 
 ### 3.19.1 (2022-08-04)
 * (Apollon77) Fix retry handling
@@ -661,7 +661,7 @@ If you region is not present, and you find out the value, do not hesitate to enr
 * (Apollon77) Add Equalizer preferences (if supported by devices)
 * (Apollon77) Add Speaker and AUX preferences (if supported by devices)
 * (Apollon77) Add Display (enabled, brightness, adaptive brightness) preferences (if supported by devices)
-* (Apollon77) Enhance doNotDisturb state to also allow specifying a enable duration or end timepoint
+* (Apollon77) Enhance doNotDisturb state to also allow specifying an enable duration or end timepoint
 * (Apollon77) Add a fallback to update music player when a new history record mentions music as target for the spoken words. Could help as fallback when push infos are not coming in sometimes with Sonos
 * (Apollon77) Delay initialization of push connection to when basic structures are initialized
 * (Apollon77) Add some more devices
@@ -729,7 +729,7 @@ If you region is not present, and you find out the value, do not hesitate to enr
 * (Apollon77) Add Info states for macAddress and WifiSSID of the Alexa devices
 * (Apollon77) Add several new states for Player for allowed actions, medium quality
 * (Apollon77) Add mediaId and also allow to set it to jump to a defined entry in the playlist
-* (Apollon77) Add Commands.sound to play a sound
+* (Apollon77) Add `Commands.sound` to play a sound
 * (Apollon77) Do not set the speak-volume when executing textCommand and deviceStop
 * (Apollon77) Do not set speak-volume if the volume is already as wanted when executing commands
 * (Apollon77) update Do-Not-Disturb status once on start and with device configuration updates
@@ -872,7 +872,7 @@ If you region is not present, and you find out the value, do not hesitate to enr
 * (Apollon77) Fix currentState handling
 
 ### 3.2.2 (2020-06-17)
-* (Apollon77) remove goodnight because was not working
+* (Apollon77) remove goodnight because it was not working
 * (Apollon77) Fix Play/Pause states and some media optimizations
 
 ### 3.2.1 (2020-06-17)
@@ -884,7 +884,7 @@ If you region is not present, and you find out the value, do not hesitate to enr
 * (Apollon77) Prevent some crashes
 * (Apollon77) Make sure Timer are not triggering the state when deleted
 * (Apollon77) make sure that Lists objects are deleted correctly when deleting
-* (Apollon77) Make compatible with nodejs 14
+* (Apollon77) Make compatible with Node.js 14
 * (Apollon77) Adjust to changes from Amazon so that initial Proxy process works again
 * (OberstVonGatow) Make sure that for Spotify Media data requests do not have negative effects and stop the playback
 
@@ -914,11 +914,11 @@ If you region is not present, and you find out the value, do not hesitate to enr
 * (Apollon77) Prevent some errors
 
 ### 3.0.3 (2019-12-24)
-* Adapter needs nodejs 8+ and js-controller 2.0 now!
+* Adapter needs Node.js 8+ and js-controller 2.0 now!
 * (Zefau) add functionality for handling of lists
 * (Apollon77) Add answerText when available from history
 * (Apollon77) handle error for empty valueMaps for ColorTemperatures
-* (Apollon77) also support names for new special routines (Alarm Notifications, Sensor Detections, ..)
+* (Apollon77) also support names for new special routines (Alarm Notifications, Sensor Detections, ...)
 * (Apollon77) GitHub Actions for Test& Build
 * (Apollon77) Add Sentry for error reporting
 * (Apollon77) prevent some crashed after changes by Amazon
@@ -1017,7 +1017,7 @@ If you region is not present, and you find out the value, do not hesitate to enr
 
 ### 0.6.1 (2018-08-24)
 * (Apollon77) sometimes new alarms were not triggered in adapter
-* (Apollon77) add support to control smart devices and groups (and also add groups). Because I was only able to test a few types i added logging. please check log, try out and report back!
+* (Apollon77) add support to control smart devices and groups (and also add groups). Because I was only able to test a few types I added logging. please check log, try out and report back!
 * (Apollon77) When routines are executed via voice command and push connection is enabled the routine state is also triggered by "true" with ack=true when routine trigger text is matching exactly to spoken text
 * (Apollon77) corrected volume and mute handling in states, a volume of 0 is also seen as "muted" if muting flag is not supported by device
 * (Apollon77) when speak text is coming from cloud adapter and contains SSML tags they will be filtered out, so you can use a speak endpoint directly to output response from Smart Home skill actions
@@ -1027,7 +1027,7 @@ If you region is not present, and you find out the value, do not hesitate to enr
 * (Apollon77) add new "Playlist" states for the Music providers to directly prepend "playlist" :-)
 * (Apollon77) Volumes are not updated for multiroom devices when === 0
 * (Apollon77) Add Reminder and Alarms support. Write time and pot. text separated by comma into the "New" stat to create a new one (e.g. "10:00:00, Test-Reminder")
-* (Apollon77) Also with Push-Connection some times states are generally updated to make sure data are correct (e.g. player media info will disappear 2h after stopping the music)
+* (Apollon77) Also with Push-Connection sometimes states are generally updated to make sure data are correct (e.g. player media info will disappear 2h after stopping the music)
 * (Apollon77) Added some more deviceTypes
 
 ### 0.4.0 (2018-08-13)
@@ -1036,7 +1036,7 @@ If you region is not present, and you find out the value, do not hesitate to enr
 * (Apollon77) sanitized music provider state names (spaces are now dashes ... should be removed automatically)
 * (Apollon77) Renamed TuneIn-Direct to TuneIn-Station (even if you still can enter text to search, this works with stations too) ... should be removed automatically)
 * (Apollon77) Device and Bluetooth status is now also checked at states update
-* (Apollon77) After enabling Push-Connection the configured polling is turned off and anything is done based on real time informations from Alexa. Test it
+* (Apollon77) After enabling Push-Connection the configured polling is turned off and anything is done based on real time information from Alexa. Test it
 * (Apollon77) Enhanced History states to include the status of the action (SUCCESS, FAIL ...), infos from returned cards (if available) and info on accessed skill for this action.
 * (Apollon77) When using Push-Connection History update is also updated automatically. An empty summary with status DISCARDED_NON_DEVICE_DIRECTED_INTENT means the activation of the echo by saying the wake word
 * (Bluefox) Add icons for some of the devices for Admin
@@ -1062,13 +1062,13 @@ If you region is not present, and you find out the value, do not hesitate to enr
 * (Apollon77) Added further information in Infos states per echo device
 * (Apollon77) Try to detect the type of the device different and decide if commands are available or not (till capabilities are known better)
 * (Apollon77) New "Music-Provider" states depending on available music providers with possibility to enter a text to play something (same as you would speak it)
-* (Apollon77) Volume is send different now, so that it also works when Device player get's inactive
+* (Apollon77) Volume is sent differently now, so that it also works when Device player gets inactive
 
 ### 0.2.4 (2018-07-22)
 * (pix) materialize settings window
 * (Apollon77) WOn IP is set automatically with IP from first network interface
 * (Apollon77) fix comma replacements in speaks, do not speak empty text
-* (Apollon77) if Device is Multiroom, the do not create Routines and Commands and not bluetooth
+* (Apollon77) if Device is Multiroom, do not create Routines and Commands and not bluetooth
 * (Apollon77) add information about multiroom device and master (later we can use this to sort out commands that are impossible with multiroom)
 * (Apollon77) History is also stored as JSON, so it can be used to monitor one datapoint and have all infos on updateState
 * (Apollon77) Several other fixes
@@ -1086,14 +1086,14 @@ If you region is not present, and you find out the value, do not hesitate to enr
 * (Apollon77) 0.2.0: added many Player-Info datapoints including "progress updates " when media is playing
 * (Apollon77) 0.2.0: removed "Notifications" because the only benefit for now is to show them, no interaction or change possible
 * (Apollon77) 0.2.0: adapter now allows to configure intervals for history updates and other data updates like player info
-* (Apollon77) 0.2.0: if cookie could not be determined correctly a proxy is started to allow manual login and cookie is catched in the background on success
+* (Apollon77) 0.2.0: if cookie could not be determined correctly a proxy is started to allow manual login and cookie is caught in the background on success
 * (Apollon77) 0.2.0: add info datapoints for connection (connected to Alexa), cookie and csrf
 * (Apollon77) 0.2.0: rework complete logic to not use soef library anymore
-* (Apollon77) 0.2.0: Speaking free text at any timepoint is available under Commands.speak
+* (Apollon77) 0.2.0: Speaking free text at any timepoint is available under `Commands.speak`
 * (Apollon77) 0.2.0: Sequence-Commands (weather, traffic, flashbriefing, goodmorning, singasong, tellstory) are available to be triggered under "Commands"
 * (Apollon77) 0.2.0: Automation-Routines are now available to be triggered per device under "Routines"
-* (Apollon77) 0.2.0: Automatically use different user-agents for Win32, MacOS and Linux based systems
-* (Apollon77) 0.2.0: Automatically use different user-agents for Win32, MacOS and Linux based systems
+* (Apollon77) 0.2.0: Automatically use different user-agents for Win32, macOS and Linux based systems
+* (Apollon77) 0.2.0: Automatically use different user-agents for Win32, macOS and Linux based systems
 * (Apollon77) 0.2.0: Also support entering TuneIn-Station IDs ("s" plus 4-6 digits) to play that station
 
 ### 0.1.0 (2018-07-10)
