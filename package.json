@@ -42,21 +42,38 @@
     "@alcalzone/release-script-plugin-license": "^5.2.2",
     "@iobroker/adapter-dev": "^1.5.0",
     "@iobroker/dev-server": "^0.8.0",
-    "@iobroker/legacy-testing": "^4.0.0",
-    "eslint": "^10.12.0",
-    "mocha": "^12.0.3"
+    "@iobroker/eslint-config": "^2.3.4",
+    "@iobroker/testing": "^6.2.2",
+    "@iobroker/types": "^7.2.3",
+    "@tsconfig/node22": "^22.0.6",
+    "@types/node": "^22.20.4",
+    "typescript": "~6.0.3"
   },
-  "main": "main.js",
+  "main": "build/main.js",
+  "files": [
+    "build/",
+    "admin/",
+    "io-package.json",
+    "LICENSE"
+  ],
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha --exit",
-    "release": "release-script",
-    "translate": "translate-adapter",
+    "build": "tsc -p tsconfig.build.json",
+    "watch": "tsc -p tsconfig.build.json --watch",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint -c eslint.config.mjs",
+    "test:package": "mocha test/packageFiles --exit",
+    "test:integration": "mocha test/integrationAdapter --exit",
+    "test": "npm run test:package",
+    "translate": "translate-adapter -b admin/i18n/en.json",
     "dev-server": "dev-server",
+    "release": "release-script --noPush -y",
+    "release-patch": "release-script patch --yes",
+    "release-minor": "release-script minor --yes",
+    "release-major": "release-script major --yes",
     "update-packages": "npx npm-check-updates --upgrade",
     "npm": "npm install"
   },
   "bugs": {
     "url": "https://github.com/Apollon77/ioBroker.alexa2/issues"
-  },
-  "readmeFilename": "README.md"
+  }
 }
