@@ -1,0 +1,349 @@
+{
+    "i18n": true,
+    "type": "tabs",
+    "items": {
+        "_tabMain": {
+            "type": "panel",
+            "label": "Alexa login data",
+            "items": {
+                "_statusInfo": {
+                    "type": "textSendTo",
+                    "command": "getStatusInfoText",
+                    "jsonData": "{\"lang\": \"${_system.language}\"}",
+                    "container": "html",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "_headerPush": {
+                    "type": "header",
+                    "text": "Push-Connection",
+                    "size": 4,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "_infoPush": {
+                    "type": "staticText",
+                    "text": "With the direct push connection the changes from the Alexa devices are notified to the adapter and are used to update only needed data in near real time. If enabled some data update intervals below are not used. It is Urgently recommended to use the push connection to limit the data requested from the amazon cloud!",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "usePushConnection": {
+                    "type": "checkbox",
+                    "label": "Use push connection",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "_headerHistory": {
+                    "type": "header",
+                    "text": "History Settings",
+                    "size": 4,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "_infoHistory": {
+                    "type": "staticText",
+                    "text": "Settings for History data that are available in the \"History\" states",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "historyIgnoreEmptySummary": {
+                    "type": "checkbox",
+                    "label": "Ignore History-Entries when no command was recognized",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "autoQueryActivityOnTrigger": {
+                    "type": "checkbox",
+                    "label": "Automatically query activity on device interaction",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "_warnAutoQueryActivity": {
+                    "type": "staticText",
+                    "text": "Please only enable if you really need activity information automatically!",
+                    "style": { "color": "#ff9800", "fontWeight": "bold" },
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "_headerSync": {
+                    "type": "header",
+                    "text": "Synchronization Settings",
+                    "size": 4,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "_warnSync": {
+                    "type": "staticText",
+                    "text": "Specify which data should be synced from the Amazon Cloud to the ioBroker instance. Please only enable the data you really need!",
+                    "style": { "color": "#ff9800", "fontWeight": "bold" },
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "synchronizeSmartHomeDevices": {
+                    "type": "checkbox",
+                    "label": "Synchronize Smart Home Devices",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "synchronizeLists": {
+                    "type": "checkbox",
+                    "label": "Synchronize Lists (e.g. Todo)",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "includeAppDevices": {
+                    "type": "checkbox",
+                    "label": "Query and add also App-Devices",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "_headerInterval": {
+                    "type": "header",
+                    "text": "Data update interval",
+                    "size": 4,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "_infoInterval": {
+                    "type": "staticText",
+                    "text": "Several data can be updated automatically. You define here in seconds how often this should happen. Using the state history.#trigger you can always update the data manually. If you set 0 as interval the automatic update is disabled.",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "updateStateInterval": {
+                    "type": "number",
+                    "label": "Data update interval (player info …)",
+                    "help": "s (0 = disabled)",
+                    "min": 0,
+                    "max": 100000,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "_warnUpdateStateInterval": {
+                    "type": "staticText",
+                    "text": "The general device data update interval defines how often the data should be updated from the Amazon servers. The minimum is 300s or set to 0 to disable the update. Do not set this too low because else Amazon might block you! When the Push-Connection is established the update interval is set to 60 minutes when enabled.",
+                    "style": { "color": "#ff9800" },
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "updateHistoryInterval": {
+                    "type": "number",
+                    "label": "History update interval",
+                    "help": "s (0 = disabled)",
+                    "min": 0,
+                    "max": 100000,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "_warnUpdateHistoryInterval": {
+                    "type": "staticText",
+                    "text": "The History update interval defines how often the History data should be updated from the Amazon servers. The minimum is 60s or set to 0 to disable the update. Do not set this too low because else Amazon might block you! When the Push-Connection is established the update interval is not used because push information will trigger it when needed automatically.",
+                    "style": { "color": "#ff9800" },
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "updateConfigurationInterval": {
+                    "type": "number",
+                    "label": "Device Configuration update interval",
+                    "help": "s (0 = disabled)",
+                    "min": 0,
+                    "max": 100000,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "_warnUpdateConfigurationInterval": {
+                    "type": "staticText",
+                    "text": "The device configuration can be updated automatically. The update interval defines how often this should happen. Do not set this too low because else Amazon might block you! The Minimum is 300s or set to 0 to disable the update.",
+                    "style": { "color": "#ff9800" },
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                }
+            }
+        },
+        "_tabCookie": {
+            "type": "panel",
+            "label": "Cookie",
+            "items": {
+                "resetCookies": {
+                    "type": "checkbox",
+                    "label": "Reset Amazon Cookies",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "_headerOverwrite": {
+                    "type": "header",
+                    "text": "Override special parameter for cookie determination and communication",
+                    "size": 4,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "_infoOverwrite": {
+                    "type": "staticText",
+                    "text": "By default the parameters are set to connect with a german Amazon account. If your account is located in an other Amazon country you need to enter the correct details here. Check in Adapter README for some details. Also in certain cases when the automatic cookie determination is failing it can help to play around here especially with the Accept-Language and user-agent settings.",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "alexaServiceHost": {
+                    "type": "text",
+                    "label": "Alexa base url",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "userAgent": {
+                    "type": "text",
+                    "label": "Custom User-Agent",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "acceptLanguage": {
+                    "type": "text",
+                    "label": "Custom Accept-Language Header",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "cookieLoginUrl": {
+                    "type": "text",
+                    "label": "Custom Cookie-Amazon-URL",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                }
+            }
+        },
+        "_tabProxy": {
+            "type": "panel",
+            "label": "Proxy Settings",
+            "items": {
+                "_infoProxy": {
+                    "type": "staticText",
+                    "text": "If the automatic determination of a cookie was not possible, the adapter opens a proxy to allow a manual login to amazon. The Logfile and Admin screen will tell you the URL to use then. Open this in your browser, manually login into Amazon, solve all potential Captchas or Two-Factor-Authentications and the cookie is catched automatically in the background if successful.",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "proxyOwnIp": {
+                    "type": "ip",
+                    "label": "Own IP or hostname to use in proxy link",
+                    "onlyIp4": true,
+                    "noInternal": true,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "proxyPort": {
+                    "type": "port",
+                    "label": "Proxy-Port",
+                    "help": "(0 = random port)",
+                    "min": 0,
+                    "max": 65535,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "proxyListenBind": {
+                    "type": "ip",
+                    "label": "Proxy Binding to certain IP",
+                    "listenOnAllPorts": true,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                },
+                "proxyOverrideIp": {
+                    "type": "text",
+                    "label": "External Container-IP (Docker)",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6
+                }
+            }
+        }
+    }
+}
