@@ -27,7 +27,7 @@
     "interval_info": "Diversi dati possono essere aggiornati automaticamente. Definisci qui in secondi quanto spesso ciò dovrebbe accadere. Utilizzando la cronologia dello stato. # Trigger puoi sempre aggiornare i dati manualmente. Se si imposta 0 come intervallo, l'aggiornamento automatico è disabilitato.",
     "overwrite": "Sostituisci i parametri speciali per la determinazione e la comunicazione dei cookie",
     "overwrite_info": "Di default i parametri sono impostati per connettersi con un account tedesco di Amazon. Se stai utilizzando altri paesi di Amazon, devi impostare qui i dati corretti. Controllare in Adapter README per alcuni dettagli. Inoltre, in alcuni casi in cui la determinazione automatica dei cookie non funziona, può aiutare a giocare qui, specialmente con Accept-Language e user-agent.",
-    "password": "parola d'ordine",
+    "password": "Password",
     "proxy": "Impostazioni proxy",
     "proxyListenBind": "Collegamento a determinati indirizzi IP",
     "proxyOverrideIp": "External Container-IP (Docker)",
