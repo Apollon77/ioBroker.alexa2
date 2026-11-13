@@ -27,7 +27,7 @@
     "interval_info": "Varios datos se pueden actualizar automáticamente. Usted define aquí en segundos con qué frecuencia esto debería suceder. Con el disparador de historial de estado. #, Siempre puede actualizar los datos manualmente. Si configura 0 como intervalo, la actualización automática está deshabilitada.",
     "overwrite": "Anula el parámetro especial para la determinación y comunicación de cookies",
     "overwrite_info": "Por defecto, los parámetros están configurados para conectarse con una cuenta amazon alemana. Si está utilizando otros países amazónicos, debe establecer los datos correctos aquí. Verifique en el adaptador README para algunos detalles. También en algunos casos, la determinación automática de cookies está fallando, puede ayudar a jugar aquí especialmente con Accept-Language y User-Agent.",
-    "password": "contraseña",
+    "password": "Clave",
     "proxy": "Configuración de proxy",
     "proxyListenBind": "Enlazado Proxy a cierta IP",
     "proxyOverrideIp": "Contenedor externo-IP (Docker)",
