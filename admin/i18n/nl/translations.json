@@ -27,7 +27,7 @@
     "interval_info": "Verschillende gegevens kunnen automatisch worden bijgewerkt. Je definieert hier in seconden hoe vaak dit moet gebeuren. Door de # trigger te gebruiken, kunt u de gegevens altijd handmatig bijwerken. Als u 0 instelt als interval, is de automatische update uitgeschakeld.",
     "overwrite": "Speciale parameter voor cookie-bepaling en communicatie overschrijven",
     "overwrite_info": "Standaard zijn de parameters ingesteld om verbinding te maken met een Duits Amazon-account. Als u andere Amazon-landen gebruikt, moet u hier de juiste gegevens instellen. Raadpleeg de README van de adapter voor meer informatie. Ook in bepaalde gevallen waar de automatische cookie-bepaling faalt, kan het helpen om hier te spelen, vooral met Accept-Language en user-agent.",
-    "password": "wachtwoord",
+    "password": "Wachtwoord",
     "proxy": "Proxy instellingen",
     "proxyListenBind": "Proxy-binding aan bepaalde IP",
     "proxyOverrideIp": "External Container-IP (Docker)",
