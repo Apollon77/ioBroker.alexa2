@@ -5,6 +5,7 @@ const fs = require('fs');
 const os = require('os');
 const utils = require('@iobroker/adapter-core'); // Get common adapter utils
 const shObjects = require('./lib/smarthomedevices.js');
+const { COMMANDS, HELP } = require('./lib/help.js');
 const { rrulestr } = require('rrule');
 
 let Sentry;
@@ -641,6 +642,10 @@ function checkInstanceObject(callback) {
 function processMessage(msg) {
     adapter.log.debug(`Message: ${JSON.stringify(msg)}`);
     switch (msg.command) {
+        case 'help':
+            // A description of all commands and the most important states for AI agents and script authors
+            if (msg.callback) adapter.sendTo(msg.from, msg.command, {help: HELP, commands: COMMANDS}, msg.callback);
+            break;
         case 'getStatusInfo':
             getStatusInfo(msg);
             break;

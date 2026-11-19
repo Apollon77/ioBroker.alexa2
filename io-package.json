@@ -150,6 +150,10 @@
     "type": "iot-systems",
     "enabled": true,
     "messagebox": true,
+    "supportedMessages": {
+      "custom": true,
+      "help": true
+    },
     "licenseInformation": {
       "license": "MIT",
       "type": "free"
