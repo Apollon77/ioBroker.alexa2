@@ -431,6 +431,9 @@ A structure like the following is possible:
 
 ```
 
+## Messages for scripts and AI agents
+`sendTo('alexa2.0', 'help', {})` answers `{ help, commands }`: a description of the messages and of the most important command states for AI agents (e.g. pi-agent) and script authors, and the list of all commands with `write` (`true` if the command has an effect on a device).
+
 ## Troubleshooting
 
 ### Problem with Cookie determination with SMS based 2FA flow
@@ -506,6 +509,9 @@ If you region is not present, and you find out the value, do not hesitate to enr
 ## Changelog
 
 <!-- ### **WORK IN PROGRESS** -->
+### **WORK IN PROGRESS**
+* (Bluefox) Added the message "help": a description of all messages for AI agents (e.g. pi-agent), and common.supportedMessages.help
+
 ### 3.28.3 (2026-07-06)
 * (@Apollon77) Fix the proxy login process when no static port is specified
 
