@@ -1,5 +1,8 @@
 import type { ControlDefinition, KnownDeviceType, ListStateDefinition } from './types';
 
+/** Volume set by `MediaPlayer.mute` = false when no volume above 0 is known yet */
+export const MEDIA_PLAYER_UNMUTE_VOLUME = 30;
+
 export const PLAYER_CONTROLS: Record<string, ControlDefinition> = {
     controlPlay: {
         command: 'play',

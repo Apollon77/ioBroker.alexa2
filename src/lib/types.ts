@@ -68,6 +68,18 @@ export interface ObjectQueueEntry {
     preserveSettings: ioBroker.ExtendObjectOptionsPreserve | undefined;
 }
 
+/** Per device: last values of the Player states the `MediaPlayer` channel is derived from */
+export interface MediaPlayerCache {
+    mainArtUrl?: string;
+    imageURL?: string;
+    volume?: number;
+    /** last volume above 0, restored by `MediaPlayer.mute` = false */
+    lastVolume?: number;
+    muted?: boolean;
+    /** MediaPlayer state name -> last written value */
+    written: Record<string, ioBroker.StateValue>;
+}
+
 /** Entry of KNOWN_DEVICE_TYPES */
 export interface KnownDeviceType {
     name: string;

@@ -156,6 +156,34 @@ Directly tell Alexa to play Music or a playlist from supported music providers. 
 | Tune-In               | Phrase to play with Tune In        | Text input |
 | Tune-In-Playlist      | Playlist to play with Tune In      | Text input |
 
+### alexa2.0.Echo-Devices.Serialnumber.MediaPlayer.*
+The same player once more, laid out the way `@iobroker/type-detector` expects a media player, so ioBroker.assistant,
+ioBroker.devices, the material UI and other adapters recognize the Echo as media player. The values are taken over from
+`Player.*`, writes are executed like the corresponding `Player.*`/`Commands.*` state. `Player.*` stays unchanged.
+Assign the channel `MediaPlayer` (not `Player`) to a room (`enum.rooms`) to see it there.
+
+| State name | role                  | meaning                                                                                  |
+|------------|-----------------------|------------------------------------------------------------------------------------------|
+| state      | media.state           | true = playing, false = paused/stopped                                                   |
+| play       | button.play           | Play                                                                                     |
+| pause      | button.pause          | Pause                                                                                    |
+| stop       | button.stop           | Stop (like "Alexa, stop", `Commands.deviceStop`)                                         |
+| next       | button.next           | Next title (only devices with music player)                                              |
+| prev       | button.prev           | Previous title (only devices with music player)                                          |
+| shuffle    | media.mode.shuffle    | Shuffle on/off (only devices with music player)                                          |
+| repeat     | media.mode.repeat     | 0 = off, 1 = all; Amazon knows no "repeat one", 2 is handled like 1                      |
+| title      | media.title           | Current title                                                                            |
+| artist     | media.artist          | Current artist                                                                           |
+| album      | media.album           | Current album                                                                            |
+| cover      | media.cover           | URL of the cover                                                                         |
+| duration   | media.duration        | Length of the current title in seconds                                                   |
+| elapsed    | media.elapsed         | Elapsed time in seconds                                                                  |
+| volume     | level.volume          | Volume 0-100                                                                             |
+| mute       | media.mute            | true when muted or the volume is 0; Amazon has no mute command, so writing true sets the volume to 0 and false restores the last volume |
+| playerName | media.player.name     | Name of the device                                                                       |
+| playerType | media.player.type     | Type of the device                                                                       |
+| reachable  | indicator.reachable   | Device is online                                                                         |
+
 ### alexa2.0.Echo-Devices.Serialnumber.Player.*
 States to control the Playback of the device and to see the current status and media information
 
@@ -506,6 +534,7 @@ If your region is not present, and you find out the value, do not hesitate to en
 ## Changelog
 
 ### **WORK IN PROGRESS**
+* (@GermanBluefox) Added the channel `MediaPlayer` to every player device: the player with the IDs and roles the type-detector expects, so ioBroker.assistant, devices, material and others recognize the Echo as media player. `Player` is unchanged
 * (@GermanBluefox) Breaking change: Node.js >= 22.19.0, js-controller >= 6.0.11 and admin >= 7.0.0 are required now
 * (@GermanBluefox) The adapter was refactored to TypeScript
 * (@GermanBluefox) The configuration dialog was migrated to JsonConfig

@@ -13,6 +13,7 @@ import {
     KNOWN_DEVICE_TYPES,
     LIST_ITEMS_OBJECTS,
     LIST_OBJECTS,
+    MEDIA_PLAYER_UNMUTE_VOLUME,
     MUSIC_CONTROLS,
     PLAYER_CONTROLS,
 } from './lib/constants';
@@ -50,6 +51,7 @@ import type {
     HistoryJson,
     LastPlayerState,
     MacDms,
+    MediaPlayerCache,
     MultiroomCommandCallback,
     NotificationActiveTimer,
     NotificationEntry,
@@ -128,6 +130,8 @@ class Alexa2Adapter extends utils.Adapter {
     /** serialNumber -> utterance (lower case) -> state id */
     private routineTriggerUtterances: Record<string, Record<string, string>> | undefined;
     private playerDevices: Record<string, boolean> = {};
+    /** serialNumber -> last values of the Player states the MediaPlayer channel is derived from */
+    private mediaPlayerCache: Record<string, MediaPlayerCache> = {};
     private playingDevices: Record<string, boolean> = {};
     private appDevices: Record<string, AlexaDevice> = {};
     /** listId -> object id part of the list */
@@ -247,9 +251,227 @@ class Alexa2Adapter extends utils.Adapter {
         callback && callback();
     }
 
+    /**
+     * Creates the channel `MediaPlayer` next to `Player`. It holds the same information, but with the IDs, roles and
+     * types the type-detector expects for a media player (pattern `mediaPlayer` of `@iobroker/type-detector`), so
+     * ioBroker.assistant, devices, material and others recognize the Echo as media player.
+     * `Player` stays untouched (user scripts use it). The values are mirrored from the `Player` states by
+     * mirrorToMediaPlayer(), writes are handed to the triggers of the `Player`/`Commands` states, so the logic to
+     * talk to Amazon exists only once.
+     */
+    private createMediaPlayerStates(device: AlexaDevice, devId: string): void {
+        const mpId = `${devId}.MediaPlayer`;
+        const serial = device.serialNumber;
+        this.mediaPlayerCache[serial] = this.mediaPlayerCache[serial] || { written: {} };
+
+        // The triggers are looked up on every write: Commands.* is created after the player
+        const forward = (targets: string[], value: ioBroker.StateValue): void => {
+            for (const target of targets) {
+                const trigger = this.stateChangeTrigger[`${devId}.${target}`];
+                if (typeof trigger === 'function') {
+                    trigger(value);
+                    return;
+                }
+            }
+            this.log.warn(`${mpId}: no handler found for ${targets.join(' / ')}`);
+        };
+
+        this.setOrUpdateObject(mpId, {
+            type: 'channel',
+            common: { name: 'Media player (type-detector)', role: 'media.music' },
+        });
+
+        this.setOrUpdateObject(`${mpId}.state`, {
+            common: { type: 'boolean', role: 'media.state', write: false, def: false, desc: 'true = playing' },
+        });
+        this.setOrUpdateObject(
+            `${mpId}.play`,
+            { common: { type: 'boolean', role: 'button.play', read: false } },
+            (value: boolean) => forward(['Player.controlPlay'], value),
+        );
+        this.setOrUpdateObject(
+            `${mpId}.pause`,
+            { common: { type: 'boolean', role: 'button.pause', read: false } },
+            (value: boolean) => forward(['Player.controlPause'], value),
+        );
+        // Amazon has no stop command for the player, "Alexa, stop" does it
+        this.setOrUpdateObject(
+            `${mpId}.stop`,
+            { common: { type: 'boolean', role: 'button.stop', read: false } },
+            (value: boolean) => forward(['Commands.deviceStop', 'Player.controlPause'], value),
+        );
+
+        if (device.hasMusicPlayer) {
+            this.setOrUpdateObject(
+                `${mpId}.next`,
+                { common: { type: 'boolean', role: 'button.next', read: false } },
+                (value: boolean) => forward(['Player.controlNext'], value),
+            );
+            this.setOrUpdateObject(
+                `${mpId}.prev`,
+                { common: { type: 'boolean', role: 'button.prev', read: false } },
+                (value: boolean) => forward(['Player.controlPrevious'], value),
+            );
+            this.setOrUpdateObject(
+                `${mpId}.shuffle`,
+                { common: { type: 'boolean', role: 'media.mode.shuffle', def: false } },
+                (value: boolean) => forward(['Player.controlShuffle'], value),
+            );
+            // Amazon only knows repeat on/off, "one" (2) is handled as "all"
+            this.setOrUpdateObject(
+                `${mpId}.repeat`,
+                {
+                    common: {
+                        type: 'number',
+                        role: 'media.mode.repeat',
+                        min: 0,
+                        max: 2,
+                        def: 0,
+                        states: { 0: 'off', 1: 'all', 2: 'one' },
+                    },
+                },
+                (value: number) => forward(['Player.controlRepeat'], value > 0),
+            );
+        }
+
+        this.setOrUpdateObject(`${mpId}.title`, {
+            common: { type: 'string', role: 'media.title', write: false, def: '' },
+        });
+        this.setOrUpdateObject(`${mpId}.artist`, {
+            common: { type: 'string', role: 'media.artist', write: false, def: '' },
+        });
+        this.setOrUpdateObject(`${mpId}.album`, {
+            common: { type: 'string', role: 'media.album', write: false, def: '' },
+        });
+        this.setOrUpdateObject(`${mpId}.cover`, {
+            common: { type: 'string', role: 'media.cover', write: false, def: '' },
+        });
+        this.setOrUpdateObject(`${mpId}.duration`, {
+            common: { type: 'number', role: 'media.duration', write: false, def: 0, unit: 'sec' },
+        });
+        this.setOrUpdateObject(`${mpId}.elapsed`, {
+            common: { type: 'number', role: 'media.elapsed', write: false, def: 0, unit: 'sec' },
+        });
+
+        if (device.capabilities.includes('VOLUME_SETTING')) {
+            this.setOrUpdateObject(
+                `${mpId}.volume`,
+                { common: { type: 'number', role: 'level.volume', min: 0, max: 100, unit: '%' } },
+                (value: number) => forward(['Player.volume'], value),
+            );
+            // Amazon has no mute command: mute sets the volume to 0, unmute restores the last volume
+            this.setOrUpdateObject(
+                `${mpId}.mute`,
+                { common: { type: 'boolean', role: 'media.mute', def: false } },
+                (value: boolean) => {
+                    const cache = this.mediaPlayerCache[serial];
+                    forward(['Player.volume'], value ? 0 : cache.lastVolume || MEDIA_PLAYER_UNMUTE_VOLUME);
+                },
+            );
+        }
+
+        this.setOrUpdateObject(
+            `${mpId}.playerName`,
+            { common: { type: 'string', role: 'media.player.name', write: false } },
+            device._name,
+        );
+        this.setOrUpdateObject(
+            `${mpId}.playerType`,
+            { common: { type: 'string', role: 'media.player.type', write: false } },
+            device.deviceTypeDetails ? device.deviceTypeDetails.name : 'Unknown',
+        );
+        this.setOrUpdateObject(
+            `${mpId}.reachable`,
+            { common: { type: 'boolean', role: 'indicator.reachable', write: false } },
+            !!device.online,
+        );
+    }
+
+    /**
+     * Mirrors an acknowledged change of a `Player` state (or of `online`) into the `MediaPlayer` channel.
+     *
+     * @param id own state id without namespace
+     * @param val new value
+     */
+    private mirrorToMediaPlayer(id: string, val: ioBroker.StateValue): void {
+        if (!id.startsWith('Echo-Devices.')) {
+            return;
+        }
+        const parts = id.split('.');
+        const cache = this.mediaPlayerCache[parts[1]];
+        if (!cache || parts.length > 4) {
+            return;
+        }
+        const mpId = `Echo-Devices.${parts[1]}.MediaPlayer`;
+        const set = (name: string, value: ioBroker.StateValue): void => {
+            // only objects created for this device; unchanged values are not written again
+            if (!this.adapterObjects[`${mpId}.${name}`] || cache.written[name] === value) {
+                return;
+            }
+            cache.written[name] = value;
+            void this.setState(`${mpId}.${name}`, value, true);
+        };
+
+        switch (parts.slice(2).join('.')) {
+            case 'online':
+                set('reachable', !!val);
+                break;
+            case 'Player.currentState':
+                set('state', !!val);
+                break;
+            case 'Player.currentTitle':
+                set('title', String(val ?? ''));
+                break;
+            case 'Player.currentArtist':
+                set('artist', String(val ?? ''));
+                break;
+            case 'Player.currentAlbum':
+                set('album', String(val ?? ''));
+                break;
+            case 'Player.mainArtUrl':
+                cache.mainArtUrl = String(val ?? '');
+                set('cover', cache.mainArtUrl || cache.imageURL || '');
+                break;
+            case 'Player.imageURL':
+                cache.imageURL = String(val ?? '');
+                set('cover', cache.mainArtUrl || cache.imageURL || '');
+                break;
+            case 'Player.mediaLength':
+                set('duration', Number(val) || 0);
+                break;
+            case 'Player.mediaProgress':
+                set('elapsed', Number(val) || 0);
+                break;
+            case 'Player.controlShuffle':
+                set('shuffle', !!val);
+                break;
+            case 'Player.controlRepeat':
+                set('repeat', val ? 1 : 0);
+                break;
+            case 'Player.volume':
+                if (typeof val === 'number') {
+                    cache.volume = val;
+                    if (val > 0) {
+                        cache.lastVolume = val;
+                    }
+                    set('volume', val);
+                    set('mute', !!cache.muted || val === 0);
+                }
+                break;
+            case 'Player.muted':
+                cache.muted = !!val;
+                set('mute', cache.muted || cache.volume === 0);
+                break;
+        }
+    }
+
     private onStateChange(id: string, state: ioBroker.State | null | undefined): void {
         this.log.debug(`State changed ${id}: ${JSON.stringify(state)}`);
-        if (!state || state.ack) {
+        if (!state) {
+            return;
+        }
+        if (state.ack) {
+            this.mirrorToMediaPlayer(id.substring(this.namespace.length + 1), state.val);
             return;
         }
         id = id.substring(this.namespace.length + 1);
@@ -3735,6 +3957,8 @@ class Alexa2Adapter extends utils.Adapter {
                                                 },
                                             );
                                         }
+
+                                        this.createMediaPlayerStates(device, devId);
 
                                         if (device.hasMusicPlayer) {
                                             for (const c of Object.keys(MUSIC_CONTROLS)) {
