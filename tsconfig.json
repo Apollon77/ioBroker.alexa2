@@ -1,0 +1,33 @@
+// Root tsconfig to set the settings and power editor support for all TS files
+{
+    "compileOnSave": true,
+    "extends": "@tsconfig/node22/tsconfig.json",
+    "compilerOptions": {
+        // do not compile anything; this file is just to configure type checking
+        // the compilation is configured in tsconfig.build.json
+        "noEmit": true,
+
+        "allowJs": false,
+        "checkJs": false,
+
+        "skipLibCheck": true, // Don't report errors in 3rd party definitions
+        "noEmitOnError": true,
+        "outDir": "./build/",
+        "rootDir": "./src/",
+        "removeComments": false,
+        "module": "Node16",
+        "moduleResolution": "node16",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "target": "es2022",
+        "sourceMap": true,
+        "inlineSourceMap": false,
+        "useUnknownInCatchVariables": false,
+        "types": ["@iobroker/types", "@types/node"]
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["build/**", "node_modules/**", "admin/**"]
+}
